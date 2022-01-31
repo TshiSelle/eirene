@@ -15,6 +15,6 @@ const PORT = process.env.PORT;
 const mongoURI = process.env.MONGO_CONNECTION_URL;
 
 //async function to connect to the db with mongoose
-mongoose.connect(mongoURI, { userNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => app.listen(PORT))
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((result) => app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)))
   .catch((err) => console.log(err));
