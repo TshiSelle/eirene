@@ -1,7 +1,10 @@
 //modules
+const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
+
+//file modules
 const { Journal } = require('./models/journal');
 const { User } = require('./models/user');
 
