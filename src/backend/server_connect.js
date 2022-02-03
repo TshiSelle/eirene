@@ -1,3 +1,4 @@
+//modules
 const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -9,6 +10,10 @@ dotenv.config();
 
 //creating the express app
 const app = express();
+
+//middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));   //can now access url encoded form request bodies with req.body
 
 //port to be used for requests
 const PORT = process.env.PORT;
