@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models/user');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
-const { json } = require('body-parser');
 const router = express.Router();
 
 
