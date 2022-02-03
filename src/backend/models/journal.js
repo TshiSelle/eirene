@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { userSchema } = require('./user');
 const Schema = mongoose.Schema;
 
 //creating a new schema instance which defines the structure for a journal everytime one is created
@@ -13,9 +12,9 @@ const journalSchema = new Schema({
     type: String,
     required: true
   },
-  _userid: {
+  userid: {
     type: Schema.Types.ObjectId,
-    ref: userSchema
+    ref: 'User'
   }
 }, { timestamps: true })
 
