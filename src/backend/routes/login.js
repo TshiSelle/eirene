@@ -20,11 +20,12 @@ router.post('/', (req, res) => {
             bcrypt.compare(userLogginIn.password,dbUser.password) //verify password
                 .then((validPassword) => {
                     if (validPassword) { //valid password, sends an authentication token
+                        // Don't put sensitive data here, only data you want the client to have such as name (to view in profile page)
                         const payload = {
                             id: dbUser._id,
                             username: dbUser.username
                         }
-                        //sign a jsonwebtoken with users data as payload, a secretkey, token expires in 1 day
+                        //sign a jsonwebtoken with user's data as payload, a secret key, token expires in 1 day
                         jwt.sign(
                             payload, 
                             process.env.JWT_SECRET, 
