@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 
 
 //file modules
@@ -11,6 +10,7 @@ const { Journal } = require('./models/journal');
 const { User } = require('./models/user');
 const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
+const verifyJWT = require('./controllers/TokenVerification');
 
 //configuring the enviroment variable for the mongo URI string
 dotenv.config();
@@ -35,6 +35,14 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
+
+/*************Example code when you need to verify user's identity when accessing a specific route***********************
+app.get('/getUsername', verifyJWT, (req, res) => {
+  res.json({ isLoggedIn: true, username: req.user.username });
+})
+*************************************************************************************************************************/
+
+
 
 // app.get('/add-journal', (req, res) => {
 //   const journal = new Journal({
