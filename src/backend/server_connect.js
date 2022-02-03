@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const { Journal } = require('./models/journal');
 const { User } = require('./models/user');
 const registerRoute = require('./routes/register');
+const loginRoute = require('./routes/login');
 
 //configuring the enviroment variable for the mongo URI string
 dotenv.config();
@@ -33,6 +34,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch((err) => console.log(err));
 
 app.use('/register', registerRoute);
+app.use('/login', loginRoute);
 
 // app.get('/add-journal', (req, res) => {
 //   const journal = new Journal({
