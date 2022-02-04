@@ -49,11 +49,17 @@ const register = async (req, res) => {
 const login = (req, res) => {
     const userLoggingIn = req.body;
 
+    const { errors, isValid } = validateLoginInput(userLoggingIn);
+
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
     //find the received username in database
     User.findOne({ username: userLoggingIn.username.toLowerCase() })
         .then((dbUser) => {
             if (!dbUser) {
-                return res.status(401).json({ messsage: 'Invalid username or password' });
+                return res.status(401).json({ message: 'Invalid username or password' });
             }
             bcrypt.compare(userLoggingIn.password,dbUser.password) //verify password
                 .then((validPassword) => {
@@ -74,7 +80,7 @@ const login = (req, res) => {
                                 } 
                                 else {
                                     return res.status(200).json({
-                                        message: 'Succesful Authentication',
+                                        message: 'Successful Authentication',
                                         token: 'Bearer '+token
                                     });
                                 }
@@ -111,6 +117,9 @@ function validateRegisterInput(data) {
     } else if (!Validator.isEmail(data.email)) {
         errors.email = 'Email is invalid';
     }
+    if (Validator.isEmpty(data.username)) {
+        errors.username = 'Username field is required';
+    }
     if (Validator.isEmpty(data.password)) {
         errors.password = 'Password field is required';
     }
@@ -130,13 +139,11 @@ function validateRegisterInput(data) {
 function validateLoginInput(data) {
     const errors = {};
     //converting empty fields to strings
-    data.email = !isEmpty(data.email) ? data.email : '';
+    data.username = !isEmpty(data.username) ? data.username : '';
     data.password = !isEmpty(data.password) ? data.password : '';
     
-    if (Validator.isEmpty(data.email)) {
-        errors.email = 'Email field is required';
-    } else if (!Validator.isEmail(data.email)) {
-        errors.email = 'Email is invalid';
+    if (Validator.isEmpty(data.username)) {
+        errors.username = 'Username field is required';
     }
     if (Validator.isEmpty(data.password)) {
         errors.password = 'Password field is required';
