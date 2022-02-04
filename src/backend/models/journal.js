@@ -11,10 +11,6 @@ const journalSchema = new Schema({
   body: {
     type: String,
     required: true
-  },
-  userid: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
   }
 }, { timestamps: true })
 
