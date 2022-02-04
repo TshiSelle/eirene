@@ -61,28 +61,18 @@ const login = (req, res) => {
             if (!dbUser) {
                 return res.status(401).json({ message: 'Invalid username or password' });
             }
-            bcrypt.compare(userLoggingIn.password,dbUser.password) //verify password
+            bcrypt.compare(userLoggingIn.password, dbUser.password) //verify password
                 .then((validPassword) => {
                     if (validPassword) { //valid password, sends an authentication token
                         // Don't put sensitive data here, only data you want the client to have such as name (to view in profile page)
-                        const payload = {
-                            id: dbUser._id,
-                            username: dbUser.username
-                        }
+                        const payload = { id: dbUser._id, username: dbUser.username }
                         //sign a jsonwebtoken with user's data as payload, a secret key, token expires in 1 day
-                        jwt.sign(
-                            payload, 
-                            process.env.JWT_SECRET, 
-                            { expiresIn: 86400 }, 
-                            (err, token) => {
+                        jwt.sign( payload, process.env.JWT_SECRET, { expiresIn: 86400 }, (err, token) => {
                                 if (err) {
                                     return res.status(500).json({ message: `Error during token creation : ${err}` });
                                 } 
                                 else {
-                                    return res.status(200).json({
-                                        message: 'Successful Authentication',
-                                        token: 'Bearer '+token
-                                    });
+                                    return res.status(200).json({ message: 'Successful Authentication', token: 'Bearer '+token });
                                 }
                             }
                         );
