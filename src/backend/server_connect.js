@@ -8,9 +8,8 @@ const mongoose = require('mongoose');
 //file modules
 const { Journal } = require('./models/journal');
 const { User } = require('./models/user');
-const registerRoute = require('./routes/register');
-const loginRoute = require('./routes/login');
-const verifyJWT = require('./controllers/TokenVerification');
+const accountRoutes = require('./routes/accountRoutes');
+const verifyJWT = require('./middlewares/TokenVerification');
 
 //configuring the enviroment variable for the mongo URI string
 dotenv.config();
@@ -33,13 +32,14 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => app.listen(PORT, () => console.log(`Server listening on ${PORT}`)))
   .catch((err) => console.log(err));
 
-app.use('/register', registerRoute);
-app.use('/login', loginRoute);
+app.use('/account', accountRoutes);
 
 /*************Example code when you need to verify user's identity when accessing a specific route***********************
+ 
 app.get('/getUsername', verifyJWT, (req, res) => {
   res.json({ isLoggedIn: true, username: req.user.username });
 })
+
 *************************************************************************************************************************/
 
 
