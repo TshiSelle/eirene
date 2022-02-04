@@ -2,6 +2,8 @@ const { User } = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const Validator = require('validator');
+const isEmpty = require('is-empty');
 
 dotenv.config();
 
@@ -12,11 +14,13 @@ const register = async (req, res) => {
     //check if user's email/username are already taken
     const takenUsername = await User.findOne({ username: user.username.toLowerCase() });
     const takenEmail = await User.findOne({ email: user.email });
+    const input = validateRegisterInput(user);
 
-    if (takenUsername) {
+    if (!input.isValid) {
+        res.status(400).json({...input.errors});
+    } else if (takenUsername) {
         res.status(400).json({ message: 'Username is already in use' });
-    }
-    else if (takenEmail) {
+    } else if (takenEmail) {
         res.status(400).json({ message: 'Email is already in use' });
     }
     else {
@@ -82,6 +86,45 @@ const login = (req, res) => {
                     }
                 })
         })
+}
+
+function validateRegisterInput(data) {
+    let errors = {};
+
+    //converting empty fields to strings
+    data.fname = !isEmpty(data.fname) ? data.fname : '';
+    data.lname = !isEmpty(data.lname) ? data.lname : '';
+    data.email = !isEmpty(data.email) ? data.email : '';
+    data.username = !isEmpty(data.username) ? data.username : '';
+    data.password = !isEmpty(data.password) ? data.password : '';
+    data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : '';
+
+    //field checks (empty input / password rules / etc..)
+    if (Validator.isEmpty(data.fname)) {
+        errors.fname = 'First name field is required';
+    } 
+    if (Validator.isEmpty(data.lname)) {
+        errors.lname = 'Last name field is required';
+    }
+    if (Validator.isEmpty(data.email)) {
+        errors.email = 'Email field is required';
+    } else if (!Validator.isEmail(data.email)) {
+        errors.email = 'Email is invalid';
+    }
+    if (Validator.isEmpty(data.password)) {
+        errors.password = 'Password field is required';
+    }
+    if (Validator.isEmpty(data.confirmPassword)) {
+        errors.confirmPassword = 'Confirm Password field is required';
+    }
+    if (!Validator.isLength(data.password, { min: 8, max: 64 })) {
+        errors.password = 'Password must be at least 8 characters long';
+    }
+    if (!Validator.equals(data.password,data.confirmPassword)) {
+        errors.confirmPassword = 'Passwords must match';
+    }
+    return { errors, isValid: isEmpty(errors) };
+
 }
 
 module.exports = {
