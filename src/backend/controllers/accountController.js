@@ -11,38 +11,44 @@ dotenv.config();
 const register = async (req, res) => {
     const user = req.body;
 
-    //check if user's email/username are already taken
-    const takenUsername = await User.findOne({ username: user.username.toLowerCase() });
-    const takenEmail = await User.findOne({ email: user.email });
+    
     const { errors, isValid } = validateRegisterInput(user);
 
     if (!isValid) {
         res.status(400).json(errors);
-    } else if (takenUsername) {
-        res.status(400).json({ message: 'Username is already in use' });
-    } else if (takenEmail) {
-        res.status(400).json({ message: 'Email is already in use' });
-    }
+    } 
     else {
-        //hash the password before storing in DB (salt should be auto-generated)
-        user.password = await bcrypt.hash(req.body.password, 10);
-
-        const dbUser = new User({
-            fname: user.fname,
-            lname: user.lname,
-            username: user.username.toLowerCase(),
-            email: user.email.toLowerCase(),
-            password: user.password 
-        });
-
-        dbUser.save()
-            .then(() => {
-                res.status(201).json({ message: 'Successfully created user account' });
-            })
-            .catch((err) => {
-                console.log(`Error occurred while storing user account in database : ${err}`);
-            })
+        //check if user's email/username are already taken
+        const takenUsername = await User.findOne({ username: user.username.toLowerCase() });
+        const takenEmail = await User.findOne({ email: user.email });
+        if (takenUsername) {
+            res.status(400).json({ message: 'Username is already in use' });
+        } else if (takenEmail) {
+            res.status(400).json({ message: 'Email is already in use' });
+        }
+        else {
+            //hash the password before storing in DB (salt should be auto-generated)
+            user.password = await bcrypt.hash(req.body.password, 10);
+    
+            const dbUser = new User({
+                fname: user.fname,
+                lname: user.lname,
+                username: user.username.toLowerCase(),
+                email: user.email.toLowerCase(),
+                password: user.password 
+            });
+    
+            dbUser.save()
+                .then(() => {
+                    res.status(201).json({ message: 'Successfully created user account' });
+                })
+                .catch((err) => {
+                    console.log(`Error occurred while storing user account in database : ${err}`);
+                })
+        }
     }
+    
+    
 }
 
 //Expected Request : Receive login credentials (username and password)
@@ -112,14 +118,11 @@ function validateRegisterInput(data) {
     }
     if (Validator.isEmpty(data.password)) {
         errors.password = 'Password field is required';
-    }
-    if (Validator.isEmpty(data.confirmPassword)) {
+    } else if (!Validator.isLength(data.password, { min: 8, max: 64 })) {
+        errors.password = `Password must be at least 8 characters long${data.password.length > 64 ? ' and less than 64': ''}`;
+    } else if (Validator.isEmpty(data.confirmPassword)) {
         errors.confirmPassword = 'Confirm Password field is required';
-    }
-    if (!Validator.isLength(data.password, { min: 8, max: 64 })) {
-        errors.password = 'Password must be at least 8 characters long';
-    }
-    if (!Validator.equals(data.password,data.confirmPassword)) {
+    } else if (!Validator.equals(data.password,data.confirmPassword)) {
         errors.confirmPassword = 'Passwords must match';
     }
     return { errors, isValid: isEmpty(errors) };
