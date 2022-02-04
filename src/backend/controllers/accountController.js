@@ -14,10 +14,10 @@ const register = async (req, res) => {
     //check if user's email/username are already taken
     const takenUsername = await User.findOne({ username: user.username.toLowerCase() });
     const takenEmail = await User.findOne({ email: user.email });
-    const input = validateRegisterInput(user);
+    const { errors, isValid } = validateRegisterInput(user);
 
-    if (!input.isValid) {
-        res.status(400).json({...input.errors});
+    if (!isValid) {
+        res.status(400).json(errors);
     } else if (takenUsername) {
         res.status(400).json({ message: 'Username is already in use' });
     } else if (takenEmail) {
@@ -37,7 +37,7 @@ const register = async (req, res) => {
 
         dbUser.save()
             .then(() => {
-                res.status(201).json({ message: 'Succesfully created user account' });
+                res.status(201).json({ message: 'Successfully created user account' });
             })
             .catch((err) => {
                 console.log(`Error occurred while storing user account in database : ${err}`);
@@ -98,7 +98,7 @@ function validateRegisterInput(data) {
     data.username = !isEmpty(data.username) ? data.username : '';
     data.password = !isEmpty(data.password) ? data.password : '';
     data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : '';
-
+    
     //field checks (empty input / password rules / etc..)
     if (Validator.isEmpty(data.fname)) {
         errors.fname = 'First name field is required';
@@ -124,7 +124,24 @@ function validateRegisterInput(data) {
         errors.confirmPassword = 'Passwords must match';
     }
     return { errors, isValid: isEmpty(errors) };
+    
+}
 
+function validateLoginInput(data) {
+    const errors = {};
+    //converting empty fields to strings
+    data.email = !isEmpty(data.email) ? data.email : '';
+    data.password = !isEmpty(data.password) ? data.password : '';
+    
+    if (Validator.isEmpty(data.email)) {
+        errors.email = 'Email field is required';
+    } else if (!Validator.isEmail(data.email)) {
+        errors.email = 'Email is invalid';
+    }
+    if (Validator.isEmpty(data.password)) {
+        errors.password = 'Password field is required';
+    }
+    return { errors, isValid: isEmpty(errors) };
 }
 
 module.exports = {
