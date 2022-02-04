@@ -9,9 +9,9 @@ const mongoose = require('mongoose');
 const { Journal } = require('./models/journal');
 const { User } = require('./models/user');
 const accountRoutes = require('./routes/accountRoutes');
-const verifyJWT = require('./middlewares/TokenVerification');
+const verifyJWT = require('./middleware/TokenVerification');
 
-//configuring the enviroment variable for the mongo URI string
+//configuring the environment variable for the mongo URI string
 dotenv.config();
 
 //creating the express app
