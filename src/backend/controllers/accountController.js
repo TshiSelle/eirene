@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const Validator = require('validator');
 const isEmpty = require('is-empty');
-//const crypto = require('crypto');
-//crypto.randomBytes(20).toString('hex');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 dotenv.config();
 
 // Expected Request : Receive a JSON, filled with user data
@@ -30,7 +30,7 @@ const register = async (req, res) => {
         else {
             //hash the password before storing in DB (salt should be auto-generated)
             user.password = await bcrypt.hash(req.body.password, 10);
-            
+            const randString = crypto.randomBytes(20).toString('hex');
     
             const dbUser = new User({
                 fname: user.fname,
@@ -38,11 +38,13 @@ const register = async (req, res) => {
                 gender: user.gender,
                 username: user.username.toLowerCase(),
                 email: user.email.toLowerCase(),
-                password: user.password 
+                password: user.password ,
+                uniqueString: randString
             });
     
             dbUser.save()
                 .then(() => {
+                    sendEmail(dbUser.email, dbUser.uniqueString);
                     res.status(201).json({ message: 'Successfully created user account' });
                 })
                 .catch((err) => {
@@ -92,6 +94,23 @@ const login = (req, res) => {
                 })
         })
 }
+
+const verifyEmail = async (req, res) => {
+    const { uniqueString } = req.params;
+
+    const validUser = await User.findOne({ uniqueString });
+
+    if (validUser) {
+        validUser.verified = true;
+        await validUser.save()
+        res.status(200).json({ message: 'Account verified!' })
+    }
+    else {
+        res.status(401).json({ message: 'User not found' });
+    }
+};
+
+//********** Input validation functions **********
 
 function validateRegisterInput(data) {
     let errors = {};
@@ -158,7 +177,40 @@ function validateLoginInput(data) {
     return { errors, isValid: isEmpty(errors) };
 }
 
+
+//*************** Email transfer function ******************
+
+function sendEmail(email, uniqueString) {
+    var Transport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'loom.senior@gmail.com',
+            pass: process.env.LOOM_EMAIL_PASSWORD
+        }
+    });
+
+    let sender = 'Eirene';
+    var mailOptions = {
+        from: sender,
+        to: email,
+        subject: 'Eirene account verification',
+        html: `hi kifak, press <a href=http://localhost:${process.env.PORT}/account/verify/${uniqueString}>here</a> to verify your account!`
+    };
+
+    Transport.sendMail(mailOptions, (error, response) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            console.log('Email sent')
+        }
+    });
+
+
+}
+
 module.exports = {
     register,
-    login
+    login,
+    verifyEmail
 };
