@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const Validator = require('validator');
 const isEmpty = require('is-empty');
-
+//const crypto = require('crypto');
+//crypto.randomBytes(20).toString('hex');
 dotenv.config();
 
 // Expected Request : Receive a JSON, filled with user data
@@ -29,10 +30,12 @@ const register = async (req, res) => {
         else {
             //hash the password before storing in DB (salt should be auto-generated)
             user.password = await bcrypt.hash(req.body.password, 10);
+            
     
             const dbUser = new User({
                 fname: user.fname,
                 lname: user.lname,
+                gender: user.gender,
                 username: user.username.toLowerCase(),
                 email: user.email.toLowerCase(),
                 password: user.password 
@@ -96,26 +99,37 @@ function validateRegisterInput(data) {
     //converting empty fields to strings
     data.fname = !isEmpty(data.fname) ? data.fname : '';
     data.lname = !isEmpty(data.lname) ? data.lname : '';
+    data.gender = !isEmpty(data.gender) ? data.gender : '';
     data.email = !isEmpty(data.email) ? data.email : '';
     data.username = !isEmpty(data.username) ? data.username : '';
     data.password = !isEmpty(data.password) ? data.password : '';
     data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : '';
     
     //field checks (empty input / password rules / etc..)
+    //Name Checks
     if (Validator.isEmpty(data.fname)) {
         errors.fname = 'First name field is required';
     } 
     if (Validator.isEmpty(data.lname)) {
         errors.lname = 'Last name field is required';
     }
+    //Gender Check
+    if (Validator.isEmpty(data.gender)) {
+        errors.gender = 'Gender field is required';
+    } else if (!(Validator.equals(data.gender,'male') || Validator.equals(data.gender,'female'))) {
+        errors.gender = 'Wrong input in gender field'
+    }
+    //Email Check
     if (Validator.isEmpty(data.email)) {
         errors.email = 'Email field is required';
     } else if (!Validator.isEmail(data.email)) {
         errors.email = 'Email is invalid';
     }
+    //Username Check
     if (Validator.isEmpty(data.username)) {
         errors.username = 'Username field is required';
     }
+    //Password check
     if (Validator.isEmpty(data.password)) {
         errors.password = 'Password field is required';
     } else if (!Validator.isLength(data.password, { min: 8, max: 64 })) {
