@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
 
-
 //file modules
 const { Journal } = require('./models/journal');
 const { User } = require('./models/user');
@@ -33,6 +32,8 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch((err) => console.log(err));
 
 app.use('/account', accountRoutes);
+
+
 
 /*************Example code when you need to verify user's identity when accessing a specific route***********************
  
