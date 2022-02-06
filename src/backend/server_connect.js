@@ -31,7 +31,14 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => app.listen(PORT, () => console.log(`Server listening on ${PORT}`)))
   .catch((err) => console.log(err));
 
+// Routing
 app.use('/account', accountRoutes);
+
+
+
+app.get('/isUserAuthenticated', verifyJWT, (req, res) => {
+  return res.json({ isLoggedIn: true, username: req.user.username });
+});
 
 
 
