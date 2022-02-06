@@ -34,22 +34,17 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // Routing
 app.use('/account', accountRoutes);
 
-
-
-app.get('/isUserAuthenticated', verifyJWT, (req, res) => {
+app.get('/getUsername', verifyJWT, (req, res) => {
   return res.json({ isLoggedIn: true, username: req.user.username });
 });
 
 
 
-/*************Example code when you need to verify user's identity when accessing a specific route***********************
- 
-app.get('/getUsername', verifyJWT, (req, res) => {
-  res.json({ isLoggedIn: true, username: req.user.username });
-})
 
-*************************************************************************************************************************/
-
+// Unexpected URLs
+app.use('*', (req, res) => {
+  res.status(404).send('Resource not found');
+});
 
 
 // app.get('/add-journal', (req, res) => {
