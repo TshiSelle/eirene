@@ -1,6 +1,6 @@
-export function validateName(name) {
-  if (!name) return { success: false, message: 'Name required.' };
-  if (name.length >= 1024) return { success: false, message: 'Name too long.' };
+export function validateName(name, tag) {
+  if (!name) return { success: false, message: `${tag} required.` };
+  if (name.length >= 1024) return { success: false, message: `${tag} too long.` };
   return { success: true };
 }
 
@@ -18,7 +18,7 @@ export function validateEmail(email) {
 }
 
 export function validateGender(gender) {
-  if (!gender || gender === 'None') return { success: false, message: 'Please select a gender.' };
-  if (gender === 'male' || gender === 'female') return { success: true };
+  if (!gender || gender === 'None' || gender === 'Select an option') return { success: false, message: 'Please select a gender.' };
+  if (gender === 'Male' || gender === 'Female') return { success: true };
   return { success: false, message: 'Invalid gender.' };
 }
