@@ -69,8 +69,32 @@ function validateLoginInput(data) {
     return { errors, isValid: isEmpty(errors) };
 }
 
+function validatePassResetInput(data) {
+    let errors = {};
+    data.oldPassword = !isEmpty(data.oldPassword) ? data.oldPassword : '';
+    data.newPassword = !isEmpty(data.newPassword) ? data.newPassword : '';
+    data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : '';
+    //Password check
+    if (Validator.isEmpty(data.oldPassword)) {
+        errors.oldPassword = 'Old Password field is required';
+    }
+    if (Validator.isEmpty(data.newPassword)) {
+        errors.newPassword = 'New Password field is required';
+    } else if (!Validator.isLength(data.newPassword, { min: 8, max: 64 })) {
+        errors.newPassword = `Password must be at least 8 characters long${data.newPassword.length > 64 ? ' and less than 64': ''}`;
+    } else if (Validator.isEmpty(data.confirmPassword)) {
+        errors.confirmPassword = 'Confirm Password field is required';
+    } else if (Validator.equals(data.oldPassword, data.newPassword)) {
+        errors.newPassword  = 'Old and new password cannot be the same'
+    } else if (!Validator.equals(data.newPassword, data.confirmPassword)) {
+        errors.confirmPassword = 'Password confirmation must match new password';
+    }
+    return { errors, isValid: isEmpty(errors) };
+}
+
 
 module.exports = {
     validateLoginInput,
-    validateRegisterInput
+    validateRegisterInput,
+    validatePassResetInput
 };
