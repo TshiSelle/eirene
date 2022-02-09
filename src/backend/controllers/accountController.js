@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
 const sendEmail = require('../helperFunctions/emailSender');
-const { validateLoginInput, validateRegisterInput } = require('../helperFunctions/inputValidation');
+const { validateLoginInput, validateRegisterInput, validatePassResetInput } = require('../helperFunctions/inputValidation');
 dotenv.config();
 
 // Expected Request : Receive a JSON, filled with user data
@@ -106,9 +106,58 @@ const verifyEmail = async (req, res) => {
     }
 };
 
+//Expected data are the old password, a new one with a confirmation field
+const resetPassword = async (req, res) => {
+    //Validating New Passwords
+    const resetInfo = req.body;
+
+    const { errors, isValid } = validatePassResetInput(resetInfo);
+
+    if (!isValid) {
+        res.status(400).json(errors);
+    } 
+    else {
+        //Find user in database
+        const currentUserFound = await User.findOne({ username: req.user.username.toLowerCase() });
+        if (currentUserFound) {
+            //verifying old password
+            bcrypt.compare(resetInfo.oldPassword, currentUserFound.password)
+                .then((validPassword) => {
+                    if (validPassword) {
+                        bcrypt.hash(resetInfo.newPassword, 10)
+                            .then((hashedPassword) => {
+                                currentUserFound.password = hashedPassword;
+                                currentUserFound.save()
+                                    .then(() => {
+                                        res.status(201).json({ message: 'Password reset successful.' })
+                                    })
+                                    .catch((err) => {
+                                        console.log(`Error occurred during updating user's password in DB : ${err}`)
+                                    })
+                            })
+                            .catch((err) => {
+                                console.log(`Error occurred while hashing user's new password : ${err}`);
+                            })
+                    }
+                    else {
+                        res.status(401).json({ message: 'Old password is incorrect' });
+                    }
+                })
+                .catch((err) => {
+                    console.log(`Error occurred while verifying user's password : ${err}`);
+                })
+
+        }
+        else {
+            res.status(404).json({ message: 'Account not found' })
+        }
+    }
+
+};
 
 module.exports = {
     register,
     login,
-    verifyEmail
+    verifyEmail,
+    resetPassword
 };
