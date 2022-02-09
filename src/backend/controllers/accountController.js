@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
 const sendEmail = require('../helperFunctions/emailSender');
-const { validateLoginInput, validateRegisterInput, validatePassResetInput } = require('../helperFunctions/inputValidation');
+const { validateLoginInput, validateRegisterInput, validatePassChangeInput } = require('../helperFunctions/inputValidation');
 dotenv.config();
 
 // Expected Request : Receive a JSON, filled with user data
@@ -107,11 +107,11 @@ const verifyEmail = async (req, res) => {
 };
 
 //Expected data are the old password, a new one with a confirmation field
-const resetPassword = async (req, res) => {
+const changePassword = async (req, res) => {
     //Validating New Passwords
-    const resetInfo = req.body;
+    const changeInfo = req.body;
 
-    const { errors, isValid } = validatePassResetInput(resetInfo);
+    const { errors, isValid } = validatePassChangeInput(changeInfo);
 
     if (!isValid) {
         res.status(400).json(errors);
@@ -121,15 +121,15 @@ const resetPassword = async (req, res) => {
         const currentUserFound = await User.findOne({ username: req.user.username.toLowerCase() });
         if (currentUserFound) {
             //verifying old password
-            bcrypt.compare(resetInfo.oldPassword, currentUserFound.password)
+            bcrypt.compare(changeInfo.oldPassword, currentUserFound.password)
                 .then((validPassword) => {
                     if (validPassword) {
-                        bcrypt.hash(resetInfo.newPassword, 10)
+                        bcrypt.hash(changeInfo.newPassword, 10)
                             .then((hashedPassword) => {
                                 currentUserFound.password = hashedPassword;
                                 currentUserFound.save()
                                     .then(() => {
-                                        res.status(201).json({ message: 'Password reset successful.' })
+                                        res.status(201).json({ message: 'Password change successful.' })
                                     })
                                     .catch((err) => {
                                         console.log(`Error occurred during updating user's password in DB : ${err}`)
@@ -159,5 +159,5 @@ module.exports = {
     register,
     login,
     verifyEmail,
-    resetPassword
+    changePassword 
 };
