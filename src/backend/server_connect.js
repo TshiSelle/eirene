@@ -9,6 +9,7 @@ const { Journal } = require('./models/journal');
 const { User } = require('./models/user');
 const accountRoutes = require('./routes/accountRoutes');
 const verifyJWT = require('./middleware/TokenVerification');
+const accounts = require('./controllers/accountController');
 
 //configuring the environment variable for the mongo URI string
 dotenv.config();
@@ -33,7 +34,8 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Routing
 app.use('/account', accountRoutes);
-
+app.post('/register', accounts.register);
+//dummy route for educational purposes
 app.get('/getUsername', verifyJWT, (req, res) => {
   return res.json({ isLoggedIn: true, username: req.user.username });
 });
