@@ -69,7 +69,7 @@ function validateLoginInput(data) {
     return { errors, isValid: isEmpty(errors) };
 }
 
-function validatePassResetInput(data) {
+function validatePassChangeInput(data) {
     let errors = {};
     data.oldPassword = !isEmpty(data.oldPassword) ? data.oldPassword : '';
     data.newPassword = !isEmpty(data.newPassword) ? data.newPassword : '';
@@ -96,5 +96,5 @@ function validatePassResetInput(data) {
 module.exports = {
     validateLoginInput,
     validateRegisterInput,
-    validatePassResetInput
+    validatePassChangeInput
 };

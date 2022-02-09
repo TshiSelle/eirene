@@ -8,6 +8,6 @@ const verifyJWT = require('../middleware/TokenVerification');
 
 router.post('/login', accounts.login);
 router.get('/verify/:uniqueString', accounts.verifyEmail)
-router.post('/changePass', verifyJWT, accounts.resetPassword)
+router.post('/changePass', verifyJWT, accounts.changePassword)
 
 module.exports = router;
