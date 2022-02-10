@@ -9,7 +9,7 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   verified: { type: Boolean, default: false },
-  uniqueString: { type: String },
+  uniqueString: { type: String, unique: true },
   _journalid: { type: Schema.Types.ObjectId, ref: 'Journal' }
 
 },{ timestamps: true })
