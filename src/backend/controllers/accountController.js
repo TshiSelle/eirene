@@ -3,8 +3,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
-const sendEmail = require('../helperFunctions/emailSender');
-const { validateLoginInput, validateRegisterInput, validatePassChangeInput } = require('../helperFunctions/inputValidation');
+const isEmpty = require('is-empty');
+const { sendEmailVerification, sendEmailResetPass } = require('../helperFunctions/emailSender');
+const { validateLoginInput, validateRegisterInput, validatePassChangeInput, validateEmail, validatePassResetInput } = require('../helperFunctions/inputValidation');
 dotenv.config();
 
 // Expected Request : Receive a JSON, filled with user data
@@ -40,7 +41,7 @@ const register = async (req, res) => {
     
             dbUser.save()
                 .then(() => {
-                    sendEmail(dbUser.email, dbUser.uniqueString);
+                    sendEmailVerification(dbUser.email, dbUser.uniqueString);
                     res.status(201).json({ message: 'Successfully created user account' });
                 })
                 .catch((err) => {
@@ -155,9 +156,107 @@ const changePassword = async (req, res) => {
 
 };
 
+//Expected request:  an email(sent thru forgot password page)
+const forgotPassword = async (req, res) => {
+    const userInput = req.body;
+    const { errors, isValid } = validateEmail(userInput);
+
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+    
+    const user = await User.findOne({ email: userInput.email.toLowerCase() });
+
+    if (user) {
+        // user exists, check if user is verified
+        if (user.verified) {
+            //generate a new unique string and send to user's email
+            const randString = crypto.randomBytes(20).toString('hex');
+            user.uniqueString = randString;
+            await user.save()
+
+            sendEmailResetPass(user.email, randString)
+
+            return res.status(200).json({ message: 'Reset Password email sent' })
+            //TODO: consider token authentication instead of unique string
+        } else {
+            res.status(400).json({ message: 'Please verify your account before resetting your password' })
+        }
+
+
+    } else {
+        //Email not found
+        res.status(400).json({ message: 'Email is not registered' })
+    }
+}
+
+
+const resetPassPage = async (req, res) => {
+    if (isEmpty(req.params.uniqueString)) {
+        return res.status(400).json({ message: 'Invalid String' })
+    }
+        
+    
+    const dbUser = await User.findOne({ uniqueString: req.params.uniqueString });
+    if (dbUser) {
+        const randString = crypto.randomBytes(20).toString('hex');
+        dbUser.uniqueString = randString;
+        await dbUser.save()
+
+        res.redirect('Frontend url for changing password/'+dbUser.uniqueString); //redirects the user to reset password webpage
+    }
+    else {
+        return res.status(401).json({ message: 'User not found' })
+    }
+}
+
+const resetPass = async (req, res) => {
+    if (isEmpty(req.params.uniqueString)) {
+        return res.status(400).json({ message: 'Invalid String' })
+    }
+
+
+    //Validating New Passwords
+    const resetInfo = req.body;
+
+    const { errors, isValid } = validatePassResetInput(resetInfo);
+
+    if (!isValid) {
+        res.status(400).json(errors);
+    } 
+    else {
+        const dbUser = await User.findOne({ uniqueString: req.params.uniqueString });
+        if (dbUser) {
+            bcrypt.hash(resetInfo.newPassword, 10)
+                .then((hashedPassword) => {
+                    dbUser.password = hashedPassword;
+                    dbUser.uniqueString = crypto.randomBytes(20).toString('hex');
+                    dbUser.save()
+                        .then(() => {
+                            res.status(201).json({ message: 'Password reset successful.' })
+                        })
+                        .catch((err) => {
+                            console.log(`Error occurred during updating user's password in DB : ${err}`)
+                        })
+                })
+                .catch((err) => {
+                    console.log(`Error occurred while hashing user's new password : ${err}`);
+                })
+        }
+        else {
+            return res.status(401).json({ message: 'User not found' })
+        }
+    }
+}
+
+
+
 module.exports = {
     register,
     login,
     verifyEmail,
-    changePassword 
+    changePassword,
+    forgotPassword,
+    resetPassPage,
+    resetPass 
 };
