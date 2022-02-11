@@ -1,11 +1,12 @@
 import React, { useReducer, useCallback } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
 import {
   validatePassword,
   validateEmail,
 } from "../../../validators/validators";
+import "./loginStyle.css";
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
@@ -108,27 +109,48 @@ const SignUpForm = () => {
 
   return (
     <>
+      <Header>
+        Login to <strong>Eirene</strong>
+      </Header>
+      <Paragraph>
+        To keep connected with Eirene, please login with your personal info.
+      </Paragraph>
+
       <FormContainer>
         <Form className="login-form" onSubmit={loginUser}>
           <Form.Group className="mb-3">
+            <Label>Username</Label>
+
             <Form.Control
-              className="email-input"
+              className="textField"
               type="email"
               isInvalid={emailError}
-              placeholder="Email"
+              placeholder=""
               name="email"
               value={email}
               onChange={setEmail}
             />
+
+            <Label>Password</Label>
             <Form.Control
-              className="password-i	nput"
+              className="textField"
               type="password"
               isInvalid={passwordError}
-              placeholder="Password"
+              placeholder=""
               name="password"
               value={password}
               onChange={setPassword}
             />
+
+            <RememberMeTab>
+              <label class="remember-me">
+                <span>Remember me</span>
+                <input type="checkbox" />
+                <div></div>
+              </label>
+
+              <ForgotPassword>Forgot Password</ForgotPassword>
+            </RememberMeTab>
 
             {submissionErrorMessage && (
               <div style={{ paddingTop: 20 }}>
@@ -137,26 +159,61 @@ const SignUpForm = () => {
             )}
 
             <Button
-              className="submit-button"
               disabled={submissionErrorMessage}
-              variant={`${submissionErrorMessage ? "danger" : "primary"}`}
               value="Sign Up"
               type="submit"
+              style={{
+                width: "100%",
+                margin: "3rem 0 0",
+                backgroundColor: "#edbec4",
+                color: "#ffffff",
+              }}
             >
               Login
             </Button>
           </Form.Group>
         </Form>
       </FormContainer>
-      <Link to="/SignUp"> Go to Signup</Link>
     </>
   );
 };
 
-const FormContainer = styled.div`
-  padding: 20px;
-  width: 80%;
-  height: 100%;
+const FormContainer = styled.div``;
+
+const Button = styled.button`
+  cursor: pointer;
+  height: 54px;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+`;
+
+const Header = styled.h3`
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+`;
+
+const Paragraph = styled.p`
+  margin-bottom: 1.5rem;
+  color: #b3b3b3;
+`;
+
+const Label = styled.label`
+  margin-bottom: 0.5rem;
+`;
+
+const RememberMeTab = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ForgotPassword = styled.a`
+  position: relative;
+  top: 2px;
+  font-size: 14px;
+  color: #888888;
 `;
 
 export default SignUpForm;
