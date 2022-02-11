@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 
 //*************** Email transfer functions ******************
 
-function sendEmailVerification(email, uniqueString) {
+function sendEmailVerification(email, emailVerificationToken) {
     var Transport = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -17,7 +17,7 @@ function sendEmailVerification(email, uniqueString) {
         from: sender,
         to: email,
         subject: 'Eirene account verification',
-        html: `Hello!, press <a href=http://localhost:${process.env.PORT}/account/verify/${uniqueString}>here</a> to verify your account!`
+        html: `Hello!, press <a href=http://localhost:${process.env.PORT}/account/verify/${emailVerificationToken}>here</a> to verify your account!`
     };
 
     Transport.sendMail(mailOptions, (error, response) => {
@@ -32,7 +32,7 @@ function sendEmailVerification(email, uniqueString) {
 
 }
 
-function sendEmailResetPass(email, uniqueString) {
+function sendEmailResetPass(email, username, passResetToken) {
     var Transport = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -46,7 +46,7 @@ function sendEmailResetPass(email, uniqueString) {
         from: sender,
         to: email,
         subject: 'Eirene account reset password',
-        html: `Hello!, press <a href=http://localhost:${process.env.PORT}/account/resetPass/${uniqueString}>here</a> to reset your password.`
+        html: `Hello!, press <a href=http://localhost:${process.env.PORT}/account/resetPass/${username}/${passResetToken}>here</a> to reset your password.`
     };
 
     Transport.sendMail(mailOptions, (error, response) => {

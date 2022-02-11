@@ -9,7 +9,9 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   verified: { type: Boolean, default: false },
-  uniqueString: { type: String, unique: true },
+  emailVerificationToken: { type: String, unique: true },
+  passResetToken: { type: String },
+  passResetTokenExpirationDate: { type: Number },
   _journalid: { type: Schema.Types.ObjectId, ref: 'Journal' }
 
 },{ timestamps: true })
