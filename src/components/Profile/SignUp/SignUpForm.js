@@ -205,7 +205,6 @@ const SignUpForm = () => {
       });
       return;
     }
-    console.log("gender ", gender);
     const genderValidation = validateGender(gender);
     if (!genderValidation.success) {
       dispatch({
