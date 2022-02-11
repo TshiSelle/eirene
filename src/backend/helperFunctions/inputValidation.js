@@ -39,6 +39,8 @@ function validateRegisterInput(data) {
     //Username Check
     if (Validator.isEmpty(data.username)) {
         errors.username = 'Username field is required';
+    } else if (hasWhiteSpace(Validator.trim(data.username))) {
+        errors.username = 'Username should be one word';
     }
     //Password check
     if (Validator.isEmpty(data.password)) {
@@ -130,3 +132,10 @@ module.exports = {
     validateEmail,
     validatePassResetInput
 };
+
+
+
+
+function hasWhiteSpace(s) {
+    return /\s/g.test(s);
+  }

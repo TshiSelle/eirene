@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
 const isEmpty = require('is-empty');
+const Validator = require('validator');
 const { sendEmailVerification, sendEmailResetPass } = require('../helperFunctions/emailSender');
 const { validateLoginInput, validateRegisterInput, validatePassChangeInput, validateEmail, validatePassResetInput } = require('../helperFunctions/inputValidation');
 dotenv.config();
@@ -30,18 +31,18 @@ const register = async (req, res) => {
             const randString = crypto.randomBytes(20).toString('hex');
     
             const dbUser = new User({
-                fname: user.fname,
-                lname: user.lname,
-                gender: user.gender,
-                username: user.username.toLowerCase(),
+                fname: Validator.trim(user.fname),
+                lname: Validator.trim(user.lname),
+                gender: Validator.trim(user.gender),
+                username: Validator.trim(user.username.toLowerCase()),
                 email: user.email.toLowerCase(),
                 password: user.password ,
-                uniqueString: randString
+                emailVerificationToken: randString
             });
     
             dbUser.save()
                 .then(() => {
-                    sendEmailVerification(dbUser.email, dbUser.uniqueString);
+                    sendEmailVerification(dbUser.email, dbUser.emailVerificationToken);
                     res.status(201).json({ message: 'Successfully created user account' });
                 })
                 .catch((err) => {
@@ -93,12 +94,13 @@ const login = (req, res) => {
 }
 
 const verifyEmail = async (req, res) => {
-    const { uniqueString } = req.params;
+    const { emailVerificationToken } = req.params;
 
-    const validUser = await User.findOne({ uniqueString });
+    const validUser = await User.findOne({ emailVerificationToken });
 
     if (validUser) {
         validUser.verified = true;
+        validUser.emailVerificationToken = undefined;
         await validUser.save()
         res.status(200).json({ message: 'Account verified!' })
     }
@@ -172,10 +174,11 @@ const forgotPassword = async (req, res) => {
         if (user.verified) {
             //generate a new unique string and send to user's email
             const randString = crypto.randomBytes(20).toString('hex');
-            user.uniqueString = randString;
+            user.passResetToken = randString;
+            user.passResetTokenExpirationDate = Date.now() + 3600000;
             await user.save()
 
-            sendEmailResetPass(user.email, randString)
+            sendEmailResetPass(user.email, user.username, randString)
 
             return res.status(200).json({ message: 'Reset Password email sent' })
             //TODO: consider token authentication instead of unique string
@@ -192,27 +195,25 @@ const forgotPassword = async (req, res) => {
 
 
 const resetPassPage = async (req, res) => {
-    if (isEmpty(req.params.uniqueString)) {
-        return res.status(400).json({ message: 'Invalid String' })
+    if (isEmpty(req.params.passResetToken)) {
+        return res.status(400).json({ message: 'No token found' })
     }
         
     
-    const dbUser = await User.findOne({ uniqueString: req.params.uniqueString });
+    const dbUser = await User.findOne({ username: req.params.username, 
+                                        passResetToken : req.params.passResetToken, 
+                                        passResetTokenExpirationDate : { $gt: Date.now() } });
     if (dbUser) {
-        const randString = crypto.randomBytes(20).toString('hex');
-        dbUser.uniqueString = randString;
-        await dbUser.save()
-
-        res.redirect('Frontend url for changing password/'+dbUser.uniqueString); //redirects the user to reset password webpage
+        res.redirect('Client url for changing password/'+dbUser.username+'/'+dbUser.passResetToken); //redirects the user to reset password webpage
     }
     else {
-        return res.status(401).json({ message: 'User not found' })
+        return res.status(401).json({ message: 'User not found or token expired' })
     }
 }
 
 const resetPass = async (req, res) => {
-    if (isEmpty(req.params.uniqueString)) {
-        return res.status(400).json({ message: 'Invalid String' })
+    if (isEmpty(req.params.passResetToken)) {
+        return res.status(400).json({ message: 'No token found' })
     }
 
 
@@ -225,12 +226,13 @@ const resetPass = async (req, res) => {
         res.status(400).json(errors);
     } 
     else {
-        const dbUser = await User.findOne({ uniqueString: req.params.uniqueString });
+        const dbUser = await User.findOne({ username: req.params.username, passResetToken: req.params.passResetToken });
         if (dbUser) {
             bcrypt.hash(resetInfo.newPassword, 10)
                 .then((hashedPassword) => {
                     dbUser.password = hashedPassword;
-                    dbUser.uniqueString = crypto.randomBytes(20).toString('hex');
+                    dbUser.passResetToken = undefined;
+                    dbUser.passResetTokenExpirationDate = undefined;
                     dbUser.save()
                         .then(() => {
                             res.status(201).json({ message: 'Password reset successful.' })
