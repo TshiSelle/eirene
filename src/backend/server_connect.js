@@ -1,12 +1,10 @@
-//modules
+//node modules
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
 
 //file modules
-const { Journal } = require('./models/journal');
-const { User } = require('./models/user');
 const accountRoutes = require('./routes/accountRoutes');
 const verifyJWT = require('./middleware/TokenVerification');
 const accounts = require('./controllers/accountController');
@@ -32,9 +30,12 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => app.listen(PORT, () => console.log(`Server listening on ${PORT}`)))
   .catch((err) => console.log(err));
 
+  
 // Routing
 app.use('/account', accountRoutes);
 app.post('/register', accounts.register);
+
+
 //dummy route for educational purposes
 app.get('/getUsername', verifyJWT, (req, res) => {
   return res.json({ isLoggedIn: true, username: req.user.username });
