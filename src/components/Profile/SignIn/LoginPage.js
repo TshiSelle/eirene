@@ -2,7 +2,6 @@ import React from "react";
 import LoginForm from "./LoginForm";
 import styled from "styled-components";
 import "./loginStyle.css";
-import SignUpForm from "../SignUp/SignUpForm";
 
 const LoginPage = () => {
   return (
@@ -10,21 +9,23 @@ const LoginPage = () => {
       <MainSection>
         <SectionContainer>
           <TabContainer>
-            <Button
-              type="button"
-              style={{ width: "50%", borderRadius: "0.25rem 0 0 0.25rem" }}
+            <Anchor
+              style={{
+                width: "50%",
+                borderRadius: "0.25rem 0 0 0.25rem",
+                backgroundColor: "#EDBEC4",
+              }}
             >
-              Login
-            </Button>
+              <p>Login</p>
+            </Anchor>
 
-            <Button
-              type="button"
+            <Anchor
               style={{ width: "50%", borderRadius: "0 0.25rem 0.25rem 0" }}
+              href={"/SignUp"}
             >
               Sign Up
-            </Button>
+            </Anchor>
           </TabContainer>
-
           <LoginForm />
         </SectionContainer>
       </MainSection>
@@ -74,5 +75,13 @@ const Button = styled.button`
   border-radius: 0.25rem;
   font-size: 1rem;
 `;
-
+const Anchor = styled.a`
+  cursor: pointer;
+  height: 54px;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #ffffff;
+`;
 export default LoginPage;
