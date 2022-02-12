@@ -198,16 +198,14 @@ const resetPassPage = async (req, res) => {
     if (isEmpty(req.params.passResetToken)) {
         return res.status(400).json({ message: 'No token found' })
     }
-        
-    
     const dbUser = await User.findOne({ username: req.params.username, 
                                         passResetToken : req.params.passResetToken, 
                                         passResetTokenExpirationDate : { $gt: Date.now() } });
     if (dbUser) {
-        res.redirect('Client url for changing password/'+dbUser.username+'/'+dbUser.passResetToken); //redirects the user to reset password webpage
+        res.status(200).json({ tokenValid: true, message: 'User authenticated' }); //redirects the user to reset password webpage
     }
     else {
-        return res.status(401).json({ message: 'User not found or token expired' })
+        return res.status(401).json({ tokenValid: false, message: 'User not found or token expired' })
     }
 }
 
@@ -226,7 +224,9 @@ const resetPass = async (req, res) => {
         res.status(400).json(errors);
     } 
     else {
-        const dbUser = await User.findOne({ username: req.params.username, passResetToken: req.params.passResetToken });
+        const dbUser = await User.findOne({ username: req.params.username, 
+                                            passResetToken : req.params.passResetToken, 
+                                            passResetTokenExpirationDate : { $gt: Date.now() } });        
         if (dbUser) {
             bcrypt.hash(resetInfo.newPassword, 10)
                 .then((hashedPassword) => {
@@ -246,7 +246,7 @@ const resetPass = async (req, res) => {
                 })
         }
         else {
-            return res.status(401).json({ message: 'User not found' })
+            return res.status(401).json({ message: 'User not found or token expired' })
         }
     }
 }

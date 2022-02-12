@@ -46,7 +46,7 @@ function sendEmailResetPass(email, username, passResetToken) {
         from: sender,
         to: email,
         subject: 'Eirene account reset password',
-        html: `Hello!, press <a href=http://localhost:${process.env.PORT}/account/resetPass/${username}/${passResetToken}>here</a> to reset your password.`
+        html: `Hello!, press <a href=http://localhost:${process.env.CLIENT_PORT}/account/resetPass/${username}/${passResetToken}>here</a> to reset your password.`
     };
 
     Transport.sendMail(mailOptions, (error, response) => {
