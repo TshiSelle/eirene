@@ -9,18 +9,23 @@ const SignUpPage = () => {
         <SectionContainer>
           <TabContainer>
             <Anchor
-              href="/SignIn"
-              style={{ width: "50%", borderRadius: "0.25rem 0 0 0.25rem" }}
+              className="tab"
+              style={{
+                borderRadius: "0.25rem 0 0 0.25rem",
+                backgroundColor: "#EFEFEF",
+                color: "#212529",
+              }}
             >
               Login
             </Anchor>
 
             <Anchor
+              className="tab"
               style={{
-                width: "50%",
                 borderRadius: "0 0.25rem 0.25rem 0",
                 backgroundColor: "#EDBEC4",
               }}
+              href={"/SignUp"}
             >
               Sign Up
             </Anchor>
