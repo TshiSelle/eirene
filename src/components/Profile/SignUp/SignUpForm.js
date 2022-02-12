@@ -2,13 +2,14 @@ import React, { useReducer, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
 import {
   validateName,
   validatePassword,
   validateEmail,
   validateGender,
 } from "../../../validators/validators";
+import "./signupStyle.css";
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
@@ -232,56 +233,81 @@ const SignUpForm = () => {
 
   return (
     <>
+      <Header>
+        Login to <strong>Eirene</strong>
+      </Header>
+      <Paragraph>
+        To keep connected with Eirene, please login with your personal info.
+      </Paragraph>
+
       <FormContainer>
         <Form className="signup-form" onSubmit={submitUser}>
           <Form.Group className="mb-3">
-            <Form.Control
-              className="name-input"
-              isInvalid={firstNameError}
-              type="text"
-              placeholder="Enter First Name"
-              value={firstName}
-              onChange={setFirstName}
-            />
+            <GridContainer>
+              <Label>First Name</Label>
+              <Label>Last Name</Label>
 
+              <Form.Control
+                className="textField"
+                isInvalid={firstNameError}
+                type="text"
+                placeholder=""
+                value={firstName}
+                onChange={setFirstName}
+                style={{ width: "100%", boxSizing: "border-box" }}
+              />
+
+              <Form.Control
+                className="textField"
+                type="text"
+                value={lastName}
+                isInvalid={lastNameError}
+                placeholder=""
+                name="email"
+                onChange={setLastName}
+              />
+            </GridContainer>
+
+            <Label>Email</Label>
             <Form.Control
-              className="name-input"
-              type="text"
-              value={lastName}
-              isInvalid={lastNameError}
-              placeholder="Enter Last Name"
+              className="textField"
+              type="email"
+              isInvalid={emailError}
+              placeholder=""
               name="email"
-              onChange={setLastName}
+              onChange={setEmail}
             />
 
+            <Label>Username</Label>
             <Form.Control
-              className="name-input"
+              className="textField"
               type="text"
               isInvalid={usernameError}
-              placeholder="Enter Username"
+              placeholder=""
               name="username"
               value={username}
               onChange={setUsername}
             />
 
-            <Form.Control
-              className="email-input"
-              type="email"
-              isInvalid={emailError}
-              placeholder="Email"
-              name="email"
-              onChange={setEmail}
-            />
-            <Form.Control
-              className="password-i	nput"
-              type="password"
-              isInvalid={passwordError}
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={setPassword}
-            />
-            <Form.Group className="mb-5">
+            <GridContainer>
+              <Label>Password</Label>
+              <Label>Confirm Password</Label>
+
+              <Form.Control
+                className="textField"
+                type="password"
+                isInvalid={passwordError}
+                placeholder=""
+                name="password"
+                value={password}
+                onChange={setPassword}
+              />
+
+              <Form.Control className="textField" />
+            </GridContainer>
+
+            {/* <Label>Confirm Password</Label> */}
+            <Form.Group>
               <Form.Label htmlFor="genderSelect">Gender</Form.Label>
               <Form.Select
                 id="genderSelect"
@@ -289,10 +315,16 @@ const SignUpForm = () => {
                 value={gender}
                 onChange={setGender}
                 isInvalid={genderError}
+                style={{
+                  height: "54px",
+                  border: "none",
+                  boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
+                }}
               >
                 <option value="">Select an option</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
+                <option value="Other">Other</option>
               </Form.Select>
             </Form.Group>
             {submissionErrorMessage && (
@@ -301,26 +333,55 @@ const SignUpForm = () => {
               </div>
             )}
             <Button
-              className="submit-button"
               value="Sign Up"
               type="submit"
               disabled={submissionErrorMessage}
-              variant={`${submissionErrorMessage ? "danger" : "primary"}`}
+              style={{
+                width: "100%",
+                margin: "3rem 0 0",
+                backgroundColor: "#edbec4",
+                color: "#ffffff",
+              }}
             >
               Sign up
             </Button>
           </Form.Group>
         </Form>
       </FormContainer>
-      <Link to="/SignIn"> Go to Login</Link>
     </>
   );
 };
 
-const FormContainer = styled.div`
-  padding: 20px;
-  width: 80%;
-  height: 100%;
+const FormContainer = styled.div``;
+
+const Button = styled.button`
+  cursor: pointer;
+  height: 54px;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+`;
+
+const Header = styled.h3`
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+`;
+
+const Paragraph = styled.p`
+  margin-bottom: 1.5rem;
+  color: #b3b3b3;
+`;
+
+const Label = styled.label`
+  margin-bottom: 0.5rem;
+`;
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 10px;
 `;
 
 export default SignUpForm;
