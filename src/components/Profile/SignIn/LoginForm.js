@@ -143,7 +143,7 @@ const SignUpForm = () => {
             />
 
             <RememberMeTab>
-              <label class="remember-me">
+              <label className="remember-me">
                 <span>Remember me</span>
                 <input type="checkbox" />
                 <div></div>

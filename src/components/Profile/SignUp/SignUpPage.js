@@ -1,31 +1,37 @@
 import React from "react";
 import SignUpForm from "./SignUpForm";
+import styled from "styled-components";
 
 const SignUpPage = () => {
-  <MainContainer>
-    <MainSection>
-      <SectionContainer>
-        <TabContainer>
-          <Button
-            type="button"
-            style={{ width: "50%", borderRadius: "0.25rem 0 0 0.25rem" }}
-          >
-            Login
-          </Button>
+  return (
+    <MainContainer>
+      <MainSection>
+        <SectionContainer>
+          <TabContainer>
+            <Anchor
+              href="/SignIn"
+              style={{ width: "50%", borderRadius: "0.25rem 0 0 0.25rem" }}
+            >
+              Login
+            </Anchor>
 
-          <Button
-            type="button"
-            style={{ width: "50%", borderRadius: "0 0.25rem 0.25rem 0" }}
-          >
-            Sign Up
-          </Button>
-        </TabContainer>
+            <Anchor
+              style={{
+                width: "50%",
+                borderRadius: "0 0.25rem 0.25rem 0",
+                backgroundColor: "#EDBEC4",
+              }}
+            >
+              Sign Up
+            </Anchor>
+          </TabContainer>
 
-        <SignUpForm />
-      </SectionContainer>
-    </MainSection>
-    <Image src={require("./bg_4.jpg")} />
-  </MainContainer>;
+          <SignUpForm />
+        </SectionContainer>
+      </MainSection>
+      <Image src={require("./bg_4.jpg")} />
+    </MainContainer>
+  );
 };
 
 // main
@@ -61,13 +67,13 @@ const TabContainer = styled.div`
   display: flex;
   margin-bottom: 3rem;
 `;
-
-const Button = styled.button`
+const Anchor = styled.a`
   cursor: pointer;
   height: 54px;
   border: none;
   border-radius: 0.25rem;
   font-size: 1rem;
+  text-decoration: none;
+  color: #ffffff;
 `;
-
 export default SignUpPage;
