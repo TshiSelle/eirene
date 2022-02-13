@@ -259,18 +259,10 @@ const SignUpForm = () => {
       headers: { "Content-Type": "application/json" },
     })
     .then((response) => {
-        if (response.data.message) {
-          dispatch({ type: "sign-up-success" });
-          // console.log(response.data.message, " response data in then");
-        }
-        console.log('.then after if');
-        return;
-      }).catch((error) => {
-        // if (response.data.message) {
-          console.log(' im in .catch');
-          dispatch({ type: "sign-up-failure", message: error.data.message });
-          return;
-      });
+      console.log(response.data);
+    }).catch((error) => {
+      console.log(error.response);
+    });
   }, [
     waiting,
     finished,
@@ -304,6 +296,7 @@ const SignUpForm = () => {
                 type="text"
                 placeholder=""
                 value={firstName}
+                name="firstName"
                 onChange={setFirstName}
                 style={{ width: "100%", boxSizing: "border-box" }}
               />
@@ -314,7 +307,7 @@ const SignUpForm = () => {
                 value={lastName}
                 isInvalid={lastNameError}
                 placeholder=""
-                name="email"
+                name="lastName"
                 onChange={setLastName}
               />
             </GridContainer>
