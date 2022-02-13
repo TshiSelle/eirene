@@ -19,3 +19,7 @@
 .mb-3 {
 	margin-bottom: unset !important;
 }
+
+.signup:hover {
+	color: #ffffff;
+}

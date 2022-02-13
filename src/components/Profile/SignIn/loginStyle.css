@@ -65,3 +65,7 @@
 .mb-3 {
 	margin-bottom: unset !important;
 }
+
+.login:hover {
+	color: #ffffff;
+}
