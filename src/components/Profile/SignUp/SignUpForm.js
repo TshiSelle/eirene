@@ -234,10 +234,10 @@ const SignUpForm = () => {
   return (
     <>
       <Header>
-        Login to <strong>Eirene</strong>
+        Sign up to <strong>Eirene</strong>
       </Header>
       <Paragraph>
-        To keep connected with Eirene, please login with your personal info.
+        Enter your registration details and start your journey with Eirene.
       </Paragraph>
 
       <FormContainer>
