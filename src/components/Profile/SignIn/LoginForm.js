@@ -185,7 +185,7 @@ const Button = styled.button`
   height: 54px;
   border: none;
   border-radius: 0.25rem;
-  font-size: 1rem;
+  font-size: 1rem;s
 `;
 
 const Header = styled.h3`
