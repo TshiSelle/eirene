@@ -1,12 +1,15 @@
-const { User } = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
 const isEmpty = require('is-empty');
 const Validator = require('validator');
+
+const { User } = require('../models/user');
 const { sendEmailVerification, sendEmailResetPass } = require('../helperFunctions/emailSender');
 const { validateLoginInput, validateRegisterInput, validatePassChangeInput, validateEmail, validatePassResetInput } = require('../helperFunctions/inputValidation');
+
+
 dotenv.config();
 
 // Expected Request : Receive a JSON, filled with user data
