@@ -259,10 +259,17 @@ const SignUpForm = () => {
       headers: { "Content-Type": "application/json" },
     })
     .then((response) => {
-      console.log(response.data);
-    }).catch((error) => {
-      console.log(error.response);
-    });
+        if (response.data.message) {
+          dispatch({ type: "sign-up-success" });
+          // console.log(response.data.message, " response data in then");
+        }
+        console.log('.then after if');
+        return;
+      }).catch((error) => {
+        // if (response.data.message) {
+          dispatch({ type: "sign-up-failure", message: error.response.data.message });
+          return;
+      });
   }, [
     waiting,
     finished,
