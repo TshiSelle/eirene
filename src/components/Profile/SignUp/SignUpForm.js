@@ -69,7 +69,7 @@ const reducer = (state, action) => {
         ...state,
         lastName: action.value,
         submissionErrorMessage: null,
-        lastNameErorr: null,
+        lastNameError: null,
       };
     case "set-username":
       return { ...state, username: action.value, submissionErrorMessage: null };
@@ -107,6 +107,7 @@ const SignUpForm = () => {
     lastName: "",
     username: "",
     password: "",
+    confirmPassword: "",
     email: "",
     gender: "",
     submissionErrorMessage: null,
