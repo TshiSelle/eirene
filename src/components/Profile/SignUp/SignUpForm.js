@@ -267,8 +267,7 @@ const SignUpForm = () => {
         return;
       }).catch((error) => {
         // if (response.data.message) {
-          console.log(' im in .catch');
-          dispatch({ type: "sign-up-failure", message: error.data.message });
+          dispatch({ type: "sign-up-failure", message: error.response.data.message });
           return;
       });
   }, [
