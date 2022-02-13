@@ -303,6 +303,7 @@ const SignUpForm = () => {
                 type="text"
                 placeholder=""
                 value={firstName}
+                name="firstName"
                 onChange={setFirstName}
                 style={{ width: "100%", boxSizing: "border-box" }}
               />
@@ -313,7 +314,7 @@ const SignUpForm = () => {
                 value={lastName}
                 isInvalid={lastNameError}
                 placeholder=""
-                name="email"
+                name="lastName"
                 onChange={setLastName}
               />
             </GridContainer>
