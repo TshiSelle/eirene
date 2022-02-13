@@ -17,16 +17,16 @@ const register = async (req, res) => {
     const user = req.body;
     const { errors, isValid } = validateRegisterInput(user);
     if (!isValid) {
-        res.status(400).json(errors);
+        res.status(400).json({ ...errors, success: false });
     } 
     else {
         //check if user's email/username are already taken
         const takenUsername = await User.findOne({ username: user.username.toLowerCase() });
         const takenEmail = await User.findOne({ email: user.email.toLowerCase() });
         if (takenUsername) {
-            res.status(400).json({ message: 'Username is already in use' });
+            res.status(400).json({ message: 'Username is already in use', success: false });
         } else if (takenEmail) {
-            res.status(400).json({ message: 'Email is already in use' });
+            res.status(400).json({ message: 'Email is already in use', success: false });
         }
         else {
             //hash the password before storing in DB (salt should be auto-generated)
@@ -46,10 +46,10 @@ const register = async (req, res) => {
             dbUser.save()
                 .then(() => {
                     sendEmailVerification(dbUser.email, dbUser.emailVerificationToken);
-                    res.status(201).json({ message: 'Successfully created user account' });
+                    res.status(201).json({ message: 'Successfully created user account', success: true });
                 })
                 .catch((err) => {
-                    res.status(400).json({ message: `Failed: ${err}`});
+                    res.status(400).json({ message: `Failed: ${err}`, success: false});
                     console.log(`Error occurred while storing user account in database : ${err}`);
                 });
         }
