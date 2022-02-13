@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Alert } from "react-bootstrap";
-import axios from 'axios';
+import axios from "axios";
 import {
   validateName,
   validatePassword,
@@ -77,8 +77,12 @@ const reducer = (state, action) => {
       return { ...state, email: action.value, submissionErrorMessage: null };
     case "set-password":
       return { ...state, password: action.value, submissionErrorMessage: null };
-      case "set-confirm-password":
-        return { ...state, confirmPassword: action.value, submissionErrorMessage: null };
+    case "set-confirm-password":
+      return {
+        ...state,
+        confirmPassword: action.value,
+        submissionErrorMessage: null
+      };
     case "set-gender":
       return { ...state, gender: action.value, submissionErrorMessage: null };
     // signup states....
@@ -238,26 +242,34 @@ const SignUpForm = () => {
     dispatch({ type: "sign-up-start" });
     // store the states in the form data
     const signUpFormData = JSON.stringify({
-    "username": username,
-    "email": email,
-    "fname": firstName,
-    "lname": lastName,
-    "password": password,
-    "confirmPassword": confirmPassword,
-    "gender": gender,
+      username: username,
+      email: email,
+      fname: firstName,
+      lname: lastName,
+      password: password,
+      confirmPassword: password,
+      gender: gender
     });
-    try {
-      // make axios post request
-      const request = axios({
-        method: "post",
-        url: "http://localhost:8080/register",
-        data: signUpFormData,
-        headers: { "Content-Type": "application/json" },
-      }).then ((response) => console.log(response.data))
-    } catch(error) {
-      console.log(error)
-    }
-    console.log("submitting!");
+    // make axios post request
+    const request = axios({
+      method: "post",
+      url: "http://localhost:8080/register",
+      data: signUpFormData,
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((response) => {
+        if (response.data.message) {
+          dispatch({ type: "sign-up-success" });
+          // console.log(response.data.message, " response data in then");
+        }
+        console.log('.then after if');
+        return;
+      }).catch((error) => {
+        // if (response.data.message) {
+          console.log(' im in .catch');
+          dispatch({ type: "sign-up-failure", message: error.data.message });
+          return;
+      });
   }, [
     waiting,
     finished,
@@ -353,6 +365,7 @@ const SignUpForm = () => {
             </GridContainer>
 
             {/* <Label>Confirm Password</Label> */}
+            {/* {console.log(submissionErrorMessage, " Submission error message")} */}
             <Form.Group>
               <Form.Label htmlFor="genderSelect">Gender</Form.Label>
               <Form.Select
@@ -398,7 +411,8 @@ const SignUpForm = () => {
   );
 };
 
-const FormContainer = styled.div``;
+const FormContainer = styled.div`
+`;
 
 const Button = styled.button`
   cursor: pointer;

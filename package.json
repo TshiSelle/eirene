@@ -20,6 +20,7 @@
     "mongoose": "^6.1.9",
     "node-sass": "^7.0.1",
     "nodemailer": "^6.7.2",
+    "nodemon": "^2.0.15",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.2",
     "react-dom": "^17.0.2",

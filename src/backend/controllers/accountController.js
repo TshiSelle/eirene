@@ -49,8 +49,9 @@ const register = async (req, res) => {
                     res.status(201).json({ message: 'Successfully created user account' });
                 })
                 .catch((err) => {
+                    res.status(400).json({ message: `Failed: ${err}`});
                     console.log(`Error occurred while storing user account in database : ${err}`);
-                })
+                });
         }
     }
     
