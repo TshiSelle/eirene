@@ -11,7 +11,7 @@ const LoginPage = () => {
         <SectionContainer>
           <TabContainer>
             <Anchor
-              className="tab"
+              className="tab login"
               style={{
                 borderRadius: "0.25rem 0 0 0.25rem",
                 backgroundColor: "#EDBEC4",

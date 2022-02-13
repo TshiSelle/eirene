@@ -21,7 +21,7 @@ const SignUpPage = () => {
             </Anchor>
 
             <Anchor
-              className="tab"
+              className="tab signup"
               style={{
                 borderRadius: "0 0.25rem 0.25rem 0",
                 backgroundColor: "#EDBEC4",
