@@ -1,12 +1,12 @@
 import React, { useReducer, useCallback } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import {
   validatePassword,
-  validateEmail,
+  validateName,
 } from "../../../validators/validators";
 import "./loginStyle.css";
+import { LoginApiCall } from "../../../api/ApiClient";
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
@@ -14,10 +14,10 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "validation-error":
       return { ...state, submissionErrorMessage: action.message };
-    case "email-error":
+    case "username-error":
       return {
         ...state,
-        emailError: action.message,
+        usernameError: action.message,
         submissionErrorMessage: action.message,
       };
     case "password-error":
@@ -27,8 +27,8 @@ const reducer = (state, action) => {
         submissionErrorMessage: action.message,
       };
     // set states...
-    case "set-email":
-      return { ...state, email: action.value, submissionErrorMessage: null };
+    case "set-username":
+      return { ...state, username: action.value, submissionErrorMessage: null };
     case "set-password":
       return { ...state, password: action.value, submissionErrorMessage: null };
     // signin states....
@@ -50,34 +50,44 @@ const reducer = (state, action) => {
 const SignUpForm = () => {
   const [state, dispatch] = useReducer(reducer, {
     password: "",
-    email: "",
+    username: "",
     submissionErrorMessage: null,
-    emailError: null,
+    usernameError: null,
     passwordError: null,
     waiting: false,
     finished: false,
   });
   const {
-    email,
+    username,
     password,
     submissionErrorMessage,
     passwordError,
-    emailError,
+    usernameError,
     finished,
     waiting,
   } = state;
+
+  // The useCallbacks basically take the values set in the input forms and sends them to their desired destination
+  const setUsername = useCallback(
+    (e) => dispatch({ type: "set-username", value: e.target.value }),
+    []
+  );
+  const setPassword = useCallback(
+    (e) => dispatch({ type: "set-password", value: e.target.value }),
+    []
+  );
 
   const loginUser = useCallback(() => {
     // this prevents auto refresh onsubmit
     event.preventDefault();
     // We should validate the users input THEN call the api to login user here...
     if (waiting || finished) return;
-    const emailValidation = validateEmail(email);
-    if (!emailValidation.success) {
+    const usernameValidation = validateName(username, "Username");
+    if (!usernameValidation.success) {
       dispatch({
-        type: "email-error",
-        emailError: emailValidation.message,
-        message: emailValidation.message,
+        type: "username-error",
+        usernameError: usernameValidation.message,
+        message: usernameValidation.message,
       });
       return;
     }
@@ -94,18 +104,23 @@ const SignUpForm = () => {
     // TODO
     // Now we should call the api to register user since all userInput has been validated...
     dispatch({ type: "sign-in-start" });
-    console.log("submitting!");
-  }, [email, password, waiting, finished]);
-
-  // The useCallbacks basically take the values set in the input forms and sends them to their desired destination
-  const setEmail = useCallback(
-    (e) => dispatch({ type: "set-email", value: e.target.value }),
-    []
-  );
-  const setPassword = useCallback(
-    (e) => dispatch({ type: "set-password", value: e.target.value }),
-    []
-  );
+    LoginApiCall(username, password)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: "sign-in-success" });
+          console.log('Successful signin!');
+        } else {
+          dispatch({ type: "sign-in-failure", message: response.data.message });
+        }
+      })
+      .catch((error) => {
+        dispatch({
+          type: "sign-in-failure",
+          message: error.response.data.message,
+        });
+        return;
+      });
+  }, [username, password, waiting, finished]);
 
   return (
     <>
@@ -123,12 +138,11 @@ const SignUpForm = () => {
 
             <Form.Control
               className="textField"
-              type="email"
-              isInvalid={emailError}
-              placeholder=""
-              name="email"
-              value={email}
-              onChange={setEmail}
+              type="text"
+              isInvalid={usernameError}
+              name="username"
+              value={username}
+              onChange={setUsername}
             />
 
             <Label>Password</Label>
@@ -136,7 +150,6 @@ const SignUpForm = () => {
               className="textField"
               type="password"
               isInvalid={passwordError}
-              placeholder=""
               name="password"
               value={password}
               onChange={setPassword}

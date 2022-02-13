@@ -34,7 +34,7 @@ const LoginPage = () => {
           <LoginForm />
         </SectionContainer>
       </MainSection>
-      <Image src={require("./bg_4.jpg")} />
+      <Image src={require("./bg_4.jpg")} alt="Eirene plant" />
     </MainContainer>
   );
 };
