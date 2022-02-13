@@ -10,7 +10,7 @@ function verifyJWT(req, res, next) {
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {  // error during jwt verification
-                return res.status(401).json({ isLoggedIn: false, message: 'Authentication failed' });
+                return res.status(401).json({ isLoggedIn: false, message: 'Authentication failed', success: false });
             }
             else {
                 req.user = {};
@@ -21,7 +21,7 @@ function verifyJWT(req, res, next) {
         });
     }
     else {
-        res.status(401).json({ message: 'Incorrect Token', isLoggedIn: false })
+        res.status(401).json({ message: 'Incorrect Token', isLoggedIn: false, success: false })
     }
 
 }

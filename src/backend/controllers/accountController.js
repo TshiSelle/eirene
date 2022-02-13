@@ -65,7 +65,7 @@ const login = (req, res) => {
     const { errors, isValid } = validateLoginInput(userLoggingIn);
 
     if (!isValid) {
-        return res.status(400).json({...errors, success: false});
+        return res.status(400).json({ ...errors, success: false});
     }
 
     //find the received username in database
@@ -121,7 +121,7 @@ const changePassword = async (req, res) => {
     const { errors, isValid } = validatePassChangeInput(changeInfo);
 
     if (!isValid) {
-        res.status(400).json({...errors, success: false});
+        res.status(400).json({ ...errors, success: false });
     } 
     else {
         //Find user in database
@@ -168,7 +168,7 @@ const forgotPassword = async (req, res) => {
     const { errors, isValid } = validateEmail(userInput);
 
     if (!isValid) {
-        return res.status(400).json({...errors, success: false});
+        return res.status(400).json({ ...errors, success: false });
     }
     
     const user = await User.findOne({ email: userInput.email.toLowerCase() });
@@ -184,13 +184,11 @@ const forgotPassword = async (req, res) => {
 
             sendEmailResetPass(user.email, user.username, randString)
 
-            return res.status(200).json({ message: 'Reset Password email sent', success: true})
+            return res.status(200).json({ message: 'Reset Password email sent', success: true })
             //TODO: consider token authentication instead of unique string
         } else {
             res.status(400).json({ message: 'Please verify your account before resetting your password', success: false })
         }
-
-
     } else {
         //Email not found
         res.status(400).json({ message: 'Email is not registered', success: false })
@@ -200,22 +198,22 @@ const forgotPassword = async (req, res) => {
 
 const resetPassPage = async (req, res) => {
     if (isEmpty(req.params.passResetToken)) {
-        return res.status(400).json({ message: 'No token found' })
+        return res.status(400).json({ message: 'No token found', success: false })
     }
     const dbUser = await User.findOne({ username: req.params.username, 
                                         passResetToken : req.params.passResetToken, 
                                         passResetTokenExpirationDate : { $gt: Date.now() } });
     if (dbUser) {
-        res.status(200).json({ tokenValid: true, message: 'User authenticated' }); //redirects the user to reset password webpage
+        res.status(200).json({ tokenValid: true, message: 'User authenticated', success: true }); //redirects the user to reset password webpage
     }
     else {
-        return res.status(401).json({ tokenValid: false, message: 'User not found or token expired' })
+        return res.status(401).json({ tokenValid: false, message: 'User not found or token expired', success: false })
     }
 }
 
 const resetPass = async (req, res) => {
     if (isEmpty(req.params.passResetToken)) {
-        return res.status(400).json({ message: 'No token found' })
+        return res.status(400).json({ message: 'No token found', success: false })
     }
 
 
@@ -225,7 +223,7 @@ const resetPass = async (req, res) => {
     const { errors, isValid } = validatePassResetInput(resetInfo);
 
     if (!isValid) {
-        res.status(400).json(errors);
+        res.status(400).json({ ...errors, success: false });
     } 
     else {
         const dbUser = await User.findOne({ username: req.params.username, 
@@ -239,7 +237,7 @@ const resetPass = async (req, res) => {
                     dbUser.passResetTokenExpirationDate = undefined;
                     dbUser.save()
                         .then(() => {
-                            res.status(201).json({ message: 'Password reset successful.' })
+                            res.status(201).json({ message: 'Password reset successful.', success: true })
                         })
                         .catch((err) => {
                             console.log(`Error occurred during updating user's password in DB : ${err}`)
@@ -250,7 +248,7 @@ const resetPass = async (req, res) => {
                 })
         }
         else {
-            return res.status(401).json({ message: 'User not found or token expired' })
+            return res.status(401).json({ message: 'User not found or token expired', success: false })
         }
     }
 }
