@@ -1,14 +1,14 @@
 import React, { useReducer, useCallback, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { SignUpApiCall } from '../../../api/ApiClient';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Alert } from "react-bootstrap";
-import axios from "axios";
 import {
   validateName,
   validatePassword,
   validateEmail,
   validateGender,
+  validateConfirmPassword
 } from "../../../validators/validators";
 import "./signupStyle.css";
 
@@ -219,7 +219,7 @@ const SignUpForm = () => {
       });
       return;
     }
-    const confirmPasswordValidation = validatePassword(confirmPassword);
+    const confirmPasswordValidation = validateConfirmPassword(password, confirmPassword);
     if (!confirmPasswordValidation.success) {
       dispatch({
         type: "password-error",
@@ -241,34 +241,22 @@ const SignUpForm = () => {
     // TODO
     // Now we should call the api to register user since all userInput has been validated...
     dispatch({ type: "sign-up-start" });
-    // store the states in the form data
-    const signUpFormData = JSON.stringify({
-      username: username,
-      email: email,
-      fname: firstName,
-      lname: lastName,
-      password: password,
-      confirmPassword: password,
-      gender: gender
-    });
     // make axios post request
-    const request = axios({
-      method: "post",
-      url: "http://localhost:8080/register",
-      data: signUpFormData,
-      headers: { "Content-Type": "application/json" },
-    })
-    .then((response) => {
-        if (response.data.message) {
+    SignUpApiCall(username, email, firstName, lastName, password, confirmPassword, gender)
+      .then((response) => {
+        if (response.data.success) {
           dispatch({ type: "sign-up-success" });
-          // console.log(response.data.message, " response data in then");
+          console.log('Successful signup!');
+        } else {
+          dispatch({ type: "sign-up-failure", message: response.data.message });
         }
-        console.log('.then after if');
+      })
+      .catch((error) => {
+        dispatch({
+          type: "sign-up-failure",
+          message: error.response.data.message,
+        });
         return;
-      }).catch((error) => {
-        // if (response.data.message) {
-          dispatch({ type: "sign-up-failure", message: error.response.data.message });
-          return;
       });
   }, [
     waiting,
@@ -284,7 +272,7 @@ const SignUpForm = () => {
   return (
     <>
       <Header>
-        Login to <strong>Eirene</strong>
+        Signup to <strong>Eirene</strong>
       </Header>
       <Paragraph>
         To keep connected with Eirene, please login with your personal info.
@@ -372,7 +360,8 @@ const SignUpForm = () => {
               <Form.Select
                 id="genderSelect"
                 as="select"
-                value={gender}
+                name={gender}
+                value='gender'
                 onChange={setGender}
                 isInvalid={genderError}
                 style={{
