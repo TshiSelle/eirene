@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Alert } from "react-bootstrap";
+import axios from 'axios';
 import {
   validateName,
   validatePassword,
@@ -76,6 +77,8 @@ const reducer = (state, action) => {
       return { ...state, email: action.value, submissionErrorMessage: null };
     case "set-password":
       return { ...state, password: action.value, submissionErrorMessage: null };
+      case "set-confirm-password":
+        return { ...state, confirmPassword: action.value, submissionErrorMessage: null };
     case "set-gender":
       return { ...state, gender: action.value, submissionErrorMessage: null };
     // signup states....
@@ -115,6 +118,7 @@ const SignUpForm = () => {
   const {
     email,
     password,
+    confirmPassword,
     firstName,
     lastName,
     gender,
@@ -149,6 +153,10 @@ const SignUpForm = () => {
   );
   const setPassword = useCallback(
     (e) => dispatch({ type: "set-password", value: e.target.value }),
+    []
+  );
+  const setConfirmPassword = useCallback(
+    (e) => dispatch({ type: "set-confirm-password", value: e.target.value }),
     []
   );
   const setGender = useCallback(
@@ -206,6 +214,15 @@ const SignUpForm = () => {
       });
       return;
     }
+    const confirmPasswordValidation = validatePassword(confirmPassword);
+    if (!confirmPasswordValidation.success) {
+      dispatch({
+        type: "password-error",
+        passwordError: confirmPasswordValidation.message,
+        message: confirmPasswordValidation.message,
+      });
+      return;
+    }
     const genderValidation = validateGender(gender);
     if (!genderValidation.success) {
       dispatch({
@@ -219,6 +236,27 @@ const SignUpForm = () => {
     // TODO
     // Now we should call the api to register user since all userInput has been validated...
     dispatch({ type: "sign-up-start" });
+    // store the states in the form data
+    const signUpFormData = JSON.stringify({
+    "username": username,
+    "email": email,
+    "fname": firstName,
+    "lname": lastName,
+    "password": password,
+    "confirmPassword": confirmPassword,
+    "gender": gender,
+    });
+    try {
+      // make axios post request
+      const request = axios({
+        method: "post",
+        url: "http://localhost:8080/register",
+        data: signUpFormData,
+        headers: { "Content-Type": "application/json" },
+      }).then ((response) => console.log(response.data))
+    } catch(error) {
+      console.log(error)
+    }
     console.log("submitting!");
   }, [
     waiting,
@@ -228,9 +266,9 @@ const SignUpForm = () => {
     username,
     email,
     password,
+    confirmPassword,
     gender,
   ]);
-
   return (
     <>
       <Header>
@@ -303,7 +341,15 @@ const SignUpForm = () => {
                 onChange={setPassword}
               />
 
-              <Form.Control className="textField" />
+              <Form.Control
+                className="textField"
+                type="password"
+                isInvalid={passwordError}
+                placeholder=""
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={setConfirmPassword}
+              />
             </GridContainer>
 
             {/* <Label>Confirm Password</Label> */}
@@ -322,8 +368,8 @@ const SignUpForm = () => {
                 }}
               >
                 <option value="">Select an option</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
                 <option value="Other">Other</option>
               </Form.Select>
             </Form.Group>

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
+const cors  = require('cors');
 
 //file modules
 const accountRoutes = require('./routes/accountRoutes');
@@ -16,6 +17,7 @@ dotenv.config();
 const app = express();
 
 //middleware
+app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));   //can now access url encoded form request bodies with req.body
 

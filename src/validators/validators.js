@@ -19,6 +19,6 @@ export function validateEmail(email) {
 
 export function validateGender(gender) {
   if (!gender || gender === 'None' || gender === 'Select an option') return { success: false, message: 'Please select a gender.' };
-  if (gender === 'Male' || gender === 'Female') return { success: true };
+  if (gender === 'male' || gender === 'female') return { success: true };
   return { success: false, message: 'Invalid gender.' };
 }
