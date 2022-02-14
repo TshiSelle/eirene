@@ -1,12 +1,15 @@
-const { User } = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
 const isEmpty = require('is-empty');
 const Validator = require('validator');
+
+const { User } = require('../models/user');
 const { sendEmailVerification, sendEmailResetPass } = require('../helperFunctions/emailSender');
 const { validateLoginInput, validateRegisterInput, validatePassChangeInput, validateEmail, validatePassResetInput } = require('../helperFunctions/inputValidation');
+
+
 dotenv.config();
 
 // Expected Request : Receive a JSON, filled with user data
@@ -14,16 +17,16 @@ const register = async (req, res) => {
     const user = req.body;
     const { errors, isValid } = validateRegisterInput(user);
     if (!isValid) {
-        res.status(400).json(errors);
+        res.status(400).json({ ...errors, success: false });
     } 
     else {
         //check if user's email/username are already taken
         const takenUsername = await User.findOne({ username: user.username.toLowerCase() });
         const takenEmail = await User.findOne({ email: user.email.toLowerCase() });
         if (takenUsername) {
-            res.status(400).json({ message: 'Username is already in use' });
+            res.status(400).json({ message: 'Username is already in use', success: false });
         } else if (takenEmail) {
-            res.status(400).json({ message: 'Email is already in use' });
+            res.status(400).json({ message: 'Email is already in use', success: false });
         }
         else {
             //hash the password before storing in DB (salt should be auto-generated)
@@ -43,11 +46,12 @@ const register = async (req, res) => {
             dbUser.save()
                 .then(() => {
                     sendEmailVerification(dbUser.email, dbUser.emailVerificationToken);
-                    res.status(201).json({ message: 'Successfully created user account' });
+                    res.status(201).json({ message: 'Successfully created user account', success: true });
                 })
                 .catch((err) => {
+                    res.status(400).json({ message: `Failed: ${err}`, success: false});
                     console.log(`Error occurred while storing user account in database : ${err}`);
-                })
+                });
         }
     }
     
@@ -61,14 +65,14 @@ const login = (req, res) => {
     const { errors, isValid } = validateLoginInput(userLoggingIn);
 
     if (!isValid) {
-        return res.status(400).json(errors);
+        return res.status(400).json({ ...errors, success: false});
     }
 
     //find the received username in database
     User.findOne({ username: userLoggingIn.username.toLowerCase() })
         .then((dbUser) => {
             if (!dbUser) {
-                return res.status(401).json({ message: 'Invalid username or password' });
+                return res.status(401).json({ message: 'Invalid username or password', success: false });
             }
             bcrypt.compare(userLoggingIn.password, dbUser.password) //verify password
                 .then((validPassword) => {
@@ -78,16 +82,16 @@ const login = (req, res) => {
                         //sign a jsonwebtoken with user's data as payload, a secret key, token expires in 1 day
                         jwt.sign( payload, process.env.JWT_SECRET, { expiresIn: 86400 }, (err, token) => {
                                 if (err) {
-                                    return res.status(500).json({ message: `Error during token creation : ${err}` });
+                                    return res.status(500).json({ message: `Error during token creation : ${err}`, success: false });
                                 } 
                                 else {
-                                    return res.status(200).json({ message: 'Successful Authentication', token: 'Bearer '+token });
+                                    return res.status(200).json({ message: 'Successful Authentication', token: 'Bearer '+ token, success: true });
                                 }
                             }
                         );
                     }
                     else {
-                        res.status(401).json({ message: 'Wrong password' });
+                        res.status(401).json({ message: 'Wrong password', success: false });
                     }
                 })
         })
@@ -102,10 +106,10 @@ const verifyEmail = async (req, res) => {
         validUser.verified = true;
         validUser.emailVerificationToken = undefined;
         await validUser.save()
-        res.status(200).json({ message: 'Account verified!' })
+        res.status(200).json({ message: 'Account verified!', success: true })
     }
     else {
-        res.status(401).json({ message: 'User not found' });
+        res.status(401).json({ message: 'User not found', success: false });
     }
 };
 
@@ -117,7 +121,7 @@ const changePassword = async (req, res) => {
     const { errors, isValid } = validatePassChangeInput(changeInfo);
 
     if (!isValid) {
-        res.status(400).json(errors);
+        res.status(400).json({ ...errors, success: false });
     } 
     else {
         //Find user in database
@@ -132,7 +136,7 @@ const changePassword = async (req, res) => {
                                 currentUserFound.password = hashedPassword;
                                 currentUserFound.save()
                                     .then(() => {
-                                        res.status(201).json({ message: 'Password change successful.' })
+                                        res.status(201).json({ message: 'Password change successful.', success: true })
                                     })
                                     .catch((err) => {
                                         console.log(`Error occurred during updating user's password in DB : ${err}`)
@@ -143,7 +147,7 @@ const changePassword = async (req, res) => {
                             })
                     }
                     else {
-                        res.status(401).json({ message: 'Old password is incorrect' });
+                        res.status(401).json({ message: 'Old password is incorrect', success: false });
                     }
                 })
                 .catch((err) => {
@@ -152,7 +156,7 @@ const changePassword = async (req, res) => {
 
         }
         else {
-            res.status(404).json({ message: 'Account not found' })
+            res.status(404).json({ message: 'Account not found', success: false })
         }
     }
 
@@ -164,7 +168,7 @@ const forgotPassword = async (req, res) => {
     const { errors, isValid } = validateEmail(userInput);
 
     if (!isValid) {
-        return res.status(400).json(errors);
+        return res.status(400).json({ ...errors, success: false });
     }
     
     const user = await User.findOne({ email: userInput.email.toLowerCase() });
@@ -180,38 +184,36 @@ const forgotPassword = async (req, res) => {
 
             sendEmailResetPass(user.email, user.username, randString)
 
-            return res.status(200).json({ message: 'Reset Password email sent' })
+            return res.status(200).json({ message: 'Reset Password email sent', success: true })
             //TODO: consider token authentication instead of unique string
         } else {
-            res.status(400).json({ message: 'Please verify your account before resetting your password' })
+            res.status(400).json({ message: 'Please verify your account before resetting your password', success: false })
         }
-
-
     } else {
         //Email not found
-        res.status(400).json({ message: 'Email is not registered' })
+        res.status(400).json({ message: 'Email is not registered', success: false })
     }
 }
 
 
 const resetPassPage = async (req, res) => {
     if (isEmpty(req.params.passResetToken)) {
-        return res.status(400).json({ message: 'No token found' })
+        return res.status(400).json({ message: 'No token found', success: false })
     }
     const dbUser = await User.findOne({ username: req.params.username, 
                                         passResetToken : req.params.passResetToken, 
                                         passResetTokenExpirationDate : { $gt: Date.now() } });
     if (dbUser) {
-        res.status(200).json({ tokenValid: true, message: 'User authenticated' }); //redirects the user to reset password webpage
+        res.status(200).json({ tokenValid: true, message: 'User authenticated', success: true }); //redirects the user to reset password webpage
     }
     else {
-        return res.status(401).json({ tokenValid: false, message: 'User not found or token expired' })
+        return res.status(401).json({ tokenValid: false, message: 'User not found or token expired', success: false })
     }
 }
 
 const resetPass = async (req, res) => {
     if (isEmpty(req.params.passResetToken)) {
-        return res.status(400).json({ message: 'No token found' })
+        return res.status(400).json({ message: 'No token found', success: false })
     }
 
 
@@ -221,7 +223,7 @@ const resetPass = async (req, res) => {
     const { errors, isValid } = validatePassResetInput(resetInfo);
 
     if (!isValid) {
-        res.status(400).json(errors);
+        res.status(400).json({ ...errors, success: false });
     } 
     else {
         const dbUser = await User.findOne({ username: req.params.username, 
@@ -235,7 +237,7 @@ const resetPass = async (req, res) => {
                     dbUser.passResetTokenExpirationDate = undefined;
                     dbUser.save()
                         .then(() => {
-                            res.status(201).json({ message: 'Password reset successful.' })
+                            res.status(201).json({ message: 'Password reset successful.', success: true })
                         })
                         .catch((err) => {
                             console.log(`Error occurred during updating user's password in DB : ${err}`)
@@ -246,7 +248,7 @@ const resetPass = async (req, res) => {
                 })
         }
         else {
-            return res.status(401).json({ message: 'User not found or token expired' })
+            return res.status(401).json({ message: 'User not found or token expired', success: false })
         }
     }
 }

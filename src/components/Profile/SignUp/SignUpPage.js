@@ -15,6 +15,7 @@ const SignUpPage = () => {
                 backgroundColor: "#EFEFEF",
                 color: "#212529",
               }}
+              href={'/SignIn'}
             >
               Login
             </Anchor>
@@ -34,7 +35,7 @@ const SignUpPage = () => {
           <SignUpForm />
         </SectionContainer>
       </MainSection>
-      <Image src={require("./bg_4.jpg")} />
+      <Image src={require("./bg_4.jpg")} alt="Eirene plant" />
     </MainContainer>
   );
 };
@@ -66,6 +67,7 @@ const MainSection = styled.section`
 
 const SectionContainer = styled.div`
   width: 55%;
+  height: 100%;
 `;
 
 const TabContainer = styled.div`
