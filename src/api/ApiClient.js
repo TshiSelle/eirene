@@ -42,5 +42,13 @@ export function LoginApiCall(username, password) {
         password: password
     });
 
-    return PostAxiosCall('/login', data, { "Content-Type": "application/json" });
+    return PostAxiosCall('/account/login', data, { "Content-Type": "application/json" });
+}
+
+export function SendEmail(email) {
+    const data = JSON.stringify({
+        email
+    });
+
+    return GetAxiosCall('/account/forgotPass', data );
 }

@@ -2,6 +2,7 @@ import React, { useCallback, useReducer } from "react";
 import styled from "styled-components";
 import { validateEmail } from "../../../../validators/validators";
 import { Form, Button, Alert } from "react-bootstrap";
+import { SendEmail } from '../../../../api/ApiClient';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -21,8 +22,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         waiting: false,
-        errorMessage: action.message,
-        errorCounter: state.errorCounter + 1,
+        errorMessage: action.message
       };
     default:
       throw new Error("Unhandled action type: " + action.type);
@@ -41,19 +41,37 @@ const ForgotPasswordForm = () => {
   const submitRequest = useCallback(() => {
     // this prevents auto refresh onsubmit
     event.preventDefault();
+    console.log(email, ' email');
     // check base cases then call api, we generally dont need to verify if the user email input
     // is actually a true email, since if its not it just wont send an email...
     if (waiting || finished) return;
+    console.log('25');
     const emailValidation = validateEmail(email);
     if (!emailValidation.success) {
       dispatch({
         type: "validation-error",
-        message: emailValidation.message,
+        errorMessage: emailValidation.message,
       });
       return;
     }
     // now we call the api.
     dispatch({ type: "start-submit" });
+    SendEmail(email)
+    .then((response) => {
+      if (response.data.success) {
+        dispatch({ type: "submit-success" });
+        console.log('Successful forgotpass!');
+      } else {
+        dispatch({ type: "submit-failure", errorMessage: response.data.email });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: "submit-failure",
+        errorMessage: error.response.data.email,
+      });
+      return;
+    });
   }, [waiting, finished, email]);
 
   const setEmail = useCallback(
