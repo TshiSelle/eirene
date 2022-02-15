@@ -12,9 +12,8 @@ const userSchema = new Schema({
   emailVerificationToken: { type: String, unique: true },
   passResetToken: { type: String },
   passResetTokenExpirationDate: { type: Number },
-  _journalid: { type: Schema.Types.ObjectId, ref: 'Journal' }
 
-},{ timestamps: true })
+}, { timestamps: true })
 
 const User = mongoose.model('User', userSchema);
 
