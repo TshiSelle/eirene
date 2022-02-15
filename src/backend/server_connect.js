@@ -3,12 +3,15 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
-const cors  = require('cors');
+const cors = require('cors');
+
 
 //file modules
 const accountRoutes = require('./routes/accountRoutes');
 const verifyJWT = require('./middleware/TokenVerification');
 const accounts = require('./controllers/accountController');
+const journal = require('./routes/journalPost');
+
 
 //configuring the environment variable for the mongo URI string
 dotenv.config();
@@ -32,11 +35,11 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => app.listen(PORT, () => console.log(`Server listening on ${PORT}`)))
   .catch((err) => console.log(err));
 
-  
+
 // Routing
 app.use('/account', accountRoutes);
 app.post('/register', accounts.register);
-
+app.use('/journal', journal)
 
 //dummy route for educational purposes
 app.get('/getUsername', verifyJWT, (req, res) => {

@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const journalController = require('../controllers/journalController')
 //importing the journals model
 const { Journal } = require('../models/journal')
 //routing the user to journals to find all journals created by them by chedcking their ID
@@ -14,7 +15,7 @@ router.get('/journals', (req, res) => {
     })
 })
 
-//router.post('/newJournal', (req, res) => {
-//})
+router.post('/create', journalController.addJournal)
 
-module.exports = router
+
+module.exports = router;
