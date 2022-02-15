@@ -89,7 +89,7 @@ const ForgotPasswordForm = () => {
       ) : (
         <>
           <h3>Please Provide us with your email.</h3>
-          <Form className="login-form" onSubmit={submitRequest}>
+          <Form onSubmit={submitRequest}>
             <Form.Group className="mb-3">
               <Form.Control
                 className="email-input"
@@ -111,10 +111,10 @@ const ForgotPasswordForm = () => {
                 className="submit-button"
                 disabled={errorMessage}
                 variant={`${errorMessage ? "danger" : "primary"}`}
-                value="Sign Up"
+                value="Forgot Password"
                 type="submit"
               >
-                Login
+                Submit
               </Button>
             </Form.Group>
           </Form>
