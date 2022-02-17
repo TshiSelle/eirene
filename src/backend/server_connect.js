@@ -12,6 +12,7 @@ const verifyJWT = require('./middleware/TokenVerification');
 const accounts = require('./controllers/accountController');
 const journal = require('./routes/journalPost');
 const { Therapist } = require('./models/therapist');
+const { contactUs } = require('./controllers/support');
 
 
 //configuring the environment variable for the mongo URI string
@@ -41,11 +42,28 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use('/account', accountRoutes);
 app.post('/register', accounts.register);
 app.use('/journal', journal)
+app.post('/contact', verifyJWT, contactUs)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //dummy routes
+//trying jwt authentication
 app.get('/getUsername', verifyJWT, (req, res) => {
   return res.json({ isLoggedIn: true, username: req.user.username });
 });
+
+//fill db with therapists profiles
 app.post('/createTherapist', (req, res) => {
   const newTherapist = new Therapist({
     fname: req.body.fname,

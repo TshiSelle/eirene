@@ -3,7 +3,7 @@ const router = express.Router()
 const journalController = require('../controllers/journalController')
 //importing the journals model
 const { Journal } = require('../models/journal')
-//routing the user to journals to find all journals created by them by chedcking their ID
+//routing the user to journals to find all journals created by them by checking their ID
 router.get('/journals', (req, res) => {
   Journal.find({ postedBy: req.user._id })
     .populate()
