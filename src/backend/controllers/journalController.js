@@ -18,7 +18,7 @@ const addJournal = async (req, res) => {
       })
       .catch((err) => {
         res.status(400).json({ message: `Failed: ${err}`, success: false })
-        console.log(`An error occured while storing the journal in the database: ${err}`)
+        console.log(`An error occurred while storing the journal in the database: ${err}`)
       });
   }
 }

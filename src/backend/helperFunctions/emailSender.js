@@ -61,8 +61,37 @@ function sendEmailResetPass(email, username, passResetToken) {
 
 }
 
+function sendEmailSupport(dbSender, message) {
+    var Transport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'loom.senior@gmail.com',
+            pass: process.env.LOOM_EMAIL_PASSWORD
+        }
+    });
+
+    let sender = dbSender.username;
+    var mailOptions = {
+        from: sender,
+        to: 'eireneContactUs@gmail.com',
+        subject: `Support message from ${dbSender.fname} ${dbSender.lname}`,
+        text: message
+    };
+
+    Transport.sendMail(mailOptions, (error, response) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            console.log('Email sent')
+        }
+    });
+
+
+}
 
 module.exports = {
     sendEmailVerification,
-    sendEmailResetPass
+    sendEmailResetPass,
+    sendEmailSupport
 };
