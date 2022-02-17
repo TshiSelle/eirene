@@ -11,6 +11,7 @@ const accountRoutes = require('./routes/accountRoutes');
 const verifyJWT = require('./middleware/TokenVerification');
 const accounts = require('./controllers/accountController');
 const journal = require('./routes/journalPost');
+const { Therapist } = require('./models/therapist');
 
 
 //configuring the environment variable for the mongo URI string
@@ -41,11 +42,31 @@ app.use('/account', accountRoutes);
 app.post('/register', accounts.register);
 app.use('/journal', journal)
 
-//dummy route for educational purposes
+//dummy routes
 app.get('/getUsername', verifyJWT, (req, res) => {
   return res.json({ isLoggedIn: true, username: req.user.username });
 });
-
+app.post('/createTherapist', (req, res) => {
+  const newTherapist = new Therapist({
+    fname: req.body.fname,
+    lname: req.body.lname,
+    gender: req.body.gender,
+    degree: req.body.degree,
+    university: req.body.university,
+    officeAddress: req.body.officeAddress,
+    phone: req.body.phone,
+    description: req.body.description,
+    username: req.body.username,
+    email: req.body.email,
+  });
+  newTherapist.save()
+  .then(() => {
+    res.status(201).json({ message: 'Created therapist profile successfully' })
+  })
+  .catch((err) => {
+    res.status(400).json({ message: `Error occurred during therapist account creation`, error: `${err}` })
+  });
+})
 
 
 
