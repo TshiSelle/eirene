@@ -8,11 +8,15 @@ const therapistSchema = new Schema({
   degree: { type: String },
   university: { type: String },
   officeAddress: { type: String },
+  yearsOfExperience : { type: Number },
+  title : { type: String },
   phone: { type: String },
   description: { type: String },
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
 }, { timestamps: true })
+
+therapistSchema.index({ fname: 'text', lname: 'text' });
 
 const Therapist = mongoose.model('Therapist', therapistSchema);
 

@@ -13,6 +13,7 @@ const accounts = require('./controllers/accountController');
 const journal = require('./routes/journalPost');
 const { Therapist } = require('./models/therapist');
 const { contactUs } = require('./controllers/support');
+const { searchTherapists } = require('./controllers/searchController');
 
 
 //configuring the environment variable for the mongo URI string
@@ -40,9 +41,10 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Routing
 app.use('/account', accountRoutes);
+app.use('/journal', journal);
 app.post('/register', accounts.register);
-app.use('/journal', journal)
-app.post('/contact', verifyJWT, contactUs)
+app.post('/contact', verifyJWT, contactUs);
+app.get('/search', searchTherapists);
 
 
 
@@ -76,6 +78,8 @@ app.post('/createTherapist', (req, res) => {
     description: req.body.description,
     username: req.body.username,
     email: req.body.email,
+    yearsOfExperience: req.body.yearsOfExperience,
+    title : req.body.title
   });
   newTherapist.save()
   .then(() => {
@@ -90,7 +94,7 @@ app.post('/createTherapist', (req, res) => {
 
 // Unexpected URLs
 app.use('*', (req, res) => {
-  res.status(404).send('Resource not found');
+  res.status(404).send(`Resource not found, "${req.protocol}://${req.get('host')}${req.originalUrl}" is not a valid url`);
 });
 
 
