@@ -124,13 +124,38 @@ function validatePassResetInput(data) {
     return { errors, isValid: isEmpty(errors) };
 }
 
+function validateSearchInput(queries) {
+    let errors = {};
+
+    queries.searchString = !isEmpty(queries.searchString) ? queries.searchString : '';
+    queries.gender = !isEmpty(queries.gender) ? queries.gender : '';
+    queries.degree = !isEmpty(queries.degree) ? queries.degree : '';
+
+    if (Validator.isEmpty(queries.searchString)) {
+        errors.searchString = 'Search Input is empty, please add input to search field';
+    }
+    if (!Validator.isEmpty(queries.gender) && !( Validator.equals(queries.gender,'male') || Validator.equals(queries.gender,'female') )) {
+        errors.gender = `"${queries.gender}" is not a valid value, choose "male" or "female"`;
+    }
+    if (!Validator.isEmpty(queries.degree) && !( Validator.equals(queries.degree,'Phd') || Validator.equals(queries.degree,'Masters') )) {
+        errors.degree = `"${queries.degree}" is not a valid value, choose "Phd" or "Masters"`;
+    }
+    if (!isEmpty(queries.yoe) && (queries.yoe < 0 || queries.yoe > 100)) {
+        errors.yoe = `${queries.yoe} is not valid value for yearsOfExperience. Range is 0-100`;
+    }
+
+    return { errors, isValid: isEmpty(errors) }
+
+}
+
 
 module.exports = {
     validateLoginInput,
     validateRegisterInput,
     validatePassChangeInput,
     validateEmail,
-    validatePassResetInput
+    validatePassResetInput,
+    validateSearchInput
 };
 
 
