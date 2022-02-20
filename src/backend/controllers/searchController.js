@@ -1,6 +1,5 @@
 const isEmpty = require('is-empty');
 const { Therapist } = require('../models/therapist');
-const { getSearchConfig } = require('../helperFunctions/queryExtraction');
 
 const searchTherapists = async (req, res) => {
     if (isEmpty(req.query.searchString)) {
