@@ -9,7 +9,8 @@ router.post('/login', accounts.login);
 router.get('/verify/:emailVerificationToken', accounts.verifyEmail);
 router.post('/changePass', verifyJWT, accounts.changePassword);
 router.post('/forgotPass', accounts.forgotPassword);
-router.post('/resetPass/:username/:passResetToken', accounts.resetPass)
-router.get('/resetPass/:username/:passResetToken', accounts.resetPassPage);
+router.route('/resetPass/:username/:passResetToken')
+    .get(accounts.resetPassPage)
+    .post(accounts.resetPass);
 
 module.exports = router;
