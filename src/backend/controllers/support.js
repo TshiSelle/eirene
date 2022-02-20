@@ -10,8 +10,6 @@ const contactUs = async (req, res) => {
     res.status(200).json({ message: 'Support message sent!', success: true });
     const dbUser = await User.findById(req.user.id);
     sendEmailSupport(dbUser, req.body.supportMessage)
-
-
 };
 
 module.exports = { contactUs };
