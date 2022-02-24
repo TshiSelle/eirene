@@ -6,50 +6,51 @@ const isEmpty = require('is-empty');
 
 function validateRegisterInput(data) {
     let errors = {};
+    let { fname, lname, gender, email, username, password, confirmPassword } = data;
 
     //converting empty fields to strings
-    data.fname = !isEmpty(data.fname) ? data.fname : '';
-    data.lname = !isEmpty(data.lname) ? data.lname : '';
-    data.gender = !isEmpty(data.gender) ? data.gender : '';
-    data.email = !isEmpty(data.email) ? data.email : '';
-    data.username = !isEmpty(data.username) ? data.username : '';
-    data.password = !isEmpty(data.password) ? data.password : '';
-    data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : '';
+    fname = !isEmpty(fname) ? fname : '';
+    lname = !isEmpty(lname) ? lname : '';
+    gender = !isEmpty(gender) ? gender : '';
+    email = !isEmpty(email) ? email : '';
+    username = !isEmpty(username) ? username : '';
+    password = !isEmpty(password) ? password : '';
+    confirmPassword = !isEmpty(confirmPassword) ? confirmPassword : '';
     
     //field checks (empty input / password rules / etc..)
     //Name Checks
-    if (Validator.isEmpty(data.fname)) {
+    if (Validator.isEmpty(fname)) {
         errors.fname = 'First name field is required';
     } 
-    if (Validator.isEmpty(data.lname)) {
+    if (Validator.isEmpty(lname)) {
         errors.lname = 'Last name field is required';
     }
     //Gender Check
-    if (Validator.isEmpty(data.gender)) {
+    if (Validator.isEmpty(gender)) {
         errors.gender = 'Gender field is required';
-    } else if (!(Validator.equals(data.gender,'male') || Validator.equals(data.gender,'female'))) {
+    } else if (!(Validator.equals(gender,'male') || Validator.equals(gender,'female'))) {
         errors.gender = 'Wrong input in gender field'
     }
     //Email Check
-    if (Validator.isEmpty(data.email)) {
+    if (Validator.isEmpty(email)) {
         errors.email = 'Email field is required';
-    } else if (!Validator.isEmail(data.email)) {
+    } else if (!Validator.isEmail(email)) {
         errors.email = 'Email is invalid';
     }
     //Username Check
-    if (Validator.isEmpty(data.username)) {
+    if (Validator.isEmpty(username)) {
         errors.username = 'Username field is required';
-    } else if (hasWhiteSpace(Validator.trim(data.username))) {
+    } else if (hasWhiteSpace(Validator.trim(username))) {
         errors.username = 'Username should be one word';
     }
     //Password check
-    if (Validator.isEmpty(data.password)) {
+    if (Validator.isEmpty(password)) {
         errors.password = 'Password field is required';
-    } else if (!Validator.isLength(data.password, { min: 8, max: 64 })) {
-        errors.password = `Password must be at least 8 characters long${data.password.length > 64 ? ' and less than 64': ''}`;
-    } else if (Validator.isEmpty(data.confirmPassword)) {
+    } else if (!Validator.isLength(password, { min: 8, max: 64 })) {
+        errors.password = `Password must be at least 8 characters long${password.length > 64 ? ' and less than 64': ''}`;
+    } else if (Validator.isEmpty(confirmPassword)) {
         errors.confirmPassword = 'Confirm Password field is required';
-    } else if (!Validator.equals(data.password,data.confirmPassword)) {
+    } else if (!Validator.equals(password,confirmPassword)) {
         errors.confirmPassword = 'Passwords must match';
     }
     return { errors, isValid: isEmpty(errors) };
@@ -57,15 +58,17 @@ function validateRegisterInput(data) {
 }
 
 function validateLoginInput(data) {
-    const errors = {};
+    let errors = {};
+    let { username, password } = data;
+
     //converting empty fields to strings
-    data.username = !isEmpty(data.username) ? data.username : '';
-    data.password = !isEmpty(data.password) ? data.password : '';
+    username = !isEmpty(username) ? username : '';
+    password = !isEmpty(password) ? password : '';
     
-    if (Validator.isEmpty(data.username)) {
+    if (Validator.isEmpty(username)) {
         errors.username = 'Username field is required';
     }
-    if (Validator.isEmpty(data.password)) {
+    if (Validator.isEmpty(password)) {
         errors.password = 'Password field is required';
     }
     return { errors, isValid: isEmpty(errors) };
@@ -73,22 +76,24 @@ function validateLoginInput(data) {
 
 function validatePassChangeInput(data) {
     let errors = {};
-    data.oldPassword = !isEmpty(data.oldPassword) ? data.oldPassword : '';
-    data.newPassword = !isEmpty(data.newPassword) ? data.newPassword : '';
-    data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : '';
+    let { oldPassword, newPassword, confirmPassword } = data;
+
+    oldPassword = !isEmpty(oldPassword) ? oldPassword : '';
+    newPassword = !isEmpty(newPassword) ? newPassword : '';
+    confirmPassword = !isEmpty(confirmPassword) ? confirmPassword : '';
     //Password check
-    if (Validator.isEmpty(data.oldPassword)) {
+    if (Validator.isEmpty(oldPassword)) {
         errors.oldPassword = 'Old Password field is required';
     }
-    if (Validator.isEmpty(data.newPassword)) {
+    if (Validator.isEmpty(newPassword)) {
         errors.newPassword = 'New Password field is required';
-    } else if (!Validator.isLength(data.newPassword, { min: 8, max: 64 })) {
-        errors.newPassword = `Password must be at least 8 characters long${data.newPassword.length > 64 ? ' and less than 64': ''}`;
-    } else if (Validator.isEmpty(data.confirmPassword)) {
+    } else if (!Validator.isLength(newPassword, { min: 8, max: 64 })) {
+        errors.newPassword = `Password must be at least 8 characters long${newPassword.length > 64 ? ' and less than 64': ''}`;
+    } else if (Validator.isEmpty(confirmPassword)) {
         errors.confirmPassword = 'Confirm Password field is required';
-    } else if (Validator.equals(data.oldPassword, data.newPassword)) {
+    } else if (Validator.equals(oldPassword, newPassword)) {
         errors.newPassword  = 'Old and new password cannot be the same'
-    } else if (!Validator.equals(data.newPassword, data.confirmPassword)) {
+    } else if (!Validator.equals(newPassword, confirmPassword)) {
         errors.confirmPassword = 'Password confirmation must match new password';
     }
     return { errors, isValid: isEmpty(errors) };
@@ -96,11 +101,12 @@ function validatePassChangeInput(data) {
 
 function validateEmail(data) {
     let errors = {};
-    data.email = !isEmpty(data.email) ? data.email : '';
+    let email = data.email;
+    email = !isEmpty(email) ? email : '';
     //Email Check
-    if (Validator.isEmpty(data.email)) {
+    if (Validator.isEmpty(email)) {
         errors.email = 'Email field is required';
-    } else if (!Validator.isEmail(data.email)) {
+    } else if (!Validator.isEmail(email)) {
         errors.email = 'Email is invalid';
     }
     return { errors, isValid: isEmpty(errors) };
@@ -109,19 +115,46 @@ function validateEmail(data) {
 
 function validatePassResetInput(data) {
     let errors = {};
-    data.newPassword = !isEmpty(data.newPassword) ? data.newPassword : '';
-    data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : '';
+    let { newPassword, confirmPassword } = data;
+
+    newPassword = !isEmpty(newPassword) ? newPassword : '';
+    confirmPassword = !isEmpty(confirmPassword) ? confirmPassword : '';
     //Password check
-    if (Validator.isEmpty(data.newPassword)) {
+    if (Validator.isEmpty(newPassword)) {
         errors.newPassword = 'New Password field is required';
-    } else if (!Validator.isLength(data.newPassword, { min: 8, max: 64 })) {
-        errors.newPassword = `Password must be at least 8 characters long${data.newPassword.length > 64 ? ' and less than 64': ''}`;
-    } else if (Validator.isEmpty(data.confirmPassword)) {
+    } else if (!Validator.isLength(newPassword, { min: 8, max: 64 })) {
+        errors.newPassword = `Password must be at least 8 characters long${newPassword.length > 64 ? ' and less than 64': ''}`;
+    } else if (Validator.isEmpty(confirmPassword)) {
         errors.confirmPassword = 'Confirm Password field is required';
-    } else if (!Validator.equals(data.newPassword, data.confirmPassword)) {
+    } else if (!Validator.equals(newPassword, confirmPassword)) {
         errors.confirmPassword = 'Password confirmation must match new password';
     }
     return { errors, isValid: isEmpty(errors) };
+}
+
+function validateSearchInput(queries) {
+    let errors = {};
+    let { searchString, gender, yoe, degree } = queries;
+
+    searchString = !isEmpty(searchString) ? searchString : '';
+    gender = !isEmpty(gender) ? gender : '';
+    degree = !isEmpty(degree) ? degree : '';
+
+    if (Validator.isEmpty(searchString)) {
+        errors.searchString = 'Search Input is empty, please add input to search field';
+    }
+    if (!Validator.isEmpty(gender) && !( Validator.equals(gender,'male') || Validator.equals(gender,'female') )) {
+        errors.gender = `"${gender}" is not a valid value, choose "male" or "female"`;
+    }
+    if (!Validator.isEmpty(degree) && !( Validator.equals(degree,'Phd') || Validator.equals(degree,'Masters') )) {
+        errors.degree = `"${degree}" is not a valid value, choose "Phd" or "Masters"`;
+    }
+    if (!isEmpty(yoe) && (yoe < 0 || yoe > 100)) {
+        errors.yoe = `${yoe} is not valid value for yearsOfExperience. Range is 0-100`;
+    }
+
+    return { errors, isValid: isEmpty(errors) }
+
 }
 
 
@@ -130,7 +163,8 @@ module.exports = {
     validateRegisterInput,
     validatePassChangeInput,
     validateEmail,
-    validatePassResetInput
+    validatePassResetInput,
+    validateSearchInput
 };
 
 
