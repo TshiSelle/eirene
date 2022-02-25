@@ -29,13 +29,17 @@ const searchTherapists = async (req, res) => {
                     { title : { $regex: req.query.title ?  ".*"+req.query.title+".*" : /.*/, $options: "i" } },
                 ],
             };
-            
+
             const searchResults = await Therapist.find(query,{ _id: 0, __v: 0, score: { $meta: 'textScore' } })
                                             .limit(perPage)
                                             .skip((pageNum-1) * perPage)
                                             .sort({ score: { $meta: 'textScore' } });
 
             const numOfResults = await Therapist.countDocuments(query);
+
+            if (pageNum > Math.ceil(numOfResults / 10)) {
+                return res.status(400).json({ message: 'Page number too large', success: false, numOfResults })
+            }
         
             return res.status(200).json({ numOfResults, success: true, searchResults })
         } catch (error) {
