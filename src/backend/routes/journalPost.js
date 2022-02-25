@@ -1,7 +1,7 @@
 const express = require('express')
-const router = express.Router()
 const verifyJWT = require('../middleware/TokenVerification')
 const journalController = require('../controllers/journalController')
+const router = express.Router()
 //importing the journals model
 const { Journal } = require('../models/journal')
 //routing the user to journals to find all journals created by them by checking their ID
@@ -16,7 +16,7 @@ router.get('/journals',verifyJWT, (req, res) => {
     })
 })
 
-router.post('/create', journalController.addJournal)
+router.post('/create', verifyJWT, journalController.addJournal)
 
 
 module.exports = router;
