@@ -70,7 +70,7 @@ function sendEmailSupport(dbSender, message) {
         }
     });
 
-    let sender = dbSender.username;
+    let sender = dbSender.username || dbSender.email;
     var mailOptions = {
         from: sender,
         to: 'eireneContactUs@gmail.com',
