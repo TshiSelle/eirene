@@ -4,11 +4,12 @@ const { Therapist } = require('../models/therapist');
 const { validateSearchInput } = require('../helperFunctions/inputValidation');
 
 const searchTherapists = async (req, res) => {
-    if (isEmpty(req.query.searchString)) {
+    let { searchString, pageNum, gender, degree, yoe, title } = req.query;
+    if (isEmpty(searchString)) {
         return res.status(400).json({ message: 'Search field is empty, please add input', success: false });
     }
     const perPage = 10;
-    const pageNum = isEmpty(req.query.pageNum) || req.query.pageNum < 1 ? 1 : req.query.pageNum;
+    pageNum = isEmpty(pageNum) || pageNum < 1 ? 1 : pageNum;
 
     const { errors, isValid } = validateSearchInput(req.query);
 
@@ -18,15 +19,15 @@ const searchTherapists = async (req, res) => {
     else {
         try {
             const query = { 
-                $or: [ { fname : { $regex: ".*"+req.query.searchString+".*", $options: "i" } },
-                       { lname : { $regex: ".*"+req.query.searchString+".*", $options: "i" } },
-                       { $text : { $search: req.query.searchString } }
+                $or: [ { fname : { $regex: ".*"+searchString+".*", $options: "i" } },
+                       { lname : { $regex: ".*"+searchString+".*", $options: "i" } },
+                       { $text : { $search: searchString } }
                 ],
                 $and: [
-                    { gender : req.query.gender || { $regex: /.*/ } },
-                    { degree : req.query.degree || { $regex: /.*/ } },
-                    { yearsOfExperience : req.query.yoe || { $gte: 0 } },
-                    { title : { $regex: req.query.title ?  ".*"+req.query.title+".*" : /.*/, $options: "i" } },
+                    { gender : gender || { $regex: /.*/ } },
+                    { degree : degree || { $regex: /.*/ } },
+                    { yearsOfExperience : yoe || { $gte: 0 } },
+                    { title : { $regex: title ?  ".*"+title+".*" : /.*/, $options: "i" } },
                 ],
             };
 
@@ -48,10 +49,6 @@ const searchTherapists = async (req, res) => {
         }
 
     }
-   
-    
-
-
 };
 
 module.exports = { searchTherapists };
