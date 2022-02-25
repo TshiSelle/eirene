@@ -8,6 +8,7 @@ const cors = require('cors');
 
 //file modules
 const accountRoutes = require('./routes/accountRoutes');
+const supportRouters = require('./routes/supportRoutes');
 const verifyJWT = require('./middleware/TokenVerification');
 const accounts = require('./controllers/accountController');
 const journal = require('./routes/journalPost');
@@ -42,8 +43,8 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // Routing
 app.use('/account', accountRoutes);
 app.use('/journal', journal);
+app.use('/contact', supportRouters);
 app.post('/register', accounts.register);
-app.post('/contact', verifyJWT, contactUs);
 app.get('/search', searchTherapists);
 
 
