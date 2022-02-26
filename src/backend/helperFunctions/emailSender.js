@@ -22,6 +22,7 @@ function sendEmailVerification(email, emailVerificationToken) {
 
     Transport.sendMail(mailOptions, (error, response) => {
         if (error) {
+            res.status(400).json({"error" : error.name + ": " + error.message})
             console.log(error);
         }
         else {
@@ -51,6 +52,7 @@ function sendEmailResetPass(email, username, passResetToken) {
 
     Transport.sendMail(mailOptions, (error, response) => {
         if (error) {
+            res.status(400).json({"error" : error.name + ": " + error.message})
             console.log(error);
         }
         else {
@@ -80,6 +82,7 @@ function sendEmailSupport(dbSender, message) {
 
     Transport.sendMail(mailOptions, (error, response) => {
         if (error) {
+            res.status(400).json({"error" : error.name + ": " + error.message})
             console.log(error);
         }
         else {
