@@ -4,6 +4,9 @@ const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const helmet = require('helmet')
+const hpp = require('hpp');
+const morgan = require('morgan');
 
 
 //file modules
@@ -25,9 +28,12 @@ dotenv.config();
 const app = express();
 
 //middleware
-app.use(cors());
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));   //can now access url encoded form request bodies with req.body
+app.use(helmet()); //secure app by setting http headers
+app.use(hpp());
+app.use(cors());
 
 //port to be used for requests
 const PORT = process.env.PORT;

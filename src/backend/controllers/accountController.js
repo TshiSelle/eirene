@@ -105,8 +105,13 @@ const verifyEmail = async (req, res) => {
     if (validUser) {
         validUser.verified = true;
         validUser.emailVerificationToken = undefined;
-        await validUser.save()
-        res.status(200).json({ message: 'Account verified!', success: true })
+        validUser.save()
+        .then((dbUser) => {
+            res.redirect(200,`https://www.google.com`);
+        })
+        .catch((err) => {
+            res.status(400).json({"error" : err.name + ": " + err.message});
+        })
     }
     else {
         res.status(401).json({ message: 'User not found', success: false });
