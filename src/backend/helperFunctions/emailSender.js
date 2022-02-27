@@ -17,7 +17,7 @@ function sendEmailVerification(email, emailVerificationToken) {
         from: sender,
         to: email,
         subject: 'Eirene account verification',
-        html: `Hello! press <a href=http://localhost:${process.env.PORT}/account/verify/${emailVerificationToken}>here</a> to verify your account!`
+        html: `Hello! press <a href=http://localhost:${process.env.CLIENT_PORT}/account/verify/${emailVerificationToken}>here</a> to verify your account!`
     };
 
     Transport.sendMail(mailOptions, (error, response) => {

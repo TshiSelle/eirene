@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const Validator = require('validator');
 const crypto = require('crypto');
 const isEmpty = require('is-empty');
-const Validator = require('validator');
 
 const { User } = require('../models/user');
 const { sendEmailVerification, sendEmailResetPass } = require('../helperFunctions/emailSender');
@@ -100,6 +100,10 @@ const login = (req, res) => {
 const verifyEmail = async (req, res) => {
     const { emailVerificationToken } = req.params;
 
+    if (isEmpty(emailVerificationToken)) {
+        return res.status(400).json({ message: 'No token found', success: false })
+    }
+
     const validUser = await User.findOne({ emailVerificationToken });
 
     if (validUser) {
@@ -107,10 +111,10 @@ const verifyEmail = async (req, res) => {
         validUser.emailVerificationToken = undefined;
         validUser.save()
         .then((dbUser) => {
-            res.redirect(200,`https://www.google.com`);
+            res.status(200).json({ message: `${dbUser.username}'s account verified!`, success: true })
         })
         .catch((err) => {
-            res.status(400).json({"error" : err.name + ": " + err.message});
+            res.status(400).json({ "error" : err.name + ": " + err.message, success: false });
         })
     }
     else {

@@ -1,25 +1,20 @@
 //node modules
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
 const helmet = require('helmet')
+const mongoose = require('mongoose');
+const express = require('express');
+const cors = require('cors');
 const hpp = require('hpp');
 const morgan = require('morgan');
 
-
 //file modules
 const accountRoutes = require('./routes/accountRoutes');
-const supportRouters = require('./routes/supportRoutes');
+const supportRoutes = require('./routes/supportRoutes');
 const therapistRoutes = require('./routes/therapistRoutes');
-const verifyJWT = require('./middleware/TokenVerification');
-const accounts = require('./controllers/accountController');
 const journal = require('./routes/journalPost');
-const { Therapist } = require('./models/therapist');
-const { contactUs } = require('./controllers/support');
-const { searchTherapists } = require('./controllers/searchController');
-
+const accounts = require('./controllers/accountController');
+const verifyJWT = require('./middleware/TokenVerification');
 
 //configuring the environment variable for the mongo URI string
 dotenv.config();
@@ -31,9 +26,9 @@ const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));   //can now access url encoded form request bodies with req.body
-app.use(helmet()); //secure app by setting http headers
-app.use(hpp());
-app.use(cors());
+app.use(helmet());                                    //secure app by setting http headers
+app.use(hpp());                                       //prevent http parameter pollution
+app.use(cors());                                      //enable cross-origin resource sharing
 
 //port to be used for requests
 const PORT = process.env.PORT;
@@ -43,29 +38,16 @@ const mongoURI = process.env.MONGO_CONNECTION_URL;
 
 //async function to connect to the db with mongoose
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => app.listen(PORT, () => console.log(`Server listening on ${PORT}`)))
+  .then(() => app.listen(PORT, () => console.log(`Server listening on ${PORT}`)))
   .catch((err) => console.log(err));
 
 
 // Routing
 app.use('/account', accountRoutes);
 app.use('/journal', journal);
-app.use('/contact', supportRouters);
-app.use('/therapist-description', therapistRoutes);
+app.use('/contact', supportRoutes);
+app.use('/', therapistRoutes);
 app.post('/register', accounts.register);
-app.get('/search', searchTherapists);
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //dummy routes
@@ -74,32 +56,6 @@ app.get('/getUsername', verifyJWT, (req, res) => {
   return res.json({ isLoggedIn: true, username: req.user.username });
 });
 
-//fill db with therapists profiles
-app.post('/createTherapist', (req, res) => {
-  const newTherapist = new Therapist({
-    fname: req.body.fname,
-    lname: req.body.lname,
-    gender: req.body.gender,
-    degree: req.body.degree,
-    university: req.body.university,
-    officeAddress: req.body.officeAddress,
-    phone: req.body.phone,
-    description: req.body.description,
-    username: req.body.username,
-    email: req.body.email,
-    yearsOfExperience: req.body.yearsOfExperience,
-    title : req.body.title
-  });
-  newTherapist.save()
-  .then(() => {
-    res.status(201).json({ message: 'Created therapist profile successfully' })
-  })
-  .catch((err) => {
-    res.status(400).json({ message: `Error occurred during therapist account creation`, error: `${err}` })
-  });
-})
-
-
 
 // Unexpected URLs
 app.use('*', (req, res) => {
@@ -107,17 +63,45 @@ app.use('*', (req, res) => {
 });
 
 
-// app.get('/add-journal', (req, res) => {
-//   const journal = new Journal({
-//     title: 'sad',
-//     body: 'bade ente7ir' lol wtf
-//   })
-//   journal.save()
-//     .then((result) => {
-//       res.send(result)
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// })
 
+
+
+//Get all routes
+//uncomment to show
+
+//getRoutes();
+
+
+function getRoutes() {
+  let str= "";
+  app._router.stack.forEach(print.bind(null, []))
+  console.log(str.replace(/^(.*)(\n\1)+$/gm,"$1"));
+  
+  function print (path, layer) {
+    if (layer.route) {
+      layer.route.stack.forEach(print.bind(null, path.concat(split(layer.route.path))))
+    } else if (layer.name === 'router' && layer.handle.stack) {
+      layer.handle.stack.forEach(print.bind(null, path.concat(split(layer.regexp))))
+    } else if (layer.method) {
+      str += `${layer.method.toUpperCase()} /${path.concat(split(layer.regexp)).filter(Boolean).join('/')}`
+      str += '\n';
+    }
+  }
+  
+  function split (thing) {
+    if (typeof thing === 'string') {
+      return thing.split('/')
+    } else if (thing.fast_slash) {
+      return ''
+    } else {
+      var match = thing.toString()
+        .replace('\\/?', '')
+        .replace('(?=\\/|$)', '$')
+        .match(/^\/\^((?:\\[.*+?^${}()|[\]\\\/]|[^.*+?^${}()|[\]\\\/])*)\$\//)
+      return match
+        ? match[1].replace(/\\(.)/g, '$1').split('/')
+        : '<complex:' + thing.toString() + '>'
+    }
+  }
+
+}

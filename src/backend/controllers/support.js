@@ -4,7 +4,7 @@ const { sendEmailSupport } = require('../helperFunctions/emailSender')
 const { validateEmail } = require('../helperFunctions/inputValidation');
 /* incoming data: supportMessage */
 
-const contactUs = async (req, res) => {
+const fromUser = async (req, res) => {
     if (isEmpty(req.body.supportMessage)) {
         return res.status(422).json({ message: 'Your support message is empty', success: false }) 
     }
@@ -13,7 +13,7 @@ const contactUs = async (req, res) => {
     sendEmailSupport(dbUser, req.body.supportMessage)
 };
 
-const externalContactUs = (req, res) => {
+const external = (req, res) => {
     /* fname - lname - email - supportMessage */
     if (isEmpty(req.body.supportMessage)) {
         return res.status(422).json({ message: 'Your support message is empty', success: false }) 
@@ -27,6 +27,6 @@ const externalContactUs = (req, res) => {
 };
 
 module.exports = { 
-    contactUs,
-    externalContactUs
+    fromUser,
+    external
 };
