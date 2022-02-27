@@ -1,9 +1,8 @@
 const express = require('express');
-const router = express.Router();
-const accounts = require('../controllers/accountController');
 const verifyJWT = require('../middleware/TokenVerification');
+const accounts = require('../controllers/accountController');
 
-
+const router = express.Router();
 
 router.post('/login', accounts.login);
 router.get('/verify/:emailVerificationToken', accounts.verifyEmail);

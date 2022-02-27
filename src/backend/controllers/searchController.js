@@ -1,5 +1,4 @@
 const isEmpty = require('is-empty');
-const mongoose = require('mongoose')
 const { Therapist } = require('../models/therapist');
 const { validateSearchInput } = require('../helperFunctions/inputValidation');
 
@@ -31,7 +30,7 @@ const searchTherapists = async (req, res) => {
                 ],
             };
 
-            const searchResults = await Therapist.find(query,{ _id: 0, __v: 0, score: { $meta: 'textScore' } })
+            const searchResults = await Therapist.find(query,{ __v: 0, score: { $meta: 'textScore' } })
                                             .limit(perPage)
                                             .skip((pageNum-1) * perPage)
                                             .sort({ score: { $meta: 'textScore' } });
