@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const Validator = require('validator');
 const crypto = require('crypto');
 const isEmpty = require('is-empty');
-const Validator = require('validator');
 
 const { User } = require('../models/user');
 const { sendEmailVerification, sendEmailResetPass } = require('../helperFunctions/emailSender');
@@ -45,7 +45,7 @@ const register = async (req, res) => {
     
             dbUser.save()
                 .then(() => {
-                    sendEmailVerification(dbUser.email, dbUser.emailVerificationToken);
+                    sendEmailVerification(dbUser.username, dbUser.email, dbUser.emailVerificationToken);
                     res.status(201).json({ message: 'Successfully created user account', success: true });
                 })
                 .catch((err) => {
@@ -98,15 +98,24 @@ const login = (req, res) => {
 }
 
 const verifyEmail = async (req, res) => {
-    const { emailVerificationToken } = req.params;
+    const { username, emailVerificationToken } = req.params;
 
-    const validUser = await User.findOne({ emailVerificationToken });
+    if (isEmpty(emailVerificationToken)) {
+        return res.status(400).json({ message: 'No token found', success: false })
+    }
+
+    const validUser = await User.findOne({ username, emailVerificationToken });
 
     if (validUser) {
         validUser.verified = true;
         validUser.emailVerificationToken = undefined;
-        await validUser.save()
-        res.status(200).json({ message: 'Account verified!', success: true })
+        validUser.save()
+        .then((dbUser) => {
+            res.status(200).json({ message: `${dbUser.username}'s account verified!`, success: true })
+        })
+        .catch((err) => {
+            res.status(400).json({ "error" : err.name + ": " + err.message, success: false });
+        })
     }
     else {
         res.status(401).json({ message: 'User not found', success: false });
@@ -131,6 +140,10 @@ const changePassword = async (req, res) => {
             bcrypt.compare(changeInfo.oldPassword, currentUserFound.password)
                 .then((validPassword) => {
                     if (validPassword) {
+                        if (Validator.equals(changeInfo.oldPassword, changeInfo.newPassword)) {
+                            return res.status(400).json({ message: 'Old and new password cannot be the same', success: false });
+                        }
+
                         bcrypt.hash(changeInfo.newPassword, 10)
                             .then((hashedPassword) => {
                                 currentUserFound.password = hashedPassword;
