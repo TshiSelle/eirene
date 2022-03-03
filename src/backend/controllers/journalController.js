@@ -10,7 +10,8 @@ const addJournal = async (req, res) => {
   else {
     const dbJournal = new Journal({
       title: journal.title,
-      body: journal.body
+      body: journal.body,
+      _UID: req.user.id
     });
     dbJournal.save()
       .then(() => {
