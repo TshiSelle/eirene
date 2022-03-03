@@ -1,6 +1,5 @@
 import React, { useEffect, useReducer } from "react";
 import { useParams, Navigate} from "react-router-dom";
-import { Route } from "react-router";
 import { IsVerificationTokenValid } from "../../../../api/ApiClient";
 
 const reducer = (state, action) => {
@@ -47,6 +46,7 @@ const VerifyAccount = () => {
             if (response.data.success) {
                 dispatch({ type: "token-success" });
                 console.log('Email verified!');
+                console.log(`EmailValido is ${emailValid}`)
             } else {
                 dispatch({ type: "token-failure" });
             }
