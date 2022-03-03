@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 
 //*************** Email transfer functions ******************
 
-function sendEmailVerification(email, emailVerificationToken) {
+function sendEmailVerification(username, email, emailVerificationToken) {
     var Transport = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -12,12 +12,12 @@ function sendEmailVerification(email, emailVerificationToken) {
         }
     });
 
-    let sender = 'Eirene';
+    let sender = 'Eirene <loom.senior@gmail.com>';
     var mailOptions = {
         from: sender,
         to: email,
         subject: 'Eirene account verification',
-        html: `Hello! press <a href=http://localhost:${process.env.CLIENT_PORT}/account/verify/${emailVerificationToken}>here</a> to verify your account!`
+        html: `Hello! press <a href=http://localhost:${process.env.CLIENT_PORT}/verify/${username}/${emailVerificationToken}>here</a> to verify your account!`
     };
 
     Transport.sendMail(mailOptions, (error, response) => {
@@ -42,7 +42,7 @@ function sendEmailResetPass(email, username, passResetToken) {
         }
     });
 
-    let sender = 'Eirene';
+    let sender = 'Eirene <loom.senior@gmail.com>';
     var mailOptions = {
         from: sender,
         to: email,
@@ -72,7 +72,7 @@ function sendEmailSupport(dbSender, message) {
         }
     });
 
-    let sender = dbSender.username || dbSender.email;
+    let sender = dbSender.username ? `${dbSender.username} <${dbSender.email}>` : `<${dbSender.email}>`;
     var mailOptions = {
         from: sender,
         to: 'eireneContactUs@gmail.com',
