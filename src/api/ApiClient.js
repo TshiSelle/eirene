@@ -78,3 +78,7 @@ export function PasswordResetWithToken(username, token, password, confirmPasswor
 export function IsEmailTokenValid(username, passResetToken) {
     return GetAxiosCall(`/account/resetPass/${username}/${passResetToken}`);
   }
+
+export function IsVerificationTokenValid(username, emailVerificationToken) {
+    return GetAxiosCall(`/account/verify/${username}/${emailVerificationToken}`);
+}

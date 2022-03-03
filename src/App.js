@@ -6,6 +6,7 @@ import LoginPage from "./components/Profile/SignIn/LoginPage";
 import ForgotPasswordForm from "./components/Profile/SignIn/forgot/ForgotPasswordForm";
 import FullPageSpinner from "./components/spinner/FullPageSpinner";
 import ForgotPasswordResetForm from './components/Profile/SignIn/forgot/ForgotPasswordResetForm';
+import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/SignIn" element={<LoginPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordForm />} />
             <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
+            <Route path="/verify/:username/:token" element={<VerifyAccount />} />
           </Routes>
         </Router>
       </Suspense>
