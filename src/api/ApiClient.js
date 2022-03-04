@@ -77,4 +77,12 @@ export function PasswordResetWithToken(username, token, password, confirmPasswor
 
 export function IsEmailTokenValid(username, passResetToken) {
     return GetAxiosCall(`/account/resetPass/${username}/${passResetToken}`);
-  }
+}
+
+export function FilterTherapists(query) {
+  return GetAxiosCall(`/search?searchString=${query}`);
+}
+
+export function GetFilteredTherapist(id) {
+  return GetAxiosCall(`/therapist-description/${id}`);
+}

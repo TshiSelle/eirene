@@ -9,7 +9,7 @@ const getTherapist = async (req, res) => {
 
     Therapist.findById(req.params.id)
         .then((dbTherapist) => {
-            return res.status(200).json(dbTherapist);
+            return res.status(200).json({ dbTherapist, success: true });
         })
         .catch((err) => {
             return res.status(400).json({ message : `${err}`, success: false })

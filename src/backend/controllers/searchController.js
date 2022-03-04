@@ -28,7 +28,7 @@ const searchTherapists = async (req, res) => {
                     { title : { $regex: req.query.title ?  ".*"+req.query.title+".*" : /.*/, $options: "i" } },
                 ],
              },
-             { _id: 0, __v: 0, score: { $meta: 'textScore' } })
+             { __v: 0, score: { $meta: 'textScore' } })
              .limit(perPage)
              .skip((pageNum-1) * perPage)
              .sort({ score: { $meta: 'textScore' } });

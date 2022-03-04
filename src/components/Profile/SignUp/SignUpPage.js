@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SignUpForm from "./SignUpForm";
 import styled from "styled-components";
+import { useAuthenticator } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
+  const { loggedIn } = useAuthenticator();
+
+  useEffect(() => {
+    if (loggedIn) return navigate('/');
+  }, [loggedIn]);
+
   return (
     <MainContainer>
       <MainSection>
