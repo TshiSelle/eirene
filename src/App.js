@@ -9,6 +9,7 @@ import ForgotPasswordResetForm from './components/Profile/SignIn/forgot/ForgotPa
 import SearchTherapists from "./components/Therapists/SearchTherapists";
 import TherapistDescription from './components/Therapists/TherapistDescription';
 import { AuthProvider } from "./context/AuthContext";
+import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 import { UserProvider } from "./context/UserContext";
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
                 <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
                 <Route path="/find-therapists" element={<SearchTherapists />} />
                 <Route path="/therapist-description/:id" element={<TherapistDescription />} />
+                <Route path="/verify/:username/:token" element={<VerifyAccount />} />
               </Routes>
             </Router>
           </Suspense>

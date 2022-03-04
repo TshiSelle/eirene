@@ -91,8 +91,6 @@ function validatePassChangeInput(data) {
         errors.newPassword = `Password must be at least 8 characters long${newPassword.length > 64 ? ' and less than 64': ''}`;
     } else if (Validator.isEmpty(confirmPassword)) {
         errors.confirmPassword = 'Confirm Password field is required';
-    } else if (Validator.equals(oldPassword, newPassword)) {
-        errors.newPassword  = 'Old and new password cannot be the same'
     } else if (!Validator.equals(newPassword, confirmPassword)) {
         errors.confirmPassword = 'Password confirmation must match new password';
     }

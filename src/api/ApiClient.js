@@ -85,4 +85,8 @@ export function FilterTherapists(query) {
 
 export function GetFilteredTherapist(id) {
   return GetAxiosCall(`/therapist-description/${id}`);
+  }
+
+export function IsVerificationTokenValid(username, emailVerificationToken) {
+    return GetAxiosCall(`/account/verify/${username}/${emailVerificationToken}`);
 }
