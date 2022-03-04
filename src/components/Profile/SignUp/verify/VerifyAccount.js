@@ -1,6 +1,9 @@
 import React, { useEffect, useReducer } from "react";
 import { useParams, Navigate} from "react-router-dom";
 import { IsVerificationTokenValid } from "../../../../api/ApiClient";
+import isEmpty from "is-empty";
+import { Spinner } from "react-bootstrap";
+import './verifyacc.css'
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -27,10 +30,10 @@ const VerifyAccount = () => {
     const { username, token } = useParams();
 
     const [state, dispatch] = useReducer(reducer, {
-        emailValid: false,
+        emailValid: null,
         submissionErrorMessage: null,
-        waiting: false,
-        finished: false,
+        waiting: null,
+        finished: null,
     });
 
     const {
@@ -40,25 +43,42 @@ const VerifyAccount = () => {
         finished
     } = state;
     
-    useEffect(() => {
-        IsVerificationTokenValid(username, token)
-        .then((response) => {
-            if (response.data.success) {
-                dispatch({ type: "token-success" });
-                console.log('Email verified!');
-                console.log(`EmailValido is ${emailValid}`)
-            } else {
-                dispatch({ type: "token-failure" });
-            }
-        })
-        .catch((error) => {
+    
+useEffect(() => {
+    IsVerificationTokenValid(username, token)
+    .then((response) => {
+        if (response.data.success) {
+            dispatch({ type: "token-success" });
+            console.log('Email verified!');
+        } else {
             dispatch({ type: "token-failure" });
-            return;
-        })
-    }, [username, token]);
+        }
+    })
+    .catch((error) => {
+        dispatch({ type: "token-failure" });
+        return;
+    });
+},[]);
 
-    return (<>{emailValid ? <Navigate to="/validtoken" /> : <Navigate to="/nonvalidtoken" />}</>);
+const checkEmpty = () => {
+    if (isEmpty(emailValid)) {
+        return (<Spinner className="center" animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>);
+    } else {
+        return (emailValid ? <Navigate to="/valid"/> : <Navigate to="/invvalid"/>);
+    }
+}
+
+//return (<h1>hello</h1>);
+        return (
+            <>
+            {checkEmpty()}
+            {console.log("🚀 ~ file: VerifyAccount.js ~ line 73 ~ VerifyAccount ~ emailValid", emailValid)}
+            </>
+        );
 };
+
 
 
 export default VerifyAccount;
