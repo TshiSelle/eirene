@@ -23,7 +23,20 @@ const addJournal = async (req, res) => {
       });
   }
 }
+const deleteJournal = async (req, res) => {
+  Journal.findOne({ _id: req.Journal._id })
+    .populate()
+  Journal.remove()
+    .then(deleteJouranl => {
+      res.json({ deleteJournal })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
 
 module.exports = {
-  addJournal
+  addJournal,
+  deleteJournal
 }
