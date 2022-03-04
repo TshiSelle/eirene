@@ -1,0 +1,9 @@
+h1 {
+  font-size: 1rem;
+}
+
+.therapistContainer {
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: '#333';
+}
