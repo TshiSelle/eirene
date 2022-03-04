@@ -7,6 +7,7 @@ import {
 } from "../../../validators/validators";
 import "./loginStyle.css";
 import { LoginApiCall } from "../../../api/ApiClient";
+import { useAuthenticator } from "../../../context/AuthContext";
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
@@ -67,6 +68,7 @@ const SignUpForm = () => {
     waiting,
   } = state;
 
+  const { updateAuthToken } = useAuthenticator();
   // The useCallbacks basically take the values set in the input forms and sends them to their desired destination
   const setUsername = useCallback(
     (e) => dispatch({ type: "set-username", value: e.target.value }),
@@ -107,6 +109,7 @@ const SignUpForm = () => {
     LoginApiCall(username, password)
       .then((response) => {
         if (response.data.success) {
+          updateAuthToken(response.data.token);
           dispatch({ type: "sign-in-success" });
           console.log('Successful signin!');
         } else {

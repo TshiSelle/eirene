@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoginForm from "./LoginForm";
 import styled from "styled-components";
 import "./loginStyle.css";
+import { useAuthenticator } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { loggedIn } = useAuthenticator();
+
+  useEffect(() => {
+    if (loggedIn) return navigate('/');
+  }, [loggedIn]);
+
   return (
     <MainContainer>
       <MainSection>
