@@ -87,50 +87,52 @@ const ForgotPasswordForm = () => {
     <MainContainer>
       <MainSection>
         <FormContainer>
-          <Header>Forgot Password</Header>
-          {finished ? (
-            <p style={{ textAlign: "center" }}>
-              We sent an email to {email}, please check your inbox.
-            </p>
-          ) : (
-            <>
-              <Subheader>
-                Enter your email address to receive a verification code.
-              </Subheader>
+          <ResponsiveContainer>
+            <Header>Forgot Password</Header>
+            {finished ? (
+              <p style={{ textAlign: "center" }}>
+                We sent an email to {email}, please check your inbox.
+              </p>
+            ) : (
+              <>
+                <Subheader>
+                  Enter your email address to receive a verification code.
+                </Subheader>
 
-              <Form onSubmit={submitRequest}>
-                <Form.Group className="mb-3">
-                  <Label>Email</Label>
+                <Form onSubmit={submitRequest}>
+                  <Form.Group className="mb-3">
+                    <Label>Email</Label>
 
-                  <Form.Control
-                    className="input email-input"
-                    type="email"
-                    isInvalid={errorMessage}
-                    placeholder=""
-                    name="email"
-                    value={email}
-                    onChange={setEmail}
-                  />
+                    <Form.Control
+                      className="input email-input"
+                      type="email"
+                      isInvalid={errorMessage}
+                      placeholder=""
+                      name="email"
+                      value={email}
+                      onChange={setEmail}
+                    />
 
-                  {errorMessage && (
-                    <div style={{ paddingTop: 20 }}>
-                      <Alert variant="danger">{errorMessage}</Alert>
-                    </div>
-                  )}
+                    {errorMessage && (
+                      <div style={{ paddingTop: 20 }}>
+                        <Alert variant="danger">{errorMessage}</Alert>
+                      </div>
+                    )}
 
-                  <Button
-                    className="input submit-button"
-                    disabled={errorMessage}
-                    variant={`${errorMessage ? "danger" : "primary"}`}
-                    value="Forgot Password"
-                    type="submit"
-                  >
-                    Submit
-                  </Button>
-                </Form.Group>
-              </Form>
-            </>
-          )}
+                    <Button
+                      className="input submit-button"
+                      disabled={errorMessage}
+                      variant={`${errorMessage ? "danger" : "primary"}`}
+                      value="Forgot Password"
+                      type="submit"
+                    >
+                      Submit
+                    </Button>
+                  </Form.Group>
+                </Form>
+              </>
+            )}
+          </ResponsiveContainer>
         </FormContainer>
       </MainSection>
     </MainContainer>
@@ -149,6 +151,10 @@ const MainContainer = styled.div`
   font-family: "Roboto", sans-serif;
   line-height: 1.5;
   color: #212529;
+
+  @media (max-width: 1007px) {
+    background-position: right;
+  }
 `;
 
 const MainSection = styled.div`
@@ -163,6 +169,16 @@ const FormContainer = styled.div`
   padding: 30px;
   border-radius: 0.25rem;
   background-color: #f6f7fc;
+
+  @media (max-width: 1007px) {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    border-radius: 25px 25px 0 0;
+    padding: 50px 0;
+  }
 `;
 
 const Header = styled.h3`
@@ -179,6 +195,12 @@ const Subheader = styled.p`
 
 const Label = styled.label`
   margin-bottom: 0.5rem;
+`;
+
+const ResponsiveContainer = styled.div`
+  @media (max-width: 1007px) {
+    padding: 20px;
+  }
 `;
 
 export default ForgotPasswordForm;
