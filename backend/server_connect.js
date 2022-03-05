@@ -15,6 +15,7 @@ const therapistRoutes = require('./routes/therapistRoutes');
 const journal = require('./routes/journalPost');
 const accounts = require('./controllers/accountController');
 const verifyJWT = require('./middleware/TokenVerification');
+const { verifyLoggedInUser } = require('./helperFunctions/verifyToken');
 
 //configuring the environment variable for the mongo URI string
 dotenv.config();
@@ -48,7 +49,7 @@ app.use('/journal', journal);
 app.use('/contact', supportRoutes);
 app.use('/', therapistRoutes);
 app.post('/register', accounts.register);
-
+app.get('/verifyToken', verifyLoggedInUser);
 
 //dummy routes
 //trying jwt authentication
