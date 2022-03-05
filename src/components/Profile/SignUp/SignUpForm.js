@@ -306,8 +306,8 @@ const SignUpForm = () => {
               <Form.Control className="textField" />
             </GridContainer>
 
-            {/* <Label>Confirm Password</Label> */}
-            {/* <Form.Group>
+            {<Label>Confirm Password</Label>}
+            {<Form.Group>
               <Form.Label htmlFor="genderSelect">Gender</Form.Label>
               <Form.Select
                 id="genderSelect"
@@ -326,7 +326,7 @@ const SignUpForm = () => {
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
               </Form.Select>
-            </Form.Group> */}
+            </Form.Group>}
             {submissionErrorMessage && (
               <div style={{ paddingTop: 20 }}>
                 <Alert variant="danger">{submissionErrorMessage}</Alert>
