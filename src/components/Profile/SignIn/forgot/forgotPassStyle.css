@@ -29,3 +29,8 @@
 	background-color: #edbec4;
 	color: #ffffff;
 }
+
+.submit-button:hover,
+.submit-button:focus {
+	background-color: #eeb6bd;
+}
