@@ -10,8 +10,8 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   verified: { type: Boolean, default: false },
   emailVerificationToken: { type: String, unique: true },
-  passResetToken: { type: String },
-  passResetTokenExpirationDate: { type: Number },
+  passResetToken: { type: String, expires: '1hr' },
+  passResetTokenExpirationDate: { type: Number, expires: '1hr' },
 
 }, { timestamps: true })
 
