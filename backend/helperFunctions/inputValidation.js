@@ -28,7 +28,7 @@ function validateRegisterInput(data) {
     //Gender Check
     if (Validator.isEmpty(gender)) {
         errors.gender = 'Gender field is required';
-    } else if (!(Validator.equals(gender,'male') || Validator.equals(gender,'female'))) {
+    } else if (!(Validator.equals(gender,'male') || Validator.equals(gender,'female') || Validator.equals(gender,'other'))) {
         errors.gender = 'Wrong input in gender field'
     }
     //Email Check
