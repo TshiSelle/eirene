@@ -1,18 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import SignUpForm from "./SignUpForm";
 import styled from "styled-components";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import CheckEmailModal from './verify/CheckEmailModal';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const { loggedIn } = useAuthenticator();
+  const [showModal, setShowModal] = useState(false);
+  const handleModal = useCallback(() => setShowModal(true), []);
+
+  const handleHomeRedirect = useCallback(() => {
+    return navigate('/');
+  }, [navigate]);
 
   useEffect(() => {
     if (loggedIn) return navigate('/');
-  }, [loggedIn]);
+  }, [loggedIn, navigate]);
 
   return (
+    <>
     <MainContainer>
       <MainSection>
         <SectionContainer>
@@ -41,11 +49,13 @@ const SignUpPage = () => {
             </Anchor>
           </TabContainer>
 
-          <SignUpForm />
+          <SignUpForm handleModal={handleModal} />
         </SectionContainer>
       </MainSection>
       <Image src={require("./bg_4.jpg")} alt="Eirene plant" />
     </MainContainer>
+    <CheckEmailModal handleHomeRedirect={handleHomeRedirect} showModal={showModal} handleModal={handleModal}/>
+    </>
   );
 };
 
