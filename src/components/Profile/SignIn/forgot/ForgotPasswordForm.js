@@ -11,8 +11,7 @@ const reducer = (state, action) => {
     case "validation-error":
       return {
         ...state,
-        errorMessage: action.message,
-        errorCounter: state.errorCounter + 1,
+        errorMessage: action.message
       };
     case "start-submit":
       return { ...state, waiting: true };

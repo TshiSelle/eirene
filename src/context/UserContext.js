@@ -26,12 +26,13 @@ export const UserProvider = ({ children }) => {
     user: null
   });
   const { user } = state;
-  const { authToken } = useAuthenticator();
+  const { authToken, removeAuthToken } = useAuthenticator();
 
   const userLogOut = useCallback(() => {
     if (authToken == null) return;
-    // (TODO): if token isnt null, terminate the token..
-  }, [authToken]);
+    // we log the user out by terminating his authToken that we store...
+    removeAuthToken(authToken);
+  }, [authToken, removeAuthToken]);
 
   const value = useMemo(() => {
     return {
