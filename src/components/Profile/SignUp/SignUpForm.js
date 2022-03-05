@@ -355,6 +355,27 @@ const SignUpForm = ({ handleModal }) => {
               />
             </GridContainer>
 
+
+            {<Form.Group>
+              <Form.Label htmlFor="genderSelect">Gender</Form.Label>
+              <Form.Select
+                id="genderSelect"
+                as="select"
+                value={gender}
+                onChange={setGender}
+                isInvalid={genderError}
+                style={{
+                  height: "54px",
+                  border: "none",
+                  boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
+                }}
+              >
+                <option value="">Select an option</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </Form.Select>
+            </Form.Group>}
             {submissionErrorMessage && (
               <div style={{ paddingTop: 20 }}>
                 <Alert variant="danger">{submissionErrorMessage}</Alert>
