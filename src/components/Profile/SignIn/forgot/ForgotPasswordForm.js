@@ -2,7 +2,9 @@ import React, { useCallback, useReducer } from "react";
 import styled from "styled-components";
 import { validateEmail } from "../../../../validators/validators";
 import { Form, Button, Alert } from "react-bootstrap";
-import { SendEmail } from '../../../../api/ApiClient';
+import { SendEmail } from "../../../../api/ApiClient";
+import "./forgotPassStyle.css";
+import background from "./bg_4.jpg";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -11,7 +13,7 @@ const reducer = (state, action) => {
     case "validation-error":
       return {
         ...state,
-        errorMessage: action.message
+        errorMessage: action.message,
       };
     case "start-submit":
       return { ...state, waiting: true };
@@ -21,7 +23,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         waiting: false,
-        errorMessage: action.message
+        errorMessage: action.message,
       };
     default:
       throw new Error("Unhandled action type: " + action.type);
@@ -40,11 +42,11 @@ const ForgotPasswordForm = () => {
   const submitRequest = useCallback(() => {
     // this prevents auto refresh onsubmit
     event.preventDefault();
-    console.log(email, ' email');
+    console.log(email, " email");
     // check base cases then call api, we generally dont need to verify if the user email input
     // is actually a true email, since if its not it just wont send an email...
     if (waiting || finished) return;
-    console.log('25');
+    console.log("25");
     const emailValidation = validateEmail(email);
     if (!emailValidation.success) {
       dispatch({
@@ -56,21 +58,24 @@ const ForgotPasswordForm = () => {
     // now we call the api.
     dispatch({ type: "start-submit" });
     SendEmail(email)
-    .then((response) => {
-      if (response.data.success) {
-        dispatch({ type: "submit-success" });
-        console.log('Successful forgotpass!');
-      } else {
-        dispatch({ type: "submit-failure", errorMessage: response.data.email });
-      }
-    })
-    .catch((error) => {
-      dispatch({
-        type: "submit-failure",
-        errorMessage: error.response.data.email,
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: "submit-success" });
+          console.log("Successful forgotpass!");
+        } else {
+          dispatch({
+            type: "submit-failure",
+            errorMessage: response.data.email,
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({
+          type: "submit-failure",
+          errorMessage: error.response.data.email,
+        });
+        return;
       });
-      return;
-    });
   }, [waiting, finished, email]);
 
   const setEmail = useCallback(
@@ -79,54 +84,101 @@ const ForgotPasswordForm = () => {
   );
 
   return (
-    <FormContainer>
-      <h1>Forgot Password?</h1>
-      {finished ? (
-        <p style={{ textAlign: "center" }}>
-          We sent an email to {email}, please check your inbox.
-        </p>
-      ) : (
-        <>
-          <h3>Please Provide us with your email.</h3>
-          <Form onSubmit={submitRequest}>
-            <Form.Group className="mb-3">
-              <Form.Control
-                className="email-input"
-                type="email"
-                isInvalid={errorMessage}
-                placeholder="Email"
-                name="email"
-                value={email}
-                onChange={setEmail}
-              />
+    <MainContainer>
+      <MainSection>
+        <FormContainer>
+          <Header>Forgot Password</Header>
+          {finished ? (
+            <p style={{ textAlign: "center" }}>
+              We sent an email to {email}, please check your inbox.
+            </p>
+          ) : (
+            <>
+              <Subheader>
+                Enter your email address to receive a verification code.
+              </Subheader>
 
-              {errorMessage && (
-                <div style={{ paddingTop: 20 }}>
-                  <Alert variant="danger">{errorMessage}</Alert>
-                </div>
-              )}
+              <Form onSubmit={submitRequest}>
+                <Form.Group className="mb-3">
+                  <Label>Email</Label>
 
-              <Button
-                className="submit-button"
-                disabled={errorMessage}
-                variant={`${errorMessage ? "danger" : "primary"}`}
-                value="Forgot Password"
-                type="submit"
-              >
-                Submit
-              </Button>
-            </Form.Group>
-          </Form>
-        </>
-      )}
-    </FormContainer>
+                  <Form.Control
+                    className="input email-input"
+                    type="email"
+                    isInvalid={errorMessage}
+                    placeholder=""
+                    name="email"
+                    value={email}
+                    onChange={setEmail}
+                  />
+
+                  {errorMessage && (
+                    <div style={{ paddingTop: 20 }}>
+                      <Alert variant="danger">{errorMessage}</Alert>
+                    </div>
+                  )}
+
+                  <Button
+                    className="input submit-button"
+                    disabled={errorMessage}
+                    variant={`${errorMessage ? "danger" : "primary"}`}
+                    value="Forgot Password"
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
+                </Form.Group>
+              </Form>
+            </>
+          )}
+        </FormContainer>
+      </MainSection>
+    </MainContainer>
   );
 };
 
-const FormContainer = styled.div`
-  width: 95%;
+const MainContainer = styled.div`
+  background: linear-gradient(
+      0deg,
+      rgba(33, 37, 41, 0.3),
+      rgba(33, 37, 41, 0.3)
+    ),
+    url(${background});
+  background-size: cover;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.5;
+  color: #212529;
+`;
+
+const MainSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
-  max-width: 480px;
+  width: 100%;
+`;
+
+const FormContainer = styled.div`
+  padding: 30px;
+  border-radius: 0.25rem;
+  background-color: #f6f7fc;
+`;
+
+const Header = styled.h3`
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+`;
+
+const Subheader = styled.p`
+  margin-bottom: 1.5rem;
+  color: #b3b3b3;
+`;
+
+const Label = styled.label`
+  margin-bottom: 0.5rem;
 `;
 
 export default ForgotPasswordForm;
