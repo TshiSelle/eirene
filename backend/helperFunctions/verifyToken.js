@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 //passing in the verifyJWT middleware as the second parameter to app.get() lets us access the current user's data 
-const  verifyLoggedInUser =(req, res) => {
+const verifyLoggedInUser = (req, res) => {
     const token = req.headers['x-access-token']
       ? req.headers['x-access-token'].split(' ')[1]
       : null;
