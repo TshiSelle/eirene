@@ -15,3 +15,11 @@
     justify-content: center;
 	width: 50%;
 }
+
+.mb-3 {
+	margin-bottom: unset !important;
+}
+
+.signup:hover {
+	color: #ffffff;
+}
