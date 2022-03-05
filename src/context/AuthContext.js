@@ -34,6 +34,17 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const removeAuthToken = useCallback((token) => {
+    try {
+        localStorage.removeItem(KEY);
+        dispatch({ type: 'clear-auth-token' });
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
+  }, []);
+
   useEffect(() => {
     const getAuthToken = async () => {
       try {
@@ -55,10 +66,11 @@ export const AuthProvider = ({ children }) => {
   const value = useMemo(() => {
     return {
       loggedIn,
+      removeAuthToken,
       authToken,
       updateAuthToken,
     };
-  }, [loggedIn, authToken, updateAuthToken]);
+  }, [loggedIn, authToken, updateAuthToken, removeAuthToken]);
 
   return (
     <AuthContext.Provider value={value}>
