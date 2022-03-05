@@ -272,10 +272,10 @@ const SignUpForm = () => {
   return (
     <>
       <Header>
-        Signup to <strong>Eirene</strong>
+        Sign up to <strong>Eirene</strong>
       </Header>
       <Paragraph>
-        To keep connected with Eirene, please login with your personal info.
+        Enter your registration details and start your journey with Eirene.
       </Paragraph>
 
       <FormContainer>
@@ -353,29 +353,6 @@ const SignUpForm = () => {
               />
             </GridContainer>
 
-            {/* <Label>Confirm Password</Label> */}
-            {/* {console.log(submissionErrorMessage, " Submission error message")} */}
-            <Form.Group>
-              <Form.Label htmlFor="genderSelect">Gender</Form.Label>
-              <Form.Select
-                id="genderSelect"
-                as="select"
-                name={gender}
-                value='gender'
-                onChange={setGender}
-                isInvalid={genderError}
-                style={{
-                  height: "54px",
-                  border: "none",
-                  boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
-                }}
-              >
-                <option value="">Select an option</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="Other">Other</option>
-              </Form.Select>
-            </Form.Group>
             {submissionErrorMessage && (
               <div style={{ paddingTop: 20 }}>
                 <Alert variant="danger">{submissionErrorMessage}</Alert>
@@ -387,7 +364,7 @@ const SignUpForm = () => {
               disabled={submissionErrorMessage}
               style={{
                 width: "100%",
-                margin: "3rem 0 0",
+                margin: "2rem 0 0",
                 backgroundColor: "#edbec4",
                 color: "#ffffff",
               }}
