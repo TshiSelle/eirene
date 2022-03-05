@@ -12,8 +12,7 @@ function PostAxiosCall(endpoint, data, headers) {
     });
 }
 
-function GetAxiosCall(endpoint, data, headers) {
-  if (!data) data = {};
+function GetAxiosCall(endpoint, headers) {
   if (!headers) headers = {};
   return axios({
     method: "get",
@@ -89,4 +88,12 @@ export function GetFilteredTherapist(id) {
 
 export function IsVerificationTokenValid(username, emailVerificationToken) {
     return GetAxiosCall(`/account/verify/${username}/${emailVerificationToken}`);
+}
+
+export function IsUserTokenValid(authToken) {
+  return GetAxiosCall('/verifyToken', { 'x-access-token': authToken });
+}
+
+export function GetUserInfo(authToken) {
+  return GetAxiosCall('/user-info', { 'x-access-token': authToken });
 }

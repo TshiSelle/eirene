@@ -1,4 +1,5 @@
 import React, { useReducer, useMemo, useCallback, useContext, useEffect } from 'react';
+import { IsUserTokenValid } from '../api/ApiClient';
 
 const AuthContext = React.createContext();
 
@@ -34,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const removeAuthToken = useCallback((token) => {
+  const removeAuthToken = useCallback(() => {
     try {
         localStorage.removeItem(KEY);
         dispatch({ type: 'clear-auth-token' });
@@ -45,7 +46,30 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  useEffect(() => {
+  useEffect((event) => {
+    if (event && event.preventDefault) event.preventDefault();
+    if (authToken === null ) return;
+    IsUserTokenValid(authToken)
+        .then((response) => {
+          if (response.data.success) {
+            if (response.data.isLoggedIn) {
+              updateAuthToken(authToken);
+            }else {
+              removeAuthToken();
+            }
+          } else {
+            removeAuthToken();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          return;
+        });
+  }, [authToken, updateAuthToken, removeAuthToken]);
+
+  useEffect((event) => {
+    if (event && event.preventDefault) event.preventDefault();
+
     const getAuthToken = async () => {
       try {
         const authTokenInfoEncoded = localStorage.getItem(KEY);
