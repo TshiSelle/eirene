@@ -59,7 +59,7 @@ app.get('/getUsername', verifyJWT, (req, res) => {
 
 // Unexpected URLs
 app.use('*', (req, res) => {
-  res.status(404).send(`Resource not found, "${req.protocol}://${req.get('host')}${req.originalUrl}" is not a valid url`);
+  res.status(404).send(`Resource not found, "${req.method} ${req.protocol}://${req.get('host')}${req.originalUrl}" is not a valid url`);
 });
 
 
