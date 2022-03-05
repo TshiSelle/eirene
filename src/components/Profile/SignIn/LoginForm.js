@@ -149,7 +149,9 @@ const SignUpForm = () => {
                 <div></div>
               </label>
 
-              <ForgotPassword>Forgot Password</ForgotPassword>
+              <ForgotPassword href={"/forgot-password"} className="link">
+                Forgot Password
+              </ForgotPassword>
             </RememberMeTab>
 
             {submissionErrorMessage && (
