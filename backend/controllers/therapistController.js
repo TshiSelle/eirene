@@ -35,7 +35,7 @@ const getTherapist = async (req, res) => {
         Therapist.findById(id)
             .then((dbTherapist) => {
                 if (dbTherapist) {
-                    return res.status(200).json(dbTherapist);
+                    return res.status(200).json({ dbTherapist, success: true });
                 }
                 else {
                     return res.status(404).json({ message: `No therapists with id : ${id}`, success: false })
