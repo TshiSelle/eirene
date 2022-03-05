@@ -28,6 +28,7 @@
 	font-size: 1rem;
 	background-color: #edbec4;
 	color: #ffffff;
+	width: 100%;
 }
 
 .submit-button:hover,
