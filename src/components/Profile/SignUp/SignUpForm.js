@@ -101,7 +101,7 @@ const reducer = (state, action) => {
   }
 };
 
-const SignUpForm = () => {
+const SignUpForm = ({ handleModal }) => {
   const [state, dispatch] = useReducer(reducer, {
     firstName: "",
     lastName: "",
@@ -246,6 +246,7 @@ const SignUpForm = () => {
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: "sign-up-success" });
+          handleModal();
           console.log('Successful signup!');
         } else {
           dispatch({ type: "sign-up-failure", message: response.data.message });
@@ -269,6 +270,7 @@ const SignUpForm = () => {
     confirmPassword,
     gender,
   ]);
+
   return (
     <>
       <Header>
