@@ -1,7 +1,7 @@
 import React from "react";
-import { useAuthenticator } from "../context/AuthContext";
+import { useAuthenticator } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import { useUser } from "../context/UserContext";
+import { useUser } from "../../context/UserContext";
 const HomePage = () => {
   const { loggedIn } = useAuthenticator();
   const { userLogOut } = useUser();
