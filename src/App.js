@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUpPage from "./components/Profile/SignUp/SignUpPage";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/HomePage/HomePage";
 import LoginPage from "./components/Profile/SignIn/LoginPage";
 import ProfilePage from "./components/Profile/UserProfile/ProfilePage";
 import ForgotPasswordForm from "./components/Profile/SignIn/forgot/ForgotPasswordForm";
@@ -33,6 +33,7 @@ const App = () => {
                 <Route path="/find-therapists" element={<SearchTherapists />} />
                 <Route path="/therapist-description/:id" element={<TherapistDescription />} />
                 <Route path="/verify/:username/:token" element={<VerifyAccount />} />
+                
               </Routes>
             </Router>
           </Suspense>
