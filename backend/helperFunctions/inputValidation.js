@@ -142,13 +142,13 @@ function validateSearchInput(queries) {
         errors.searchString = 'Search Input is empty, please add input to search field';
     }
     if (!Validator.isEmpty(gender) && !( Validator.equals(gender,'male') || Validator.equals(gender,'female') )) {
-        errors.gender = `"${gender}" is not a valid value, choose "male" or "female"`;
+        errors.gender = `'${gender}' is not a valid value, choose 'male' or 'female'`;
     }
     if (!Validator.isEmpty(degree) && !( Validator.equals(degree,'Phd') || Validator.equals(degree,'Masters') )) {
-        errors.degree = `"${degree}" is not a valid value, choose "Phd" or "Masters"`;
+        errors.degree = `'${degree}' is not a valid value, choose 'Phd' or 'Masters'`;
     }
-    if (!isEmpty(yoe) && (yoe < 0 || yoe > 100)) {
-        errors.yoe = `${yoe} is not valid value for yearsOfExperience. Range is 0-100`;
+    if (!isEmpty(yoe) && ( isNaN(yoe) || (yoe < 0 || yoe > 100)) ) {
+        errors.yoe = `'${yoe}' is not valid value for yearsOfExperience. Range is 0-100`;
     }
 
     return { errors, isValid: isEmpty(errors) }
