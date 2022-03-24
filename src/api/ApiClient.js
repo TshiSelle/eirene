@@ -117,3 +117,11 @@ export function ChangeName(fname, lname, authToken) {
   });
   return PatchAxiosCall('/profile/editName', data, { 'x-access-token': authToken });
 }
+
+export function DeactivateAccount(authToken) {
+  return PostAxiosCall('/account/deactivate',{}, { 'x-access-token': authToken });
+}
+
+export function StopAccountDeactivation(authToken) {
+  return PostAxiosCall('/account/undeactivate',{}, { 'x-access-token': authToken });
+}
