@@ -3,14 +3,14 @@ const nodemailer = require('nodemailer');
 
 //*************** Email transfer functions ******************
 
+var Transport = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'loom.senior@gmail.com',
+        pass: process.env.LOOM_EMAIL_PASSWORD
+    }
+});
 function sendEmailVerification(username, email, emailVerificationToken) {
-    var Transport = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: 'loom.senior@gmail.com',
-            pass: process.env.LOOM_EMAIL_PASSWORD
-        }
-    });
 
     let sender = 'Eirene <loom.senior@gmail.com>';
     var mailOptions = {
@@ -34,13 +34,6 @@ function sendEmailVerification(username, email, emailVerificationToken) {
 }
 
 function sendEmailResetPass(email, username, passResetToken) {
-    var Transport = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: 'loom.senior@gmail.com',
-            pass: process.env.LOOM_EMAIL_PASSWORD
-        }
-    });
 
     let sender = 'Eirene <loom.senior@gmail.com>';
     var mailOptions = {
@@ -64,13 +57,6 @@ function sendEmailResetPass(email, username, passResetToken) {
 }
 
 function sendEmailSupport(dbSender, message) {
-    var Transport = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: 'loom.senior@gmail.com',
-            pass: process.env.LOOM_EMAIL_PASSWORD
-        }
-    });
 
     let sender = dbSender.username ? `${dbSender.username} <${dbSender.email}>` : `<${dbSender.email}>`;
     var mailOptions = {
@@ -93,8 +79,30 @@ function sendEmailSupport(dbSender, message) {
 
 }
 
+function sendDeactivationEmail(dbUser) {
+    const { email, deactivationDate, username } = dbUser;
+    let sender = 'Eirene <loom.senior@gmail.com>';
+    var mailOptions = {
+        from: sender,
+        to: email,
+        subject: `Eirene account deactivation for ${username}`,
+        html: `Hello! <br />Your account will be deactivated at ${deactivationDate.toLocaleString()} <br />You can stop the deactivation process from inside your account settings.`
+    };
+
+    Transport.sendMail(mailOptions, (error, response) => {
+        if (error) {
+            res.status(400).json({"error" : error.name + ": " + error.message})
+            console.log(error);
+        }
+        else {
+            console.log('Email sent')
+        }
+    });
+}
+
 module.exports = {
     sendEmailVerification,
     sendEmailResetPass,
-    sendEmailSupport
+    sendEmailSupport,
+    sendDeactivationEmail
 };

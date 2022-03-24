@@ -11,5 +11,7 @@ router.post('/forgotPass', accounts.forgotPassword);
 router.route('/resetPass/:username/:passResetToken')
     .get(accounts.resetPassPage)
     .post(accounts.resetPass);
+router.post('/deactivate', verifyJWT, accounts.deactivate);
+router.post('/undeactivate', verifyJWT, accounts.undeactivate)
 
 module.exports = router;
