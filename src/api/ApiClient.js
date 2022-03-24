@@ -21,6 +21,18 @@ function GetAxiosCall(endpoint, headers) {
   });
 }
 
+function PatchAxiosCall(endpoint, data, headers) {
+  if (!data) data = {};
+  if (!headers) headers = {};
+
+    return axios({
+        method: "patch",
+        url: `http://localhost:8080${endpoint}`,
+        data: data,
+        headers: headers,
+    });
+}
+
 export function SignUpApiCall(username, email, firstName, lastName, password, confirmPassword, gender) {
     const data = JSON.stringify({
         username: username,
@@ -96,4 +108,12 @@ export function IsUserTokenValid(authToken) {
 
 export function GetUserInfo(authToken) {
   return GetAxiosCall('/user-info', { 'x-access-token': authToken });
+}
+
+export function ChangeName(fname, lname, authToken) {
+  const data = JSON.stringify({
+    fname,
+    lname
+  });
+  return PatchAxiosCall('/profile/editName', data, { 'x-access-token': authToken });
 }

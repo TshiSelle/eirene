@@ -12,6 +12,7 @@ const morgan = require('morgan');
 const accountRoutes = require('./routes/accountRoutes');
 const supportRoutes = require('./routes/supportRoutes');
 const therapistRoutes = require('./routes/therapistRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 const journal = require('./routes/journalPost');
 const accounts = require('./controllers/accountController');
 const verifyJWT = require('./middleware/TokenVerification');
@@ -48,6 +49,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use('/account', accountRoutes);
 app.use('/journal', journal);
 app.use('/contact', supportRoutes);
+app.use('/profile', verifyJWT, profileRoutes);
 app.use('/', therapistRoutes);
 app.post('/register', accounts.register);
 app.get('/verifyToken', verifyLoggedInUser);
