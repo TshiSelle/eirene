@@ -21,9 +21,12 @@ function validateRegisterInput(data) {
     //Name Checks
     if (Validator.isEmpty(fname)) {
         errors.fname = 'First name field is required';
-    } 
+    }
     if (Validator.isEmpty(lname)) {
         errors.lname = 'Last name field is required';
+    } 
+    else if (!Validator.isAlpha(fname) || !Validator.isAlpha(lname)) {
+        errors.name = 'Name can only contain letters'
     }
     //Gender Check
     if (Validator.isEmpty(gender)) {
@@ -155,6 +158,24 @@ function validateSearchInput(queries) {
 
 }
 
+function validateNameChangeInput(data) {
+    let errors = {};
+    let { fname, lname } = data;
+    fname = !isEmpty(fname) ? fname : '';
+    lname = !isEmpty(lname) ? lname : '';
+    //Name Checks
+    if (Validator.isEmpty(fname)) {
+        errors.fname = 'First name field is required';
+    }
+    if (Validator.isEmpty(lname)) {
+        errors.lname = 'Last name field is required';
+    } 
+    else if (!Validator.isAlpha(fname) || !Validator.isAlpha(lname)) {
+        errors.name = 'Name can only contain letters'
+    }
+    return { errors, isValid: isEmpty(errors) }
+}
+
 
 module.exports = {
     validateLoginInput,
@@ -162,7 +183,8 @@ module.exports = {
     validatePassChangeInput,
     validateEmail,
     validatePassResetInput,
-    validateSearchInput
+    validateSearchInput,
+    validateNameChangeInput
 };
 
 
