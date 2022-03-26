@@ -47,13 +47,6 @@ export function SignUpApiCall(username, email, firstName, lastName, password, co
 
     return PostAxiosCall('/register', data, { "Content-Type": "application/json" });
 }
-export function newJournal(title, body) {
-    const jdata = JSON.stringify({
-        title: title,
-        body: body
-    });
-    return PostAxiosCall('/addJournal', jdata, { 'Content-Type': "application/json" });
-}
 
 export function LoginApiCall(username, password) {
   const data = JSON.stringify({
@@ -88,6 +81,15 @@ export function PasswordResetWithToken(username, token, password, confirmPasswor
 
 export function IsEmailTokenValid(username, passResetToken) {
     return GetAxiosCall(`/account/resetPass/${username}/${passResetToken}`);
+}
+
+export function ChangeUserPass(authToken, oldPassword, newPassword, confirmPassword) {//for logged in user
+  const data = JSON.stringify({
+    oldPassword,
+    newPassword,
+    confirmPassword
+  });
+  return PostAxiosCall('/account/changePass', data, { 'x-access-token': authToken });
 }
 
 export function FilterTherapists(query) {
@@ -146,4 +148,23 @@ export function UpdateJournal(authToken, journalID, newTitle, newBody) {
   });
 
   return PatchAxiosCall('/journal/update', data,  { 'x-access-token': authToken });
+}
+
+export function ContactSupport(authToken, supportMessage) { //registered users
+  const data = JSON.stringify({
+    supportMessage
+  });
+
+  return PostAxiosCall('/contact/user', data,  { 'x-access-token': authToken });
+}
+
+export function ContactSupportExternal(fname, lname, email, supportMessage) {
+  const data = JSON.stringify({
+    fname,
+    lname,
+    email,
+    supportMessage
+  });
+
+  return PostAxiosCall('/contact/external', data);
 }
