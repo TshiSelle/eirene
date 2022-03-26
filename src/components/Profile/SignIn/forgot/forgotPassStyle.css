@@ -1,0 +1,37 @@
+.mb-3 {
+	display: grid;
+}
+
+.input {
+	margin-bottom: 1rem;
+}
+
+.email-input {
+	padding: 0.375rem 0.75rem;
+	height: 54px;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 1px 2px 0 rgb(0, 0, 0, 0.1);
+	color: #495057;
+	font-size: 1rem;
+}
+
+.email-input:focus {
+	outline: none;
+}
+
+.submit-button {
+	cursor: pointer;
+	height: 54px;
+	border: none;
+	border-radius: 0.25rem;
+	font-size: 1rem;
+	background-color: #edbec4;
+	color: #ffffff;
+	width: 100%;
+}
+
+.submit-button:hover,
+.submit-button:focus {
+	background-color: #eeb6bd;
+}

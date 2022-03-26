@@ -15,7 +15,6 @@ const TherapistDescription = () => {
     GetFilteredTherapist(id)
       .then((response) => {
         if (response.data.success) {
-          console.log(response.data);
           setData(response.data.dbTherapist);
           setError("");
         } else {
@@ -26,7 +25,7 @@ const TherapistDescription = () => {
         setError(error.response.data.message);
         return;
       });
-  }, [id, setData, setError]);
+  }, [id]);
 
   return (
     <>
@@ -39,7 +38,7 @@ const TherapistDescription = () => {
           <Alert variant="danger">{error}</Alert>
         </div>
       )}
-    </>
+     </>
   );
 };
 

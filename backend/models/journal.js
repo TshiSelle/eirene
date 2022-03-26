@@ -5,25 +5,21 @@ const Schema = mongoose.Schema;
 //journal has a title and a body
 const journalSchema = new Schema({
   title: {
-    type: String,
-    required: true
+	type: String,
+	required: true
   },
   body: {
-    type: String,
-    required: true
+	type: String,
   },
   _UID: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
+	type: Schema.Types.ObjectId,
+	ref: "User"
   }
-}, { timestamps: true })
+}, { timestamps: true });
 
 //creating a model of the schema above to show for the interface
 const Journal = mongoose.model('Journal', journalSchema);
 
 
 //exporting the Journal model for outside scripts to read
-module.exports = {
-  journalSchema,
-  Journal
-}
+module.exports = { Journal };

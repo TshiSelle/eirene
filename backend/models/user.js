@@ -12,7 +12,7 @@ const userSchema = new Schema({
   emailVerificationToken: { type: String, unique: true },
   passResetToken: { type: String, expires: '1hr' },
   passResetTokenExpirationDate: { type: Number, expires: '1hr' },
-
+  deactivationDate : { type: Date, default: undefined},
 }, { timestamps: true })
 
 const User = mongoose.model('User', userSchema);

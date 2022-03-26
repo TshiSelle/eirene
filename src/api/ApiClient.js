@@ -12,14 +12,25 @@ function PostAxiosCall(endpoint, data, headers) {
     });
 }
 
-function GetAxiosCall(endpoint, data, headers) {
-  if (!data) data = {};
+function GetAxiosCall(endpoint, headers) {
   if (!headers) headers = {};
   return axios({
     method: "get",
     url: `http://localhost:8080${endpoint}`,
     headers: headers,
   });
+}
+
+function PatchAxiosCall(endpoint, data, headers) {
+  if (!data) data = {};
+  if (!headers) headers = {};
+
+    return axios({
+        method: "patch",
+        url: `http://localhost:8080${endpoint}`,
+        data: data,
+        headers: headers,
+    });
 }
 
 export function SignUpApiCall(username, email, firstName, lastName, password, confirmPassword, gender) {
@@ -35,13 +46,6 @@ export function SignUpApiCall(username, email, firstName, lastName, password, co
 
 
     return PostAxiosCall('/register', data, { "Content-Type": "application/json" });
-}
-export function newJournal(title, body) {
-    const jdata = JSON.stringify({
-        title: title,
-        body: body
-    });
-    return PostAxiosCall('/addJournal', jdata, { 'Content-Type': "application/json" });
 }
 
 export function LoginApiCall(username, password) {
@@ -79,6 +83,15 @@ export function IsEmailTokenValid(username, passResetToken) {
     return GetAxiosCall(`/account/resetPass/${username}/${passResetToken}`);
 }
 
+export function ChangeUserPass(authToken, oldPassword, newPassword, confirmPassword) {//for logged in user
+  const data = JSON.stringify({
+    oldPassword,
+    newPassword,
+    confirmPassword
+  });
+  return PostAxiosCall('/account/changePass', data, { 'x-access-token': authToken });
+}
+
 export function FilterTherapists(query) {
   return GetAxiosCall(`/search?searchString=${query}`);
 }
@@ -89,4 +102,69 @@ export function GetFilteredTherapist(id) {
 
 export function IsVerificationTokenValid(username, emailVerificationToken) {
     return GetAxiosCall(`/account/verify/${username}/${emailVerificationToken}`);
+}
+
+export function IsUserTokenValid(authToken) {
+  return GetAxiosCall('/verifyToken', { 'x-access-token': authToken });
+}
+
+export function GetUserInfo(authToken) {
+  return GetAxiosCall('/user-info', { 'x-access-token': authToken });
+}
+
+export function ChangeName(fname, lname, authToken) {
+  const data = JSON.stringify({
+    fname,
+    lname
+  });
+  return PatchAxiosCall('/profile/editName', data, { 'x-access-token': authToken });
+}
+
+export function DeactivateAccount(authToken) {
+  return PostAxiosCall('/account/deactivate',{}, { 'x-access-token': authToken });
+}
+
+export function StopAccountDeactivation(authToken) {
+  return PostAxiosCall('/account/undeactivate',{}, { 'x-access-token': authToken });
+}
+
+export function CreateJournal(authToken, title, body) {
+  const data = JSON.stringify({
+    title,
+    body
+  });
+  return PostAxiosCall('/journal/create', data, { 'x-access-token': authToken });
+}
+
+export function GetUserJournals(authToken) {
+  return GetAxiosCall('/journal/read',  { 'x-access-token': authToken });
+}
+
+export function UpdateJournal(authToken, journalID, newTitle, newBody) {
+  const data = JSON.stringify({
+    journalID,
+    title : newTitle,
+    body : newBody
+  });
+
+  return PatchAxiosCall('/journal/update', data,  { 'x-access-token': authToken });
+}
+
+export function ContactSupport(authToken, supportMessage) { //registered users
+  const data = JSON.stringify({
+    supportMessage
+  });
+
+  return PostAxiosCall('/contact/user', data,  { 'x-access-token': authToken });
+}
+
+export function ContactSupportExternal(fname, lname, email, supportMessage) {
+  const data = JSON.stringify({
+    fname,
+    lname,
+    email,
+    supportMessage
+  });
+
+  return PostAxiosCall('/contact/external', data);
 }

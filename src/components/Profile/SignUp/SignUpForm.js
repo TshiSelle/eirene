@@ -1,6 +1,6 @@
 import React, { useReducer, useCallback } from "react";
 import styled from "styled-components";
-import { SignUpApiCall } from '../../../api/ApiClient';
+import { SignUpApiCall } from "../../../api/ApiClient";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Alert } from "react-bootstrap";
 import {
@@ -8,7 +8,7 @@ import {
   validatePassword,
   validateEmail,
   validateGender,
-  validateConfirmPassword
+  validateConfirmPassword,
 } from "../../../validators/validators";
 import "./signupStyle.css";
 
@@ -81,7 +81,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         confirmPassword: action.value,
-        submissionErrorMessage: null
+        submissionErrorMessage: null,
       };
     case "set-gender":
       return { ...state, gender: action.value, submissionErrorMessage: null };
@@ -101,7 +101,7 @@ const reducer = (state, action) => {
   }
 };
 
-const SignUpForm = () => {
+const SignUpForm = ({ handleModal }) => {
   const [state, dispatch] = useReducer(reducer, {
     firstName: "",
     lastName: "",
@@ -219,7 +219,10 @@ const SignUpForm = () => {
       });
       return;
     }
-    const confirmPasswordValidation = validateConfirmPassword(password, confirmPassword);
+    const confirmPasswordValidation = validateConfirmPassword(
+      password,
+      confirmPassword
+    );
     if (!confirmPasswordValidation.success) {
       dispatch({
         type: "password-error",
@@ -242,11 +245,20 @@ const SignUpForm = () => {
     // Now we should call the api to register user since all userInput has been validated...
     dispatch({ type: "sign-up-start" });
     // make axios post request
-    SignUpApiCall(username, email, firstName, lastName, password, confirmPassword, gender)
+    SignUpApiCall(
+      username,
+      email,
+      firstName,
+      lastName,
+      password,
+      confirmPassword,
+      gender
+    )
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: "sign-up-success" });
-          console.log('Successful signup!');
+          handleModal();
+          console.log("Successful signup!");
         } else {
           dispatch({ type: "sign-up-failure", message: response.data.message });
         }
@@ -269,13 +281,14 @@ const SignUpForm = () => {
     confirmPassword,
     gender,
   ]);
+
   return (
     <>
       <Header>
-        Signup to <strong>Eirene</strong>
+        Sign up to <strong>Eirene</strong>
       </Header>
       <Paragraph>
-        To keep connected with Eirene, please login with your personal info.
+        Enter your registration details and start your journey with Eirene.
       </Paragraph>
 
       <FormContainer>
@@ -353,29 +366,28 @@ const SignUpForm = () => {
               />
             </GridContainer>
 
-            {/* <Label>Confirm Password</Label> */}
-            {/* {console.log(submissionErrorMessage, " Submission error message")} */}
-            <Form.Group>
-              <Form.Label htmlFor="genderSelect">Gender</Form.Label>
-              <Form.Select
-                id="genderSelect"
-                as="select"
-                name={gender}
-                value='gender'
-                onChange={setGender}
-                isInvalid={genderError}
-                style={{
-                  height: "54px",
-                  border: "none",
-                  boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
-                }}
-              >
-                <option value="">Select an option</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="Other">Other</option>
-              </Form.Select>
-            </Form.Group>
+            {
+              <Form.Group>
+                <Form.Label htmlFor="genderSelect">Gender</Form.Label>
+                <Form.Select
+                  id="genderSelect"
+                  as="select"
+                  value={gender}
+                  onChange={setGender}
+                  isInvalid={genderError}
+                  style={{
+                    height: "54px",
+                    border: "none",
+                    boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
+                  }}
+                >
+                  <option value="">Select an option</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </Form.Select>
+              </Form.Group>
+            }
             {submissionErrorMessage && (
               <div style={{ paddingTop: 20 }}>
                 <Alert variant="danger">{submissionErrorMessage}</Alert>
@@ -387,7 +399,7 @@ const SignUpForm = () => {
               disabled={submissionErrorMessage}
               style={{
                 width: "100%",
-                margin: "3rem 0 0",
+                margin: "2rem 0 0",
                 backgroundColor: "#edbec4",
                 color: "#ffffff",
               }}
@@ -401,8 +413,7 @@ const SignUpForm = () => {
   );
 };
 
-const FormContainer = styled.div`
-`;
+const FormContainer = styled.div``;
 
 const Button = styled.button`
   cursor: pointer;

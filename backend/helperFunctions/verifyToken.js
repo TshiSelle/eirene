@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 //passing in the verifyJWT middleware as the second parameter to app.get() lets us access the current user's data 
-function verifyJWT(req, res, next) {
+const verifyLoggedInUser = (req, res) => {
     const token = req.headers['x-access-token']
       ? req.headers['x-access-token'].split(' ')[1]
       : null;
@@ -18,8 +18,9 @@ function verifyJWT(req, res, next) {
             else {
                 req.user = {};
                 req.user.id = decoded.id;
-                req.user.username = decoded.username
-                next();// if verification succeeds we can advance to the route and send back isLoggedIn set to true
+                req.user.username = decoded.username;
+                // if verification succeeds we can advance to the route and send back isLoggedIn set to true
+                res.status(200).json({ message: 'Successful Authentication', isLoggedIn: true, success: true, userInfo: req.user });
             }
         });
     } else {
@@ -28,4 +29,4 @@ function verifyJWT(req, res, next) {
 
 }
 
-module.exports = verifyJWT;
+module.exports = { verifyLoggedInUser };
