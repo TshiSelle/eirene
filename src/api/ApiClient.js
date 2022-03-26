@@ -33,6 +33,18 @@ function PatchAxiosCall(endpoint, data, headers) {
     });
 }
 
+function DeleteAxiosCall(endpoint, data, headers) {
+  if (!data) data = {};
+  if (!headers) headers = {};
+
+    return axios({
+        method: "delete",
+        url: `http://localhost:8080${endpoint}`,
+        data: data,
+        headers: headers,
+    });
+}
+
 export function SignUpApiCall(username, email, firstName, lastName, password, confirmPassword, gender) {
     const data = JSON.stringify({
         username: username,
@@ -146,8 +158,16 @@ export function UpdateJournal(authToken, journalID, newTitle, newBody) {
     title : newTitle,
     body : newBody
   });
-
+  
   return PatchAxiosCall('/journal/update', data,  { 'x-access-token': authToken });
+}
+
+export function DeleteJournal(journalID, authToken) {
+  const data = JSON({
+    journalID
+  });
+
+  return DeleteAxiosCall('/journal/delete', { 'x-access-token': authToken });
 }
 
 export function ContactSupport(authToken, supportMessage) { //registered users
