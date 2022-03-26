@@ -13,7 +13,7 @@ const accountRoutes = require('./routes/accountRoutes');
 const supportRoutes = require('./routes/supportRoutes');
 const therapistRoutes = require('./routes/therapistRoutes');
 const profileRoutes = require('./routes/profileRoutes');
-const journal = require('./routes/journalPost');
+const journal = require('./routes/journalRoutes');
 const { register } = require('./controllers/accountController');
 const verifyJWT = require('./middleware/TokenVerification');
 const { verifyLoggedInUser } = require('./helperFunctions/verifyToken');
@@ -47,7 +47,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Routing
 app.use('/account', accountRoutes);
-app.use('/journal', journal);
+app.use('/journal', verifyJWT, journal);
 app.use('/contact', supportRoutes);
 app.use('/profile', verifyJWT, profileRoutes);
 app.use('/', therapistRoutes);
