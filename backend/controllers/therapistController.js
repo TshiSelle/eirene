@@ -30,12 +30,11 @@ const getTherapist = async (req, res) => {
     const { id } = req.params;
     if (isEmpty(id) || !mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ message:'ID not valid', success: false });
-    }
-    else {
+    } else {
         Therapist.findById(id)
             .then((dbTherapist) => {
                 if (dbTherapist) {
-                    return res.status(200).json(dbTherapist);
+                    return res.status(200).json({ dbTherapist, success: true });
                 }
                 else {
                     return res.status(404).json({ message: `No therapists with id : ${id}`, success: false })

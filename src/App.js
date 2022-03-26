@@ -1,8 +1,9 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUpPage from "./components/Profile/SignUp/SignUpPage";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/HomePage/HomePage";
 import LoginPage from "./components/Profile/SignIn/LoginPage";
+import ProfilePage from "./components/Profile/UserProfile/ProfilePage";
 import ForgotPasswordForm from "./components/Profile/SignIn/forgot/ForgotPasswordForm";
 import FullPageSpinner from "./components/spinner/FullPageSpinner";
 import ForgotPasswordResetForm from './components/Profile/SignIn/forgot/ForgotPasswordResetForm';
@@ -24,6 +25,7 @@ const App = () => {
                 {/* Every page we create needs to have a route so we can navigate to it,
                     Imitate the routes below with a proper path when adding a new page */}
                 <Route path="/" element={<HomePage />} />
+                <Route path="/Profile" element={<ProfilePage /> } />
                 <Route path="/SignUp" element={<SignUpPage />} />
                 <Route path="/SignIn" element={<LoginPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordForm />} />
@@ -31,6 +33,7 @@ const App = () => {
                 <Route path="/find-therapists" element={<SearchTherapists />} />
                 <Route path="/therapist-description/:id" element={<TherapistDescription />} />
                 <Route path="/verify/:username/:token" element={<VerifyAccount />} />
+                
               </Routes>
             </Router>
           </Suspense>

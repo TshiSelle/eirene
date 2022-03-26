@@ -7,15 +7,14 @@ const searchTherapists = async (req, res) => {
     if (isEmpty(searchString)) {
         return res.status(400).json({ message: 'Search field is empty, please add input', success: false });
     }
-    const perPage = 10;
-    pageNum = isEmpty(pageNum) || pageNum < 1 ? 1 : pageNum;
 
+    const therapistsPerPage = 10;
+    pageNum = isEmpty(pageNum) || pageNum < 1 ? 1 : pageNum;
     const { errors, isValid } = validateSearchInput(req.query);
 
     if (!isValid) {
         return res.status(400).json({ ...errors, success: false })
-    }
-    else {
+    } else {
         try {
             const query = { 
                 $or: [ { fname : { $regex: ".*"+searchString+".*", $options: "i" } },
@@ -31,8 +30,8 @@ const searchTherapists = async (req, res) => {
             };
 
             const searchResults = await Therapist.find(query,{ __v: 0, score: { $meta: 'textScore' } })
-                                            .limit(perPage)
-                                            .skip((pageNum-1) * perPage)
+                                            .limit(therapistsPerPage)
+                                            .skip((pageNum-1) * therapistsPerPage)
                                             .sort({ score: { $meta: 'textScore' } });
 
             const numOfResults = await Therapist.countDocuments(query);
