@@ -6,6 +6,7 @@ const router = express.Router();
 router.post('/create', journalController.addJournal);
 router.get('/read', journalController.getJournals);
 router.patch('/update', journalController.updateJournal)
+router.post('/delete', journalController.deleteJournal)
 
 
 module.exports = router;
