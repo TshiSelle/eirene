@@ -22,8 +22,7 @@ function verifyJWT(req, res, next) {
                 next();// if verification succeeds we can advance to the route and send back isLoggedIn set to true
             }
         });
-    }
-    else {
+    } else {
         res.status(401).json({ message: 'Incorrect Token', isLoggedIn: false, success: false })
     }
 

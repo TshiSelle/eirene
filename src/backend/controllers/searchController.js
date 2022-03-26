@@ -13,8 +13,7 @@ const searchTherapists = async (req, res) => {
 
     if (!isValid) {
         return res.status(400).json({ ...errors, success: false })
-    }
-    else {
+    } else {
         try {
             const searchResults = await Therapist.find({ 
                 $or: [ { fname : { $regex: ".*"+req.query.searchString+".*", $options: "i" } },

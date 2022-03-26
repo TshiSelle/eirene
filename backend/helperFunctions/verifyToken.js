@@ -19,11 +19,11 @@ const verifyLoggedInUser = (req, res) => {
                 req.user = {};
                 req.user.id = decoded.id;
                 req.user.username = decoded.username;
-                res.status(200).json({ message: 'Successful Authentication', isLoggedIn: true, success: true, userInfo: req.user });// if verification succeeds we can advance to the route and send back isLoggedIn set to true
+                // if verification succeeds we can advance to the route and send back isLoggedIn set to true
+                res.status(200).json({ message: 'Successful Authentication', isLoggedIn: true, success: true, userInfo: req.user });
             }
         });
-    }
-    else {
+    } else {
         res.status(401).json({ message: 'Incorrect Token', isLoggedIn: false, success: false })
     }
 

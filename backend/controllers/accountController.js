@@ -6,8 +6,14 @@ const crypto = require('crypto');
 const isEmpty = require('is-empty');
 
 const { User } = require('../models/user');
-const { sendEmailVerification, sendEmailResetPass, sendDeactivationEmail } = require('../helperFunctions/emailSender');
-const { validateLoginInput, validateRegisterInput, validatePassChangeInput, validateEmail, validatePassResetInput } = require('../helperFunctions/inputValidation');
+const { sendEmailVerification, 
+    sendEmailResetPass, 
+    sendDeactivationEmail } = require('../helperFunctions/emailSender');
+const { validateLoginInput, 
+    validateRegisterInput, 
+    validatePassChangeInput, 
+    validateEmail, 
+    validatePassResetInput } = require('../helperFunctions/inputValidation');
 
 
 dotenv.config();
@@ -85,7 +91,9 @@ const login = (req, res) => {
                                     return res.status(500).json({ message: `Error during token creation : ${err}`, success: false });
                                 } 
                                 else {
-                                    return res.status(200).json({ message: 'Successful Authentication', token: 'Bearer '+ token, success: true });
+                                    return res.status(200).json({ message: 'Successful Authentication', 
+                                                                  token: 'Bearer '+ token, 
+                                                                  success: true });
                                 }
                             }
                         );
@@ -116,8 +124,7 @@ const verifyEmail = async (req, res) => {
         .catch((err) => {
             res.status(400).json({ "error" : err.name + ": " + err.message, success: false });
         })
-    }
-    else {
+    } else {
         res.status(401).json({ message: 'User not found', success: false });
     }
 };
@@ -217,9 +224,9 @@ const resetPassPage = async (req, res) => {
                                         passResetToken : req.params.passResetToken, 
                                         passResetTokenExpirationDate : { $gt: Date.now() } });
     if (dbUser) {
-        res.status(200).json({ tokenValid: true, message: 'User authenticated', success: true }); //redirects the user to reset password webpage
-    }
-    else {
+        //redirects the user to reset password webpage
+        res.status(200).json({ tokenValid: true, message: 'User authenticated', success: true }); 
+    } else {
         return res.status(401).json({ tokenValid: false, message: 'User not found or token expired', success: false })
     }
 }
@@ -229,16 +236,13 @@ const resetPass = async (req, res) => {
         return res.status(400).json({ message: 'No token found', success: false })
     }
 
-
     //Validating New Passwords
     const resetInfo = req.body;
-
     const { errors, isValid } = validatePassResetInput(resetInfo);
 
     if (!isValid) {
         res.status(400).json({ ...errors, success: false });
-    } 
-    else {
+    } else {
         const dbUser = await User.findOne({ username: req.params.username, 
                                             passResetToken : req.params.passResetToken, 
                                             passResetTokenExpirationDate : { $gt: Date.now() } });        
@@ -259,8 +263,7 @@ const resetPass = async (req, res) => {
                 .catch((err) => {
                     console.log(`Error occurred while hashing user's new password : ${err}`);
                 })
-        }
-        else {
+        } else {
             return res.status(401).json({ message: 'User not found or token expired', success: false })
         }
     }
@@ -280,7 +283,8 @@ const deactivate = (req, res) => {
                             res.status(202).json({ message: 'Deactivation process started', success: true })
                         })
                         .catch((err) => {
-                            res.status(500).json({ message: `Error occurred while setting deactivation config : ${err}`, success: false })
+                            res.status(500).json({ message: `Error occurred while setting deactivation config : ${err}`, 
+                                                   success: false })
                         })
                 }
             }
@@ -300,7 +304,8 @@ const undeactivate = (req, res) => {
                         res.status(201).json({ message: 'Deactivation process stopped', success: true });
                     })
                     .catch((err) => {
-                        res.status(500).json({ message: `Error occurred while setting deactivation config : ${err}`, success: false })
+                        res.status(500).json({ message: `Error occurred while setting deactivation config : ${err}`, 
+                                               success: false })
                     })
             } else {
                 res.status(400).json({ message: 'User account is not in deactivation process', succes: false })

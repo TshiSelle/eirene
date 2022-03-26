@@ -14,7 +14,7 @@ const supportRoutes = require('./routes/supportRoutes');
 const therapistRoutes = require('./routes/therapistRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const journal = require('./routes/journalPost');
-const accounts = require('./controllers/accountController');
+const { register } = require('./controllers/accountController');
 const verifyJWT = require('./middleware/TokenVerification');
 const { verifyLoggedInUser } = require('./helperFunctions/verifyToken');
 const { getUser } = require('./controllers/userController');
@@ -51,9 +51,12 @@ app.use('/journal', journal);
 app.use('/contact', supportRoutes);
 app.use('/profile', verifyJWT, profileRoutes);
 app.use('/', therapistRoutes);
-app.post('/register', accounts.register);
+app.post('/register', register);
 app.get('/verifyToken', verifyLoggedInUser);
 app.get('/user-info', verifyJWT, getUser);
+
+
+
 
 //dummy routes
 //trying jwt authentication
@@ -64,7 +67,8 @@ app.get('/getUsername', verifyJWT, (req, res) => {
 
 // Unexpected URLs
 app.use('*', (req, res) => {
-  res.status(404).send(`Resource not found, "${req.method} ${req.protocol}://${req.get('host')}${req.originalUrl}" is not a valid url`);
+  res.status(404).send(`Resource not found, "${req.method} ${req.protocol}://${req.get('host')}${req.originalUrl}" 
+  is not a valid url`);
 });
 
 
@@ -74,10 +78,10 @@ app.use('*', (req, res) => {
 //Get all routes
 //uncomment to show
 
-//getRoutes();
+//getAllRoutes();
 
 
-function getRoutes() {
+function getAllRoutes() {
   let str= "";
   app._router.stack.forEach(print.bind(null, []))
   console.log(str.replace(/^(.*)(\n\1)+$/gm,"$1"));

@@ -8,9 +8,7 @@ changeName = (req, res) => {
     const { errors, isValid } = validateNameChangeInput(req.body);
     if (!isValid) {
         res.status(400).json({ ...errors, success: false  });
-    }
-    else {
-
+    } else {
         User.findById(req.user.id)
             .then((dbUser) => {
                 if (!dbUser) {
