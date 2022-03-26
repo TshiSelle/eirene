@@ -14,8 +14,7 @@ const searchTherapists = async (req, res) => {
 
     if (!isValid) {
         return res.status(400).json({ ...errors, success: false })
-    }
-    else {
+    } else {
         try {
             const query = { 
                 $or: [ { fname : { $regex: ".*"+searchString+".*", $options: "i" } },
