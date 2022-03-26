@@ -125,3 +125,25 @@ export function DeactivateAccount(authToken) {
 export function StopAccountDeactivation(authToken) {
   return PostAxiosCall('/account/undeactivate',{}, { 'x-access-token': authToken });
 }
+
+export function CreateJournal(authToken, title, body) {
+  const data = JSON.stringify({
+    title,
+    body
+  });
+  return PostAxiosCall('/journal/create', data, { 'x-access-token': authToken });
+}
+
+export function GetUserJournals(authToken) {
+  return GetAxiosCall('/journal/read',  { 'x-access-token': authToken });
+}
+
+export function UpdateJournal(authToken, journalID, newTitle, newBody) {
+  const data = JSON.stringify({
+    journalID,
+    title : newTitle,
+    body : newBody
+  });
+
+  return PatchAxiosCall('/journal/update', data,  { 'x-access-token': authToken });
+}
