@@ -1,5 +1,6 @@
 const Validator = require('validator');
 const isEmpty = require('is-empty');
+const mongoose = require('mongoose');
 
 
 //********** Input validation functions **********
@@ -177,6 +178,19 @@ function validateNameChangeInput(data) {
 }
 
 
+function validateObjectID(id) {
+    let errors = {};
+    id = isEmpty(id) ? '' : id;
+
+    if (Validator.isEmpty(id)) {
+        errors.id = 'ID cannot be empty'
+    } else if (!mongoose.Types.ObjectId.isValid(id)) {
+        errors.id = 'ID is not a valid MongoDB ObjectID'
+    }
+
+    return { errors, isValid: isEmpty(errors) }
+}
+
 module.exports = {
     validateLoginInput,
     validateRegisterInput,
@@ -184,10 +198,11 @@ module.exports = {
     validateEmail,
     validatePassResetInput,
     validateSearchInput,
-    validateNameChangeInput
+    validateNameChangeInput,
+    validateObjectID
 };
 
-
+//mongoose.Types.ObjectId.isValid(id)
 
 
 function hasWhiteSpace(s) {
