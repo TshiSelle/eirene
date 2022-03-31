@@ -163,7 +163,7 @@ export function UpdateJournal(authToken, journalID, newTitle, newBody) {
 }
 
 export function DeleteJournal(journalID, authToken) {
-  const data = JSON({
+  const data = JSON.stringify({
     journalID
   });
 
