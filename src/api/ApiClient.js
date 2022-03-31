@@ -179,12 +179,13 @@ export function ContactSupport(authToken, supportMessage) { //registered users
 }
 
 export function ContactSupportExternal(fname, lname, email, supportMessage) {
+  
   const data = JSON.stringify({
-    fname,
-    lname,
-    email,
-    supportMessage
+    fname: fname,
+    lname: lname,
+    email: email,
+    supportMessage: supportMessage
   });
 
-  return PostAxiosCall('/contact/external', data);
+  return PostAxiosCall('/contact/external', data, { "Content-Type": "application/json", });
 }

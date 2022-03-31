@@ -16,6 +16,7 @@ const fromUser = async (req, res) => {
 const external = (req, res) => {
     /* fname - lname - email - supportMessage */
     if (isEmpty(req.body.supportMessage)) {
+        console.log("🚀 ~ file: support.js ~ line 19 ~ external ~ req.body", req.body)
         return res.status(422).json({ message: 'Your support message is empty', success: false }) 
     }
     const { errors, isValid } = validateEmail(req.body);
