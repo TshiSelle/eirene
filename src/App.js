@@ -12,6 +12,8 @@ import TherapistDescription from './components/Therapists/TherapistDescription';
 import { AuthProvider } from "./context/AuthContext";
 import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 import { UserProvider } from "./context/UserContext";
+import ContactUsExt from "./components/ContactUs/ContactUsExt";
+
 
 const App = () => {
   return (
@@ -33,7 +35,7 @@ const App = () => {
                 <Route path="/find-therapists" element={<SearchTherapists />} />
                 <Route path="/therapist-description/:id" element={<TherapistDescription />} />
                 <Route path="/verify/:username/:token" element={<VerifyAccount />} />
-                
+                <Route path="/contact" element={<ContactUsExt />} />
               </Routes>
             </Router>
           </Suspense>
