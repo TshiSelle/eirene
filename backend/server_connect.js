@@ -12,6 +12,7 @@ const accountRoutes = require('./routes/accountRoutes');
 const supportRoutes = require('./routes/supportRoutes');
 const therapistRoutes = require('./routes/therapistRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const calendarRoutes = require('./routes/calendarRoutes');
 const journal = require('./routes/journalRoutes');
 const { register } = require('./controllers/accountController');
 const verifyJWT = require('./middleware/TokenVerification');
@@ -50,6 +51,7 @@ app.use('/journal', verifyJWT, journal);
 app.use('/contact', supportRoutes);
 app.use('/profile', verifyJWT, profileRoutes);
 app.use('/', therapistRoutes);
+app.use('/calendar',verifyJWT, calendarRoutes)
 app.post('/register', register);
 app.get('/verifyToken', verifyLoggedInUser);
 app.get('/user-info', verifyJWT, getUser);
