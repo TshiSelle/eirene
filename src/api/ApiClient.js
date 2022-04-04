@@ -207,3 +207,14 @@ export function GetUserAppointments(authToken) {
 export function DeleteUserAppointment(authToken, eventID) {
   return DeleteAxiosCall(`/calendar/deleteAppointment/${eventID}`, {}, { 'x-access-token': authToken });
 }
+
+export function ModifyUserAppointment(authToken, eventID, title, description, date, repeat) {
+  const data = JSON.stringify({
+    title,
+    description,
+    date,
+    repeat
+  });
+
+  return DeleteAxiosCall(`/calendar/modify/${eventID}`, data, { 'x-access-token': authToken });
+}
