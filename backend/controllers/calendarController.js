@@ -53,6 +53,40 @@ const createAppointment = (req, res) => {
     }
 };
 
+const modifyAppointment = (req, res) => {
+    const { title, description, date, repeat } = req.body;
+    const { errors, isValid } = validateAppInput(req.body);
+
+
+    if (!isValid) {
+        res.status(400).json({ ...errors, success: false });
+    } else if (!validateObjectID(req.params.eventID)) {
+        res.status(400).json({ message: 'eventID provided is not a valid mongoDB objectid', success: false });
+    } else {
+        Calendar.findOne({ UID: req.user.id })
+            .then((dbCalendar) => {
+                appointmentFound = false;
+                for (i=0;i<dbCalendar.events.length;i++) {{}
+                    if (dbCalendar.events[i]._id == req.params.eventID){
+                        dbCalendar.events[i] = { title, description, date, repeat };
+                        dbCalendar.save();
+                        appointmentFound = true;
+                        break;
+                    }
+                }
+                if (appointmentFound) {
+                    res.status(201).json({ message: 'Appointment updated successfully', success: true })
+                } else {
+                    res.status(400).json({ message: `No appointment with id ${req.params.eventID}`, success: false });
+                }
+                
+            })
+            .catch((err) => {
+                res.status(400).json({ message: `Error occurred while searching user\'s calendar : ${err}` ,
+                                       success: false});
+            });
+    }
+};
 const deleteAppointment = (req, res) => {
     if (!validateObjectID(req.params.eventID)) {
         res.status(400).json({ message: 'eventID provided is not a valid mongoDB objectid', success:false });
@@ -69,7 +103,7 @@ const deleteAppointment = (req, res) => {
                     }
                 }
                 if (appointmentFound) {
-                    res.status(201).json({ message: 'Appointment removal successful', success: false })
+                    res.status(201).json({ message: 'Appointment removal successful', success: true })
                 } else {
                     res.status(400).json({ message: `No appointment with id ${req.params.eventID}`, success: false });
                 }
@@ -86,5 +120,6 @@ const deleteAppointment = (req, res) => {
 module.exports = { 
     createAppointment,
     getAppointments,
-    deleteAppointment
+    deleteAppointment,
+    modifyAppointment
 }; 
