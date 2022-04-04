@@ -9,14 +9,12 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   verified: { type: Boolean, default: false },
-  uniqueString: { type: String },
-  _journalid: { type: Schema.Types.ObjectId, ref: 'Journal' }
-
-},{ timestamps: true })
+  emailVerificationToken: { type: String, unique: true },
+  passResetToken: { type: String, expires: '1hr' },
+  passResetTokenExpirationDate: { type: Number, expires: '1hr' },
+  deactivationDate : { type: Date, default: undefined},
+}, { timestamps: true })
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = {
-  User,
-  userSchema
-}
+module.exports = { User };
