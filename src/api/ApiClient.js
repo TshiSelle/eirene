@@ -216,5 +216,5 @@ export function ModifyUserAppointment(authToken, eventID, title, description, da
     repeat
   });
 
-  return DeleteAxiosCall(`/calendar/modify/${eventID}`, data, { 'x-access-token': authToken });
+  return PatchAxiosCall(`/calendar/modify/${eventID}`, data, { 'x-access-token': authToken });
 }
