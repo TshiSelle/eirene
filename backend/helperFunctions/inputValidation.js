@@ -191,6 +191,31 @@ function validateObjectID(id) {
     return { errors, isValid: isEmpty(errors) }
 }
 
+function validateAppInput(data) {
+    let errors = {};
+    const { title, description, date, repeat }= data;
+    if (isEmpty(title)) {
+        errors.title = 'Title is empty, please provide a title';
+    } 
+    if (isEmpty(description)) {
+        errors.description = 'Description is empty, please provide a description'
+    }
+    if (isEmpty(date)) {
+        errors.datw = 'Date field is empty please provide a date';
+    } else if (!Validator.isInt(date)) {
+        errors.date = 'Date is invalid, provide date in milliseconds';
+    } else if( Date.now() > date) {
+        errors.date = 'Please provide only future dates';
+    }
+    if (isEmpty(repeat)) {
+        errors.repeat = 'Repeat field is empty, options are : None-Daily-Weekly-Monthly';
+    } else if (!Validator.isIn(repeat, ['None', 'Daily', 'Weekly', 'Monthly'])) {
+        errors.repeat = 'Repeat field is invalid, options are : None-Daily-Weekly-Monthly';
+    }
+
+    return { errors, isValid: isEmpty(errors) };
+}
+
 module.exports = {
     validateLoginInput,
     validateRegisterInput,
@@ -199,10 +224,16 @@ module.exports = {
     validatePassResetInput,
     validateSearchInput,
     validateNameChangeInput,
-    validateObjectID
+    validateObjectID,
+    validateAppInput
 };
 
+
+
+
 //mongoose.Types.ObjectId.isValid(id)
+
+
 
 
 function hasWhiteSpace(s) {

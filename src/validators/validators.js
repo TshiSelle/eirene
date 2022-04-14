@@ -40,3 +40,9 @@ export function validateGender(gender) {
     return { success: true };
   return { success: false, message: "Invalid gender." };
 }
+
+export function validateMessage(message) {
+  if (!message) 
+    return { success: false, message: "Message empty." };
+  return { success: true};
+}
