@@ -52,7 +52,7 @@ const deleteJournal = async (req, res) => {
 const getJournals = (req, res) => {
 	Journal.find({ _UID: req.user.id }, { __v: 0, _UID: 0 })
 		.then(journals => {
-			res.status(200).json({ journals })
+			res.status(200).json({ journals, success: true })
 		})
 		.catch(err => {
 			res.status(400).json({ message: `Error occurred while searching for journals : ${err}`, success: false })
