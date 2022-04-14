@@ -14,6 +14,8 @@ import { AuthProvider } from "./context/AuthContext";
 import { JournalProvider } from "./context/JournalContext";
 import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 import { UserProvider } from "./context/UserContext";
+import ContactUsExt from "./components/ContactUs/ContactUsExt";
+
 
 const App = () => {
   return (
@@ -37,6 +39,7 @@ const App = () => {
                   <Route path="/therapist-description/:id" element={<TherapistDescription />} />
                   <Route path="/verify/:username/:token" element={<VerifyAccount />} />
                   <Route path="/Journal" element={<Journal />} />
+                  <Route path="/contact" element={<ContactUsExt />} />
                 </Routes>
               </Router>
             </Suspense>
