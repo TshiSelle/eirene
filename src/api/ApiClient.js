@@ -137,14 +137,11 @@ export function DeactivateAccount(authToken) {
 }
 
 export function StopAccountDeactivation(authToken) {
-  return PostAxiosCall('/account/undeactivate',{}, { 'x-access-token': authToken });
+  return PostAxiosCall('/account/undeactivate', {}, { 'x-access-token': authToken });
 }
 
 export function CreateJournal(authToken, title, body) {
-  const data = JSON.stringify({
-    title,
-    body
-  });
+  const data = { title, body };
   return PostAxiosCall('/journal/create', data, { 'x-access-token': authToken });
 }
 
@@ -153,21 +150,19 @@ export function GetUserJournals(authToken) {
 }
 
 export function UpdateJournal(authToken, journalID, newTitle, newBody) {
-  const data = JSON.stringify({
+  const data = {
     journalID,
     title : newTitle,
     body : newBody
-  });
+  };
   
   return PatchAxiosCall('/journal/update', data,  { 'x-access-token': authToken });
 }
 
 export function DeleteJournal(journalID, authToken) {
-  const data = JSON({
-    journalID
-  });
+  const data = ({ journalID });
 
-  return DeleteAxiosCall('/journal/delete', { 'x-access-token': authToken });
+  return DeleteAxiosCall('/journal/delete', data, { 'x-access-token': authToken });
 }
 
 export function ContactSupport(authToken, supportMessage) { //registered users

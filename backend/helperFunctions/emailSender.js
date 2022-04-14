@@ -20,7 +20,7 @@ function sendEmailVerification(username, email, emailVerificationToken) {
         html: `Hello! press <a href=http://localhost:${process.env.CLIENT_PORT}/verify/${username}/${emailVerificationToken}>here</a> to verify your account!`
     };
 
-    Transport.sendMail(mailOptions, (error, response) => {
+    Transport.sendMail(mailOptions, (error, res) => {
         if (error) {
             res.status(400).json({"error" : error.name + ": " + error.message})
             console.log(error);
