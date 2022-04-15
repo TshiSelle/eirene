@@ -1,14 +1,203 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const HomePage = () => {
   return (
-		<div>
-			<h1>HomePage</h1>
-			{/* this Link is temporary */}
-			<Link to='/SignUp'>Go to Signup</Link>
-		</div>
+    <Container>
+      <Header>
+        <Nav>
+          <Anchor href={""}>Home</Anchor>
+          <Anchor href={""}>Therapists</Anchor>
+          <Anchor href={""}>Journal</Anchor>
+          <Anchor href={""}>Radio</Anchor>
+          <Anchor href={""}>Meditations</Anchor>
+          <Anchor href={""}>About Us</Anchor>
+          <Anchor href={""}>Contact</Anchor>
+        </Nav>
+      </Header>
+
+      <GreenBackground></GreenBackground>
+
+      <Main>
+        <BannerSection>
+          <BnHeader>Project: Eirene</BnHeader>
+          <BnDescription>Embrace Your Inner Peace</BnDescription>
+        </BannerSection>
+
+        <TherapistSection>
+          <ThImage src={require("./images/img1.jpg")} />
+
+          <ThDetails>
+            <ThHeader>Find The Therapist For You</ThHeader>
+            <ThPara>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+              totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
+              neque veniam. Magnam accusantium accusamus laudantium magni ipsum
+              enim assumenda ipsam!
+            </ThPara>
+            <ThPara>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+              totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
+              neque veniam. Magnam accusantium accusamus laudantium magni ipsum
+              enim assumenda ipsam!
+            </ThPara>
+            <ThPara>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+              totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
+              neque veniam. Magnam accusantium accusamus laudantium magni ipsum
+              enim assumenda ipsam!
+            </ThPara>
+          </ThDetails>
+        </TherapistSection>
+
+        <JournalSection>
+          <JrHeader>Why Journaling?</JrHeader>
+          <JrPara>It can help with</JrPara>
+
+          <JrImage src={require("./images/arrow.png")} />
+
+          <JrSection>
+            <JrDetails></JrDetails>
+          </JrSection>
+        </JournalSection>
+      </Main>
+    </Container>
   );
 };
 
 export default HomePage;
+
+const Container = styled.div`
+  font-family: "Roboto", sans-serif;
+  line-height: 1.5;
+  color: #212529;
+`;
+
+const Header = styled.header`
+  background-color: white;
+  height: 108px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  gap: 5%;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+const Anchor = styled.a`
+  font-size: 14px;
+  text-decoration: none;
+  color: #212529;
+`;
+
+const GreenBackground = styled.div`
+  background-color: #e1ebd5;
+  height: 1101px;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  margin-top: 350px;
+`;
+
+const Main = styled.main`
+  width: 90%;
+  margin: 108px auto 0;
+  display: grid;
+`;
+
+import banner from "./images/banner.jpg";
+const BannerSection = styled.section`
+  background-image: url(${banner});
+  height: 600px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  display: grid;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+`;
+
+const BnHeader = styled.h1`
+  font-size: 70px;
+  font-weight: bold;
+  align-self: end;
+`;
+
+const BnDescription = styled.p`
+  font-size: 20px;
+`;
+
+const TherapistSection = styled.section`
+  display: flex;
+  height: 738px;
+  background-color: #ffffff;
+  margin-top: 135px;
+`;
+
+const ThImage = styled.img`
+  width: 50%;
+  object-fit: cover;
+`;
+
+const ThDetails = styled.section`
+  width: 50%;
+  padding: 5% 7%;
+  box-sizing: border-box;
+`;
+
+const ThHeader = styled.h1`
+  font-size: 30px;
+  font-weight: bold;
+  border-bottom: 1px solid black;
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+`;
+
+const ThPara = styled.p`
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: justify;
+`;
+
+const JournalSection = styled.section`
+  text-align: center;
+  margin-top: 20px;
+`;
+
+const JrHeader = styled.h1`
+  font-size: 30px;
+`;
+
+const JrPara = styled.p`
+  height: 30px;
+  margin-top: 20px;
+`;
+
+const JrImage = styled.img`
+  height: 30px;
+  margin-top: 20px;
+`;
+
+import journal from "./images/img2.jpg";
+const JrSection = styled.section`
+  background-image: url(${journal});
+  background-size: cover;
+  height: 822px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+`;
+
+const JrDetails = styled.section`
+  background-color: #ffffff;
+  height: 463px;
+  width: 60%;
+`;
