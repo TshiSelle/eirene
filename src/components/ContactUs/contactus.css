@@ -1,0 +1,11 @@
+.textfield {
+	border: unset;
+	border-radius: unset;
+	border-bottom: 1px solid #8d8d8d;
+}
+
+.textarea {
+		border: unset;
+		border-radius: unset;
+		border-bottom: 1px solid #8d8d8d;
+}
