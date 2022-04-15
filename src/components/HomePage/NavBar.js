@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 
 const NavBar = () => {
     const location = useLocation();
@@ -8,13 +8,13 @@ const NavBar = () => {
   return (
       <Header pathname={location.pathname}>
         <Nav>
-          <Anchor href={"/"}>Home</Anchor>
-          <Anchor href={"/find-therapists"}>Therapists</Anchor>
-          <Anchor href={"/Journal"}>Journal</Anchor>
-          <Anchor href={"/radio"}>Radio</Anchor>
-          <Anchor href={"/meditation"}>Meditations</Anchor>
-          <Anchor href={"/about"}>About Us</Anchor>
-          <Anchor href={"/contact"}>Contact</Anchor>
+          <StyledLink to={"/"}>Home</StyledLink>
+          <StyledLink to={"/find-therapists"}>Therapists</StyledLink>
+          <StyledLink to={"/Journal"}>Journal</StyledLink>
+          <StyledLink to={"/radio"}>Radio</StyledLink>
+          <StyledLink to={"/meditation"}>Meditations</StyledLink>
+          <StyledLink to={"/about"}>About Us</StyledLink>
+          <StyledLink to={"/contact"}>Contact</StyledLink>
         </Nav>
       </Header>
       );
@@ -35,7 +35,7 @@ const Nav = styled.nav`
   height: 100%;
 `;
 
-const Anchor = styled.a`
+const StyledLink = styled(Link)`
   font-size: 14px;
   text-decoration: none;
   color: #212529;

@@ -17,6 +17,7 @@ import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 import { UserProvider } from "./context/UserContext";
 import { CalendarProvider } from './context/CalendarContext';
 import ContactUsExt from "./components/ContactUs/ContactUsExt";
+import MediaPlayer from "./components/MediaPlayer/MediaPlayer";
 
 
 const App = () => {
@@ -29,22 +30,24 @@ const App = () => {
               {/* This is where we will have to put the top navigation bar */}
               <Suspense fallback={<FullPageSpinner />}>
                 <Router>
-                <NavBar />
-                  <Routes>
-                    {/* Every page we create needs to have a route so we can navigate to it,
-                        Imitate the routes below with a proper path when adding a new page */}
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/Profile" element={<ProfilePage /> } />
-                    <Route path="/SignUp" element={<SignUpPage />} />
-                    <Route path="/SignIn" element={<LoginPage />} />
-                    <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-                    <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
-                    <Route path="/find-therapists" element={<SearchTherapists />} />
-                    <Route path="/therapist-description/:id" element={<TherapistDescription />} />
-                    <Route path="/verify/:username/:token" element={<VerifyAccount />} />
-                    <Route path="/Journal" element={<Journal />} />
-                    <Route path="/contact" element={<ContactUsExt />} />
-                  </Routes>
+                  <NavBar />
+                  <MediaPlayer>
+                    <Routes>
+                      {/* Every page we create needs to have a route so we can navigate to it,
+                          Imitate the routes below with a proper path when adding a new page */}
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/Profile" element={<ProfilePage /> } />
+                      <Route path="/SignUp" element={<SignUpPage />} />
+                      <Route path="/SignIn" element={<LoginPage />} />
+                      <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+                      <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
+                      <Route path="/find-therapists" element={<SearchTherapists />} />
+                      <Route path="/therapist-description/:id" element={<TherapistDescription />} />
+                      <Route path="/verify/:username/:token" element={<VerifyAccount />} />
+                      <Route path="/Journal" element={<Journal />} />
+                      <Route path="/contact" element={<ContactUsExt />} />
+                    </Routes>
+                    </MediaPlayer>
                 </Router>
               </Suspense>
               {/* This is where we will have to put Footer (IF IT EXISTS)*/}
