@@ -11,9 +11,11 @@ import ForgotPasswordResetForm from './components/Profile/SignIn/forgot/ForgotPa
 import SearchTherapists from "./components/Therapists/SearchTherapists";
 import TherapistDescription from './components/Therapists/TherapistDescription';
 import { AuthProvider } from "./context/AuthContext";
+import NavBar from "./components/HomePage/NavBar";
 import { JournalProvider } from "./context/JournalContext";
 import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 import { UserProvider } from "./context/UserContext";
+import { CalendarProvider } from './context/CalendarContext';
 import ContactUsExt from "./components/ContactUs/ContactUsExt";
 
 
@@ -21,31 +23,34 @@ const App = () => {
   return (
     <AuthProvider>
       <UserProvider>
-        <JournalProvider>
-          <Suspense fallback={<FullPageSpinner />}>
-            {/* This is where we will have to put the top navigation bar */}
+        <CalendarProvider>
+          <JournalProvider>
             <Suspense fallback={<FullPageSpinner />}>
-              <Router>
-                <Routes>
-                  {/* Every page we create needs to have a route so we can navigate to it,
-                      Imitate the routes below with a proper path when adding a new page */}
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/Profile" element={<ProfilePage /> } />
-                  <Route path="/SignUp" element={<SignUpPage />} />
-                  <Route path="/SignIn" element={<LoginPage />} />
-                  <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-                  <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
-                  <Route path="/find-therapists" element={<SearchTherapists />} />
-                  <Route path="/therapist-description/:id" element={<TherapistDescription />} />
-                  <Route path="/verify/:username/:token" element={<VerifyAccount />} />
-                  <Route path="/Journal" element={<Journal />} />
-                  <Route path="/contact" element={<ContactUsExt />} />
-                </Routes>
-              </Router>
+              {/* This is where we will have to put the top navigation bar */}
+              <Suspense fallback={<FullPageSpinner />}>
+                <Router>
+                <NavBar />
+                  <Routes>
+                    {/* Every page we create needs to have a route so we can navigate to it,
+                        Imitate the routes below with a proper path when adding a new page */}
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/Profile" element={<ProfilePage /> } />
+                    <Route path="/SignUp" element={<SignUpPage />} />
+                    <Route path="/SignIn" element={<LoginPage />} />
+                    <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+                    <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
+                    <Route path="/find-therapists" element={<SearchTherapists />} />
+                    <Route path="/therapist-description/:id" element={<TherapistDescription />} />
+                    <Route path="/verify/:username/:token" element={<VerifyAccount />} />
+                    <Route path="/Journal" element={<Journal />} />
+                    <Route path="/contact" element={<ContactUsExt />} />
+                  </Routes>
+                </Router>
+              </Suspense>
+              {/* This is where we will have to put Footer (IF IT EXISTS)*/}
             </Suspense>
-            {/* This is where we will have to put Footer (IF IT EXISTS)*/}
-          </Suspense>
-        </JournalProvider>
+          </JournalProvider>
+        </CalendarProvider>
       </UserProvider>
     </AuthProvider>
   );

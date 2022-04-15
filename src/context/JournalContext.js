@@ -2,7 +2,6 @@ import React, { useReducer, useMemo, useCallback, useContext, useEffect } from '
 import { useAuthenticator } from './AuthContext';
 import { UpdateJournal, GetUserJournals, DeleteJournal } from '../api/ApiClient';
 const JournalContext = React.createContext();
-const KEY = 'journal_entries';
 
 const reducer = (state, action) => {
   switch (action.type) {
