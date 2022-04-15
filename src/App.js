@@ -11,6 +11,7 @@ import ForgotPasswordResetForm from './components/Profile/SignIn/forgot/ForgotPa
 import SearchTherapists from "./components/Therapists/SearchTherapists";
 import TherapistDescription from './components/Therapists/TherapistDescription';
 import { AuthProvider } from "./context/AuthContext";
+import NavBar from "./components/HomePage/NavBar";
 import { JournalProvider } from "./context/JournalContext";
 import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 import { UserProvider } from "./context/UserContext";
@@ -28,6 +29,7 @@ const App = () => {
               {/* This is where we will have to put the top navigation bar */}
               <Suspense fallback={<FullPageSpinner />}>
                 <Router>
+                <NavBar />
                   <Routes>
                     {/* Every page we create needs to have a route so we can navigate to it,
                         Imitate the routes below with a proper path when adding a new page */}
