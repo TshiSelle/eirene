@@ -196,7 +196,7 @@ export function CreateUserAppointment(authToken, title, description, date, repea
 }
 
 export function GetUserAppointments(authToken) {
-  return GetAxiosCall('/calendar/getUserAppointments', undefined, { 'x-access-token': authToken });
+  return GetAxiosCall('/calendar/getUserAppointments', { 'x-access-token': authToken });
 }
 
 export function DeleteUserAppointment(authToken, eventID) {

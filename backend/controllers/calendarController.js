@@ -5,7 +5,7 @@ const getAppointments = (req, res) => {
     Calendar.findOne({ UID: req.user.id })
         .then((dbCalendar) => {
             if (dbCalendar) {
-                res.status(201).json({ ...dbCalendar.events, success: true  });
+                res.status(201).json({ calendarEvents: dbCalendar.events, success: true  });
             } else {
                 res.status(201).json({ message: 'No events found', success: true })
             }

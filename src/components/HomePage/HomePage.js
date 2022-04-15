@@ -5,17 +5,6 @@ import styled from "styled-components";
 const HomePage = () => {
   return (
     <Container>
-      <Header>
-        <Nav>
-          <Anchor href={"/"}>Home</Anchor>
-          <Anchor href={"/find-therapists"}>Therapists</Anchor>
-          <Anchor href={"/Journal"}>Journal</Anchor>
-          <Anchor href={"/radio"}>Radio</Anchor>
-          <Anchor href={"/meditation"}>Meditations</Anchor>
-          <Anchor href={"/about"}>About Us</Anchor>
-          <Anchor href={"/contact"}>Contact</Anchor>
-        </Nav>
-      </Header>
 
       <GreenBackground></GreenBackground>
 
@@ -105,27 +94,6 @@ const Container = styled.div`
   color: #212529;
 `;
 
-const Header = styled.header`
-  background-color: white;
-  height: 108px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  gap: 5%;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
-
-const Anchor = styled.a`
-  font-size: 14px;
-  text-decoration: none;
-  color: #212529;
-`;
 
 const GreenBackground = styled.div`
   background-color: #e1ebd5;
