@@ -61,7 +61,7 @@ const JournalEntries = ({ setError, setMessage }) => {
     updateJournalEntries(id, title, body);
   }, [updateJournalEntries]);
 
-  journalEntries && journalEntries.forEach(({ _id, title, body, createdAt }) => {
+  journalEntries && journalEntries.forEach(({ _id, title, body, createdAt, modifiedAt }) => {
     if (!_id) return;
 
     tabs.push(
