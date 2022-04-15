@@ -87,7 +87,7 @@ const ContactUsExt = () => {
     lastName: "",
     email: "",
     message: "",
-    submissionErrorMessage: null,
+    submissionErrorMessage: "",
     firstNameError: null,
     lastNameError: null,
     emailError: null,
@@ -109,6 +109,7 @@ const ContactUsExt = () => {
     waiting,
     finished,
   } = state;
+  console.log("🚀 ~ file: ContactUsExt.js ~ line 112 ~ ContactUsExt ~ submissionErrorMessage", submissionErrorMessage)
 
   const setFirstName = useCallback(
     (e) => dispatch({ type: "set-first-name", value: e.target.value }),
@@ -157,13 +158,13 @@ const ContactUsExt = () => {
       });
       return;
     }
-    const messageValidation = validateMessage()
+    const messageValidation = validateMessage();
 
     dispatch({ type: "support-message-start" });
-    console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ message", message)
-    console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ email", email)
-    console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ lastName", lastName)
-    console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ firstName", firstName)
+    // console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ message", message)
+    // console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ email", email)
+    // console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ lastName", lastName)
+    // console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ firstName", firstName)
     // make axios post request
     ContactSupportExternal(
       firstName,
