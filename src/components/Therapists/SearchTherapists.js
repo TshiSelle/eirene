@@ -10,8 +10,9 @@ const searchTherapists = () => {
   const [error, setError] = useState("");
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    event.preventDefault();
+  useEffect((event) => {
+    if (event) event.preventDefault();
+    if (!query) return;
     FilterTherapists(query)
       .then((response) => {
         if (response.data.success) {
