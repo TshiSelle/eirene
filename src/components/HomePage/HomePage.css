@@ -5,4 +5,28 @@
   --Main-Background: rgb(246, 247, 252);
   --Background: rgb(245, 164, 145);
   --Green-Leaf: rgb(180, 158, 127);
+  --Green: #e1ebd5;
+  --DarkGreen: #8da86d;
+}
+
+@font-face {
+  font-family: FuturaLight;
+  src: url(./font/Futura-Light.woff);
+}
+
+.navlink {
+  transition: color 0.2s linear;
+}
+
+.navlink:hover {
+  color: #8da86d;
+  transition: color 0.2s linear;
+}
+
+.login {
+  position: absolute;
+  right: 5%;
+  display: flex;
+  gap: 10px;
+  color: #8da86d !important;
 }

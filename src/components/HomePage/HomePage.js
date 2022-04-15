@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import "./HomePage.css";
+import ContactUsExt from "../ContactUs/ContactUsExt";
 
 const HomePage = () => {
   return (
     <Container>
-
       <GreenBackground></GreenBackground>
 
       <Main>
@@ -82,6 +83,10 @@ const HomePage = () => {
           </MediItem>
         </MediFlex>
       </MeditationSection>
+
+      <Footer>
+        <ContactUsExt />
+      </Footer>
     </Container>
   );
 };
@@ -89,11 +94,10 @@ const HomePage = () => {
 export default HomePage;
 
 const Container = styled.div`
-  font-family: "Roboto", sans-serif;
+  font-family: FuturaLight;
   line-height: 1.5;
   color: #212529;
 `;
-
 
 const GreenBackground = styled.div`
   background-color: #e1ebd5;
@@ -224,7 +228,7 @@ const RaDescription = styled.p`
 `;
 
 const MeditationSection = styled.section`
-  background-color: #e8e6e6;
+  background-color: #e1ebd5;
   display: grid;
   justify-items: center;
   margin-top: 200px;
@@ -253,4 +257,8 @@ const MediName = styled.p`
   background-color: #ffffff;
   font-size: 23px;
   padding: 20px;
+`;
+
+const Footer = styled.footer`
+  margin: 100px 0 50px;
 `;
