@@ -32,7 +32,7 @@ const NavBar = () => {
         </StyledLink>
 
         {/* in case of not logged in */}
-        <StyledLink to={""} className="login">
+        <StyledLink to={""} className="loginnav">
           <Image src={require("./images/placeholder.png")} />
           Login
         </StyledLink>
