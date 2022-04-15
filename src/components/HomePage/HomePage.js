@@ -7,13 +7,13 @@ const HomePage = () => {
     <Container>
       <Header>
         <Nav>
-          <Anchor href={""}>Home</Anchor>
-          <Anchor href={""}>Therapists</Anchor>
-          <Anchor href={""}>Journal</Anchor>
-          <Anchor href={""}>Radio</Anchor>
-          <Anchor href={""}>Meditations</Anchor>
-          <Anchor href={""}>About Us</Anchor>
-          <Anchor href={""}>Contact</Anchor>
+          <Anchor href={"/"}>Home</Anchor>
+          <Anchor href={"/find-therapists"}>Therapists</Anchor>
+          <Anchor href={"/Journal"}>Journal</Anchor>
+          <Anchor href={"/radio"}>Radio</Anchor>
+          <Anchor href={"/meditation"}>Meditations</Anchor>
+          <Anchor href={"/about"}>About Us</Anchor>
+          <Anchor href={"/contact"}>Contact</Anchor>
         </Nav>
       </Header>
 
