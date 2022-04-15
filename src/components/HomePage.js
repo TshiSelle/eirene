@@ -61,7 +61,38 @@ const HomePage = () => {
             <JrDetails></JrDetails>
           </JrSection>
         </JournalSection>
+
+        <RadioSection>
+          <RaHeader>Radio</RaHeader>
+          <RaDescription>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis totam,
+            suscipit ipsa ipsum impedit, libero harum autem qui optio neque
+            veniam. Magnam accusantium accusamus laudantium magni ipsum enim
+            assumenda ipsam!
+          </RaDescription>
+        </RadioSection>
       </Main>
+
+      <MeditationSection>
+        <MediHeader>Meditations</MediHeader>
+
+        <MediFlex>
+          <MediItem>
+            <MediImage src={require("./images/img3.jpg")} />
+            <MediName>5 minute meditation for anxiety</MediName>
+          </MediItem>
+
+          <MediItem>
+            <MediImage src={require("./images/img3.jpg")} />
+            <MediName>5 minute meditation for anxiety</MediName>
+          </MediItem>
+
+          <MediItem>
+            <MediImage src={require("./images/img3.jpg")} />
+            <MediName>5 minute meditation for anxiety</MediName>
+          </MediItem>
+        </MediFlex>
+      </MeditationSection>
     </Container>
   );
 };
@@ -155,7 +186,7 @@ const ThDetails = styled.section`
 const ThHeader = styled.h1`
   font-size: 30px;
   font-weight: bold;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #212529;
   padding-bottom: 40px;
   margin-bottom: 40px;
 `;
@@ -173,6 +204,8 @@ const JournalSection = styled.section`
 
 const JrHeader = styled.h1`
   font-size: 30px;
+  font-weight: bold;
+  margin-top: 20px;
 `;
 
 const JrPara = styled.p`
@@ -200,4 +233,56 @@ const JrDetails = styled.section`
   background-color: #ffffff;
   height: 463px;
   width: 60%;
+`;
+
+const RadioSection = styled.section`
+  margin-top: 100px;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+`;
+
+const RaHeader = styled.h1`
+  font-size: 30px;
+  border-bottom: 1px solid #212529;
+  padding-bottom: 10px;
+  width: 60%;
+`;
+
+const RaDescription = styled.p`
+  font-size: 23px;
+  margin-top: 50px;
+  width: 40%;
+`;
+
+const MeditationSection = styled.section`
+  background-color: #e8e6e6;
+  display: grid;
+  justify-items: center;
+  margin-top: 200px;
+`;
+
+const MediHeader = styled.h1`
+  font-size: 30px;
+  margin-top: 75px;
+`;
+
+const MediFlex = styled.div`
+  display: flex;
+  margin: 75px 0 100px;
+  gap: 30px;
+`;
+
+const MediItem = styled.div`
+  width: 300px;
+`;
+
+const MediImage = styled.img`
+  width: 100%;
+`;
+
+const MediName = styled.p`
+  background-color: #ffffff;
+  font-size: 23px;
+  padding: 20px;
 `;
