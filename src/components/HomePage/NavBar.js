@@ -5,7 +5,7 @@ import "./HomePage.css";
 
 const NavBar = () => {
   const location = useLocation();
-  console.log(location.pathname);
+
   return (
     <Header pathname={location.pathname}>
       <Nav>

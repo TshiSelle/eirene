@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 
 const TherapistCard = ({ therapist }) => {
   return (
@@ -18,9 +19,9 @@ const TherapistCard = ({ therapist }) => {
         <ListGroupItem>Phone: {therapist.phone}</ListGroupItem>
       </ListGroup>
       <Card.Body>
-        <Card.Link href={`/therapist-description/${therapist._id}`}>
+        <Link to={`/therapist-description/${therapist._id}`}>
           Card Link
-        </Card.Link>
+        </Link>
       </Card.Body>
     </Card>
   );

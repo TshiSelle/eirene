@@ -75,7 +75,6 @@ export const JournalProvider = ({ children }) => {
       DeleteJournal(journalID, authToken)
         .then((response) => {
           if (response.data.success) {
-            // dispatch({ type: 'delete-entry', data: response.data.journals });
             console.log('successfully in delete journal', response.data);
           } else {
             console.log(' im here', response.data);

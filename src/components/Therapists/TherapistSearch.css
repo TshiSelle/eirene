@@ -2,8 +2,18 @@ h1 {
   font-size: 1rem;
 }
 
-.therapistContainer {
+.therapist-parent-container {
   flex-direction: row;
   justify-content: space-between;
-  background-color: '#333';
+  display: flex;
+  flex-wrap: wrap;
+}
+.therapist-container {
+  padding: 20px;
+  flex-basis: 33.3333333%;
+}
+@media (max-width: 800px) {
+  .therapist-parent-container {
+    flex: 100%;
+  }
 }
