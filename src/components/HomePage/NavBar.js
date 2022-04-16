@@ -41,18 +41,16 @@ const NavBar = () => {
           </Dropdown.Toggle>
           {loggedIn
             ? <Dropdown.Menu>
-                <Dropdown.Item eventKey="1">
-                  <Link to='/profile'>Profile</Link>
-                </Dropdown.Item>
-                <button onClick={userLogOut} style={{ marginLeft: 10, fontSize: 14 }}>Log out</button>
+                <Link to='/profile' style={{ marginLeft: 10 }}>Profile</Link>
+                <Dropdown.Divider />
+                <button onClick={userLogOut} style={{ marginLeft: 5, fontSize: 14 }}>Log out</button>
               </Dropdown.Menu>
             : <Dropdown.Menu>
-                <Dropdown.Item eventKey="1">
-                  <Link to='/SignIn'>Login</Link>
-                </Dropdown.Item>
-                <Dropdown.Item eventKey="2">
-                  <Link to='/SignUp'>SignUp</Link>
-                </Dropdown.Item>
+                <div >
+                  <Link to='/SignIn' style={{ marginLeft: 10 }}>Login</Link>
+                  <Dropdown.Divider />
+                  <Link to='/SignUp' style={{ marginLeft: 10 }}>SignUp</Link>
+                </div>
               </Dropdown.Menu>}
         </Dropdown>
       </Nav>
