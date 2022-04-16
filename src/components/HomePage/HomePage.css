@@ -23,7 +23,7 @@
   transition: color 0.2s linear;
 }
 
-.login {
+.loginnav {
   position: absolute;
   right: 5%;
   display: flex;
