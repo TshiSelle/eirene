@@ -8,12 +8,52 @@ h1 {
   display: flex;
   flex-wrap: wrap;
 }
+
 .therapist-container {
   padding: 20px;
   flex-basis: 33.3333333%;
 }
+
 @media (max-width: 800px) {
   .therapist-parent-container {
     flex: 100%;
   }
+}
+
+.therapistSearch {
+  background-color: #e1ebd5;
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.textField {
+    width: 50%;
+    border-radius: 4px 0 0 4px;
+}
+
+.therapistSearch label {
+  background-color: #ffffff;
+  height: 54px;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.therapistSearch label::after {
+  font-family: 'icomoon';
+  content: '\f002';
+  font-size: 16px;
+  color: #e1ebd5;
+}
+
+.therapistSearch label:hover {
+  cursor: pointer;
+}
+
+.textField:focus {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
 }
