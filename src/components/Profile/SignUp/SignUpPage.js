@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from "react";
 import SignUpForm from "./SignUpForm";
 import styled from "styled-components";
 import { useAuthenticator } from "../../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import CheckEmailModal from './verify/CheckEmailModal';
 
 const SignUpPage = () => {
@@ -25,28 +25,28 @@ const SignUpPage = () => {
       <MainSection>
         <SectionContainer>
           <TabContainer>
-            <Anchor
+            <StyledLink
               className="tab"
               style={{
                 borderRadius: "0.25rem 0 0 0.25rem",
                 backgroundColor: "#EFEFEF",
                 color: "#212529",
               }}
-              href="/SignIn"
+              to="/SignIn"
             >
               Login
-            </Anchor>
+            </StyledLink>
 
-            <Anchor
+            <StyledLink
               className="tab signup"
               style={{
                 borderRadius: "0 0.25rem 0.25rem 0",
                 backgroundColor: "#EDBEC4",
               }}
-              href={"/SignUp"}
+              to={"/SignUp"}
             >
               Sign Up
-            </Anchor>
+            </StyledLink>
           </TabContainer>
 
           <SignUpForm handleModal={handleModal} />
@@ -116,7 +116,7 @@ const TabContainer = styled.div`
   display: flex;
   margin-bottom: 3rem;
 `;
-const Anchor = styled.a`
+const StyledLink = styled(Link)`
   cursor: pointer;
   height: 54px;
   border: none;

@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 import styled from "styled-components";
 import "./loginStyle.css";
 import { useAuthenticator } from "../../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./icomoon/style.css";
 
 const LoginPage = () => {
@@ -19,27 +19,28 @@ const LoginPage = () => {
       <MainSection>
         <SectionContainer>
           <TabContainer>
-            <Anchor
-              className="tab login"
+            <StyledLink
+              className="tab"
               style={{
                 borderRadius: "0.25rem 0 0 0.25rem",
                 backgroundColor: "#EDBEC4",
               }}
+              to="/SignIn"
             >
               Login
-            </Anchor>
+            </StyledLink>
 
-            <Anchor
+            <StyledLink
               className="tab"
               style={{
                 borderRadius: "0.25rem 0 0 0.25rem",
                 backgroundColor: "#EFEFEF",
                 color: "#212529",
               }}
-              href={"/SignUp"}
+              to={"/SignUp"}
             >
               Sign Up
-            </Anchor>
+            </StyledLink>
           </TabContainer>
           <LoginForm />
         </SectionContainer>
@@ -114,7 +115,8 @@ const Button = styled.button`
   border-radius: 0.25rem;
   font-size: 1rem;
 `;
-const Anchor = styled.a`
+
+const StyledLink = styled(Link)`
   cursor: pointer;
   height: 54px;
   border: none;

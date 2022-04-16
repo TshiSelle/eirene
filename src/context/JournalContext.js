@@ -41,7 +41,7 @@ export const JournalProvider = ({ children }) => {
       }
     };
     getJournalEntries();
-  }, [authToken, loggedIn]);
+  }, [authToken, loggedIn, journalEntries]);
 
   const updateJournalEntries = useCallback((journalID, title, body) => {
 
