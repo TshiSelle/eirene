@@ -6,8 +6,9 @@ import Image from '../HomePage/images/banner.jpg';
 
 const MediaPlayer = ({children}) => {
     return (
-        <div style={{ }}>
-            <ReactJkMusicPlayer showMediaSession  audioLists={[{ name: 'tiddies', musicSrc: Music, cover: Image }]} />
+        <div>
+            <ReactJkMusicPlayer showMediaSession showDownload={false} showThemeSwitch={false}
+                remove={false} audioLists={[{ name: 'tiddies', musicSrc: Music, cover: Image }]} />
         {children}
         </div>
     )

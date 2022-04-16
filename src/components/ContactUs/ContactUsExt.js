@@ -175,7 +175,6 @@ const ContactUsExt = () => {
         .then((response) => {
           if (response.data.success) {
             dispatch({ type: "support-message-success" });
-            handleModal();
             console.log("Message Sent!");
           } else {
             dispatch({
@@ -205,13 +204,10 @@ const ContactUsExt = () => {
         <SizeContainer>
           <Form
             className="contact-form"
-            onSubmit={(e) => sendSupportMessage(e)}
+            onSubmit={sendSupportMessage}
           >
             <Form.Group className="mb-3">
               <GridContainer>
-                {/* <Label>First Name</Label>
-                <Label>Last Name</Label> */}
-
                 <Form.Control
                   className="textfield"
                   isInvalid={firstNameError}
@@ -234,7 +230,6 @@ const ContactUsExt = () => {
                 />
               </GridContainer>
 
-              {/* <Label>Email</Label> */}
               <Form.Control
                 className="textfield"
                 type="email"
@@ -251,7 +246,6 @@ const ContactUsExt = () => {
                 className="mb-3"
                 controlId="exampleForm.ControlTextarea1"
               >
-                {/* <Form.Label>Message</Form.Label> */}
                 <Form.Control
                   className="textarea"
                   as="textarea"
@@ -276,6 +270,7 @@ const ContactUsExt = () => {
               <Button
                 value="Submit Message"
                 type="submit"
+                onClick={sendSupportMessage}
                 disabled={submissionErrorMessage}
                 style={{
                   width: "50px",

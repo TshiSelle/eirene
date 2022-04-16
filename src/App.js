@@ -12,6 +12,7 @@ import SearchTherapists from "./components/Therapists/SearchTherapists";
 import TherapistDescription from './components/Therapists/TherapistDescription';
 import { AuthProvider } from "./context/AuthContext";
 import NavBar from "./components/HomePage/NavBar";
+import SiteFooter from "./components/HomePage/Footer";
 import { JournalProvider } from "./context/JournalContext";
 import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 import { UserProvider } from "./context/UserContext";
@@ -48,6 +49,7 @@ const App = () => {
                       <Route path="/contact" element={<ContactUsExt />} />
                     </Routes>
                     </MediaPlayer>
+                    <SiteFooter />
                 </Router>
               </Suspense>
               {/* This is where we will have to put Footer (IF IT EXISTS)*/}

@@ -63,7 +63,9 @@ const JournalEntries = ({ setError, setMessage }) => {
 
   const handleUpdateEntry = useCallback((id, title, body) => {
     updateJournalEntries(id, title, body);
+    setIsEditEnabled(false);
   }, [updateJournalEntries]);
+
   const handleNewJournal = () => {
     setNewEntry(true)
     setTabIndex(journalEntries.length);
@@ -150,7 +152,7 @@ const JournalEntries = ({ setError, setMessage }) => {
         {newEntry &&
         <form>
           <button disabled={typeof(newBody) === 'string' && newBody.trim().length === 0} 
-            className="btn btn-success form-control" style={{ marginRight: 20}}
+            className="btn btn-success form-control" style={{ marginRight: 20 }}
             type="submit" onClick={handleOnSubmit}>Submit</button>
         </form>}
     </TabPanel>

@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "./HomePage.css";
-import ContactUsExt from "../ContactUs/ContactUsExt";
+import JournalImg from "./images/img2.jpg";
+import BannerImg from "./images/banner.jpg";
 
 const HomePage = () => {
   return (
@@ -83,10 +84,6 @@ const HomePage = () => {
           </MediItem>
         </MediFlex>
       </MeditationSection>
-
-      <Footer>
-        <ContactUsExt />
-      </Footer>
     </Container>
   );
 };
@@ -113,10 +110,8 @@ const Main = styled.main`
   margin: 108px auto 0;
   display: grid;
 `;
-
-import banner from "./images/banner.jpg";
 const BannerSection = styled.section`
-  background-image: url(${banner});
+  background-image: url(${BannerImg});
   height: 600px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -189,10 +184,8 @@ const JrImage = styled.img`
   height: 30px;
   margin-top: 20px;
 `;
-
-import journal from "./images/img2.jpg";
 const JrSection = styled.section`
-  background-image: url(${journal});
+  background-image: url(${JournalImg});
   background-size: cover;
   height: 822px;
   display: flex;
@@ -257,8 +250,4 @@ const MediName = styled.p`
   background-color: #ffffff;
   font-size: 23px;
   padding: 20px;
-`;
-
-const Footer = styled.footer`
-  margin: 100px 0 50px;
 `;
