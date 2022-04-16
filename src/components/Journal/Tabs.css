@@ -80,6 +80,12 @@
   padding: 0px 25px 0px 25px;
 }
 
+.edit-button {
+  flex: 1;
+  margin-right: 10px;
+  width: 140px;
+}
+
 .new-journal-button {
   background-color: transparent;
   padding-right: 40;

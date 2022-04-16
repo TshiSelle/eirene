@@ -9,7 +9,6 @@ const Journal = () => {
   const { journalEntries } = useJournal();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  console.log(loggedIn, " loggedIN");
   return (
     <div>
       {loggedIn ? (

@@ -11,6 +11,7 @@ const JournalEntries = ({ setError, setMessage }) => {
   const { authToken } = useAuthenticator();
   const [ newEntry, setNewEntry ] = useState(false);
   const [ newBody, setNewBody ] = useState(undefined);
+  const [tabIndex, setTabIndex] = useState(0);
   const [ newTitle, setNewTitle ] = useState(undefined);
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const fieldRef = useRef();
@@ -48,10 +49,13 @@ const JournalEntries = ({ setError, setMessage }) => {
   const handleTitleOnChange = e => {
     setNewTitle(e.target.value);
   };
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
     if(newBody && newTitle && newBody.trim().length > 0) {
       addNewJournalEntry(newTitle, newBody);
     }
+    setNewTitle('');
+    setNewBody('');
   }
   const editJournalEntry = useCallback(() => {
     setIsEditEnabled(true);
@@ -60,6 +64,10 @@ const JournalEntries = ({ setError, setMessage }) => {
   const handleUpdateEntry = useCallback((id, title, body) => {
     updateJournalEntries(id, title, body);
   }, [updateJournalEntries]);
+  const handleNewJournal = () => {
+    setNewEntry(true)
+    setTabIndex(journalEntries.length);
+  }
 
   journalEntries && journalEntries.forEach(({ _id, title, body, createdAt, modifiedAt }) => {
     if (!_id) return;
@@ -88,8 +96,6 @@ const JournalEntries = ({ setError, setMessage }) => {
                 ref={fieldRef}/>
                 <form>
                   <div style={{ textAlign: 'right', paddingTop: 15, paddingBottom: 15 }}>
-                    <button className="btn btn-sm btn-danger" style={{ marginRight: 20}}
-                      onClick={() => removeJournalEntries(_id)}>Delete this journal</button>
                       <button className="btn btn-sm btn-success" style={{ marginRight: 20 }}
                       onClick={() => setIsEditEnabled(false)}>Cancel</button>
                     <button className="btn btn-sm btn-success" type="submit" style={{ marginRight: 20}}
@@ -101,21 +107,27 @@ const JournalEntries = ({ setError, setMessage }) => {
                 <div style={{ padding: 25, textAlign: 'left', flex: 3 }}>
                   <h5>{body}</h5>
                 </div>
-                <button className="btn btn-sm btn-success" style={{ flex:1  }}
-                  onClick={editJournalEntry}>Edit</button>
+                <button className="new-journal-button"
+                  onClick={handleNewJournal}>Create a new journal!</button>
+                  <button className="btn btn-sm btn-success edit-button"
+                    onClick={editJournalEntry}>Edit</button>
+                  <button className="btn btn-sm btn-danger" style={{ marginRight: 20, width: 140 }}
+                      onClick={() => removeJournalEntries(_id)}>Delete this journal</button>
               </div>}
           <div>
         </div>
       </TabPanel>
     );
   });
-  tabs.push(
+  const reversedTabPanels = tabPanels.reverse();
+  const reversedTabs = tabs.reverse();
+
+  reversedTabs.push(
     <Tab disabled={isEditEnabled} key={1}>
-      <button className="new-journal-button"
-        onClick={() => setNewEntry(true)}>Create a new journal!</button>
+      
     </Tab>
   );
-  tabPanels.push(
+  reversedTabPanels.push(
     <TabPanel key={1} style={{ flex: 5, paddingBottom: 20, paddingLeft: 12 }}>
       <h1 style={{paddingTop: 5 }}>Add a title: </h1>
       <textarea className="form-control text-area"
@@ -146,13 +158,14 @@ const JournalEntries = ({ setError, setMessage }) => {
 
   return (
     <>
-     <Tabs style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+     <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}
+      style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
           <TabList style={{ flex: 1 }}>
             <div className="scroll">
-              {tabs}
+              {reversedTabs}
             </div>
           </TabList>
-          {tabPanels}
+          {reversedTabPanels}
         </Tabs>
     </>
   );
