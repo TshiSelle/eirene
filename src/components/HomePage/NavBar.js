@@ -2,9 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { useLocation, Link } from "react-router-dom";
 import "./HomePage.css";
+import { useAuthenticator } from "../../context/AuthContext";
+import { Dropdown } from "react-bootstrap";
+import { useUser } from "../../context/UserContext";
 
 const NavBar = () => {
   const location = useLocation();
+  const { loggedIn } = useAuthenticator();
+  const { userLogOut } = useUser();
 
   return (
     <Header pathname={location.pathname}>
@@ -30,14 +35,26 @@ const NavBar = () => {
         <StyledLink to={"/contact"} className="navlink">
           Contact
         </StyledLink>
-
-        {/* in case of not logged in */}
-        <StyledLink to={""} className="loginnav">
-          <Image src={require("./images/placeholder.png")} />
-          Login
-        </StyledLink>
-
-        {/* todo: in case of logged in */}
+        <Dropdown className="btn">
+          <Dropdown.Toggle>
+            <Image src={require("./images/placeholder.png")} />
+          </Dropdown.Toggle>
+          {loggedIn
+            ? <Dropdown.Menu>
+                <Dropdown.Item eventKey="1">
+                  <Link to='/profile'>Profile</Link>
+                </Dropdown.Item>
+                <button onClick={userLogOut} style={{ marginLeft: 10, fontSize: 14 }}>Log out</button>
+              </Dropdown.Menu>
+            : <Dropdown.Menu>
+                <Dropdown.Item eventKey="1">
+                  <Link to='/SignIn'>Login</Link>
+                </Dropdown.Item>
+                <Dropdown.Item eventKey="2">
+                  <Link to='/SignUp'>SignUp</Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>}
+        </Dropdown>
       </Nav>
     </Header>
   );

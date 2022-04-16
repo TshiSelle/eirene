@@ -18,11 +18,26 @@
   transition: color 0.2s linear;
 }
 
+.btn-primary {
+  color: #fff;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
 .navlink:hover {
   color: #8da86d;
   transition: color 0.2s linear;
 }
-
+.btn {
+  background-color: transparent;
+}
+.btn:focus {
+  outline: none !important;
+  outline-offset: none !important;
+}
+.btn:hover {
+  outline: none !important;
+  outline-offset: none !important;
+}
 .loginnav {
   position: absolute;
   right: 5%;
