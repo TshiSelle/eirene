@@ -7,17 +7,17 @@ const SiteFooter = () => {
   const location = useLocation();
   return (
     <>
-    {location.pathname !== '/contact'
-      ? <Footer>
+      {location.pathname !== "/contact" ? (
+        <Footer>
           <ContactUsExt />
         </Footer>
-      : null}
-  </>
-  )
+      ) : null}
+    </>
+  );
 };
 
-
 const Footer = styled.footer`
-  margin: 100px 0 50px;
+  padding: 100px 0 50px;
+  background-color: #f5f5f5;
 `;
 export default SiteFooter;
