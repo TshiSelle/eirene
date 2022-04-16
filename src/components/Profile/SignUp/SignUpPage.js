@@ -3,7 +3,7 @@ import SignUpForm from "./SignUpForm";
 import styled from "styled-components";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
-import CheckEmailModal from './verify/CheckEmailModal';
+import CheckEmailModal from "./verify/CheckEmailModal";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -12,49 +12,53 @@ const SignUpPage = () => {
   const handleModal = useCallback(() => setShowModal(true), []);
 
   const handleHomeRedirect = useCallback(() => {
-    return navigate('/');
+    return navigate("/");
   }, [navigate]);
 
   useEffect(() => {
-    if (loggedIn) return navigate('/');
+    if (loggedIn) return navigate("/");
   }, [loggedIn, navigate]);
 
   return (
     <>
-    <MainContainer>
-      <MainSection>
-        <SectionContainer>
-          <TabContainer>
-            <StyledLink
-              className="tab"
-              style={{
-                borderRadius: "0.25rem 0 0 0.25rem",
-                backgroundColor: "#EFEFEF",
-                color: "#212529",
-              }}
-              to="/SignIn"
-            >
-              Login
-            </StyledLink>
+      <MainContainer>
+        <MainSection>
+          <SectionContainer>
+            <TabContainer>
+              <StyledLink
+                className="tab"
+                style={{
+                  borderRadius: "0.25rem 0 0 0.25rem",
+                  backgroundColor: "#EFEFEF",
+                  color: "#212529",
+                }}
+                to="/SignIn"
+              >
+                Login
+              </StyledLink>
 
-            <StyledLink
-              className="tab signup"
-              style={{
-                borderRadius: "0 0.25rem 0.25rem 0",
-                backgroundColor: "#EDBEC4",
-              }}
-              to={"/SignUp"}
-            >
-              Sign Up
-            </StyledLink>
-          </TabContainer>
+              <StyledLink
+                className="tab signup"
+                style={{
+                  borderRadius: "0 0.25rem 0.25rem 0",
+                  backgroundColor: "#EDBEC4",
+                }}
+                to={"/SignUp"}
+              >
+                Sign Up
+              </StyledLink>
+            </TabContainer>
 
-          <SignUpForm handleModal={handleModal} />
-        </SectionContainer>
-      </MainSection>
-      <Image src={require("./bg_4.jpg")} alt="Eirene plant" />
-    </MainContainer>
-    <CheckEmailModal handleHomeRedirect={handleHomeRedirect} showModal={showModal} handleModal={handleModal}/>
+            <SignUpForm handleModal={handleModal} />
+          </SectionContainer>
+        </MainSection>
+        <Image src={require("./bg_4.jpg")} alt="Eirene plant" />
+      </MainContainer>
+      <CheckEmailModal
+        handleHomeRedirect={handleHomeRedirect}
+        showModal={showModal}
+        handleModal={handleModal}
+      />
     </>
   );
 };
@@ -96,7 +100,7 @@ const MainSection = styled.section`
   justify-content: center;
   width: 50%;
   padding: 20px 0;
-  background: #f6f7fc;
+  // background: #f6f7fc;
 
   @media (max-width: 991px) {
     grid-area: form;
