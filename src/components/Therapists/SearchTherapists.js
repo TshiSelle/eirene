@@ -39,7 +39,7 @@ const searchTherapists = () => {
     <div>
       <Form className="therapistSearch" onSubmit={() => event.preventDefault()}>
         <Form.Control
-          className="textField"
+          className="searchField"
           type="text"
           value={query}
           isInvalid={error}

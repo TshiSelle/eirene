@@ -1,5 +1,19 @@
-h1 {
-  font-size: 1rem;
+@font-face {
+  font-family: FuturaLight;
+  src: url(./font/Futura-Light.woff);
+}
+
+@font-face {
+  font-family: ProximaNova;
+  src: url(./font/Proxima-Nova-Regular.woff);
+}
+
+h1, h3 {
+  font-size: 16px;
+}
+
+bold {
+  font-weight: bold;
 }
 
 .therapist-parent-container {
@@ -27,9 +41,17 @@ h1 {
   justify-content: center;
 }
 
-.textField {
+.searchField {
     width: 50%;
     border-radius: 4px 0 0 4px;
+    font-family: FuturaLight;
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 1rem;
+    height: 54px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    font-size: 1rem;
 }
 
 .therapistSearch label {
@@ -54,6 +76,6 @@ h1 {
   cursor: pointer;
 }
 
-.textField:focus {
+.searchField:focus {
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
 }
