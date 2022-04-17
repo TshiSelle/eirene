@@ -2,8 +2,6 @@ import React from "react";
 // import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "./HomePage.css";
-import JournalImg from "./images/img2.jpg";
-import BannerImg from "./images/banner.jpg";
 import { Image } from "cloudinary-react";
 
 const HomePage = () => {
@@ -70,17 +68,17 @@ const HomePage = () => {
 
         <MediFlex>
           <MediItem>
-            <MediImage src={require("./images/img3.jpg")} />
+            <MediImage publicId={"samples/Profile/home-img3.jpg"} />
             <MediName>5 minute meditation for anxiety</MediName>
           </MediItem>
 
           <MediItem>
-            <MediImage src={require("./images/img3.jpg")} />
+            <MediImage publicId={"samples/Profile/home-img3.jpg"} />
             <MediName>5 minute meditation for anxiety</MediName>
           </MediItem>
 
           <MediItem>
-            <MediImage src={require("./images/img3.jpg")} />
+            <MediImage publicId={"samples/Profile/home-img3.jpg"} />
             <MediName>5 minute meditation for anxiety</MediName>
           </MediItem>
         </MediFlex>
@@ -111,8 +109,9 @@ const Main = styled.main`
   margin: 108px auto 0;
   display: grid;
 `;
+
 const BannerSection = styled.section`
-  background-image: url(${BannerImg});
+  background-image: url("https://res.cloudinary.com/cloudloom/image/upload/v1650234147/samples/Profile/home-banner.jpg");
   height: 600px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -185,8 +184,9 @@ const JrImage = styled(Image)`
   height: 30px;
   margin-top: 20px;
 `;
+
 const JrSection = styled.section`
-  background-image: url(${JournalImg});
+  background-image: url("https://res.cloudinary.com/cloudloom/image/upload/v1650234147/samples/Profile/home-img2.jpg");
   background-size: cover;
   height: 822px;
   display: flex;
@@ -245,7 +245,7 @@ const MediItem = styled.div`
   width: 300px;
 `;
 
-const MediImage = styled.img`
+const MediImage = styled(Image)`
   width: 100%;
 `;
 
