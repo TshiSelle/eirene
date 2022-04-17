@@ -19,10 +19,10 @@ export const CalendarProvider = ({ children }) => {
     userCalendarAppointments: null
   });
 
-  const { authToken } = useAuthenticator();
+  const { authToken, loggedIn } = useAuthenticator();
   const { userCalendarAppointments } = state;
   useEffect(() => {
-    if (!authToken) return;
+    if (!authToken || !loggedIn) return;
     GetUserAppointments(authToken)
       .then((response) => {
         if (response.data.success) {
