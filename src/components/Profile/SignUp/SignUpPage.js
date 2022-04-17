@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import CheckEmailModal from "./verify/CheckEmailModal";
+import { Image } from "cloudinary-react";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const SignUpPage = () => {
             <SignUpForm handleModal={handleModal} />
           </SectionContainer>
         </MainSection>
-        <Image src={require("./bg_4.jpg")} alt="Eirene plant" />
+        <StyledImage publicId={"samples/Profile/login-image.jpg"} alt="Eirene plant" />
       </MainContainer>
       <CheckEmailModal
         handleHomeRedirect={handleHomeRedirect}
@@ -81,7 +82,7 @@ const MainContainer = styled.main`
 `;
 
 // right side
-const Image = styled.img`
+const StyledImage = styled(Image)`
   width: 50%;
   object-fit: cover;
   object-position: right;
