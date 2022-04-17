@@ -4,6 +4,7 @@ import styled from "styled-components";
 import "./HomePage.css";
 import JournalImg from "./images/img2.jpg";
 import BannerImg from "./images/banner.jpg";
+import { Image } from "cloudinary-react";
 
 const HomePage = () => {
   return (
@@ -17,7 +18,7 @@ const HomePage = () => {
         </BannerSection>
 
         <TherapistSection>
-          <ThImage src={require("./images/img1.jpg")} />
+          <ThImage publicId={"samples/Profile/home-img1.jpg"} />
 
           <ThDetails>
             <ThHeader>Find The Therapist For You</ThHeader>
@@ -46,7 +47,7 @@ const HomePage = () => {
           <JrHeader>Why Journaling?</JrHeader>
           <JrPara>It can help with</JrPara>
 
-          <JrImage src={require("./images/arrow.png")} />
+          <JrImage publicId={"samples/Profile/arrow.png"} />
 
           <JrSection>
             <JrDetails></JrDetails>
@@ -139,7 +140,7 @@ const TherapistSection = styled.section`
   margin-top: 135px;
 `;
 
-const ThImage = styled.img`
+const ThImage = styled(Image)`
   width: 50%;
   object-fit: cover;
 `;
@@ -180,7 +181,7 @@ const JrPara = styled.p`
   margin-top: 20px;
 `;
 
-const JrImage = styled.img`
+const JrImage = styled(Image)`
   height: 30px;
   margin-top: 20px;
 `;

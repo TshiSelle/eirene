@@ -14,50 +14,54 @@ import { AuthProvider } from "./context/AuthContext";
 import NavBar from "./components/HomePage/NavBar";
 import SiteFooter from "./components/HomePage/Footer";
 import { JournalProvider } from "./context/JournalContext";
+import MeditationPage from "./components/Meditations/MeditationPage";
 import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 import { UserProvider } from "./context/UserContext";
 import { CalendarProvider } from './context/CalendarContext';
 import ContactUsExt from "./components/ContactUs/ContactUsExt";
 import MediaPlayer from "./components/MediaPlayer/MediaPlayer";
-
+import { CloudinaryContext } from "cloudinary-react";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <UserProvider>
-        <CalendarProvider>
-          <JournalProvider>
-            <Suspense fallback={<FullPageSpinner />}>
-              {/* This is where we will have to put the top navigation bar */}
+    <CloudinaryContext cloudName="cloudloom">
+      <AuthProvider>
+        <UserProvider>
+          <CalendarProvider>
+            <JournalProvider>
               <Suspense fallback={<FullPageSpinner />}>
-                <Router>
-                  <NavBar />
-                  <MediaPlayer>
-                    <Routes>
-                      {/* Every page we create needs to have a route so we can navigate to it,
-                          Imitate the routes below with a proper path when adding a new page */}
-                      <Route path="/" element={<HomePage />} />
-                      <Route path="/Profile" element={<ProfilePage /> } />
-                      <Route path="/SignUp" element={<SignUpPage />} />
-                      <Route path="/SignIn" element={<LoginPage />} />
-                      <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-                      <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
-                      <Route path="/find-therapists" element={<SearchTherapists />} />
-                      <Route path="/therapist-description/:id" element={<TherapistDescription />} />
-                      <Route path="/verify/:username/:token" element={<VerifyAccount />} />
-                      <Route path="/Journal" element={<Journal />} />
-                      <Route path="/contact" element={<ContactUsExt />} />
-                    </Routes>
-                    </MediaPlayer>
-                    <SiteFooter />
-                </Router>
+                {/* This is where we will have to put the top navigation bar */}
+                <Suspense fallback={<FullPageSpinner />}>
+                  <Router>
+                    <NavBar />
+                    <MediaPlayer>
+                      <Routes>
+                        {/* Every page we create needs to have a route so we can navigate to it,
+                            Imitate the routes below with a proper path when adding a new page */}
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/Profile" element={<ProfilePage /> } />
+                        <Route path="/SignUp" element={<SignUpPage />} />
+                        <Route path="/SignIn" element={<LoginPage />} />
+                        <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+                        <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
+                        <Route path="/find-therapists" element={<SearchTherapists />} />
+                        <Route path="/Meditations" element={<MeditationPage />} />
+                        <Route path="/therapist-description/:id" element={<TherapistDescription />} />
+                        <Route path="/verify/:username/:token" element={<VerifyAccount />} />
+                        <Route path="/Journal" element={<Journal />} />
+                        <Route path="/contact" element={<ContactUsExt />} />
+                      </Routes>
+                      </MediaPlayer>
+                      <SiteFooter />
+                  </Router>
+                </Suspense>
+                {/* This is where we will have to put Footer (IF IT EXISTS)*/}
               </Suspense>
-              {/* This is where we will have to put Footer (IF IT EXISTS)*/}
-            </Suspense>
-          </JournalProvider>
-        </CalendarProvider>
-      </UserProvider>
-    </AuthProvider>
+            </JournalProvider>
+          </CalendarProvider>
+        </UserProvider>
+      </AuthProvider>
+    </CloudinaryContext>
   );
 };
 

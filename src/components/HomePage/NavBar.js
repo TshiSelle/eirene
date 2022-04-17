@@ -5,6 +5,7 @@ import "./HomePage.css";
 import { useAuthenticator } from "../../context/AuthContext";
 import { Dropdown } from "react-bootstrap";
 import { useUser } from "../../context/UserContext";
+import { Image } from 'cloudinary-react';
 
 const NavBar = () => {
   const location = useLocation();
@@ -26,7 +27,7 @@ const NavBar = () => {
         <StyledLink to={"/radio"} className="navlink">
           Radio
         </StyledLink>
-        <StyledLink to={"/meditation"} className="navlink">
+        <StyledLink to={"/Meditations"} className="navlink">
           Meditations
         </StyledLink>
         <StyledLink to={"/about"} className="navlink">
@@ -37,7 +38,7 @@ const NavBar = () => {
         </StyledLink>
         <Dropdown className="btn">
           <Dropdown.Toggle>
-            <Image src={require("./images/placeholder.png")} />
+            <StyledImage publicId={'samples/Profile/navbar-profile'} />
           </Dropdown.Toggle>
           {loggedIn ? (
             <Dropdown.Menu>
@@ -107,7 +108,7 @@ const StyledLink = styled(Link)`
   color: #212529;
 `;
 
-const Image = styled.img`
+const StyledImage = styled(Image)`
   height: 25px;
   border-radius: 50%;
 `;
