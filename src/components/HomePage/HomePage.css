@@ -14,6 +14,11 @@
   src: url(./font/Futura-Light.woff);
 }
 
+@font-face {
+  font-family: ProximaNova;
+  src: url(./font/Proxima-Nova-Regular.woff);
+}
+
 .navlink {
   transition: color 0.2s linear;
 }

@@ -43,10 +43,12 @@ const searchTherapists = () => {
           type="text"
           value={query}
           isInvalid={error}
-          placeholder="Search for therapists..."
+          placeholder="Search..."
           name="Search For Therapists"
+          id="search"
           onChange={setQueryValue}
         />
+        <label for="search"></label>
       </Form>
       <div className="therapist-parent-container">
         {data.map((therapist, key) => {

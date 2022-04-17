@@ -11,7 +11,7 @@ const LoginPage = () => {
   const { loggedIn } = useAuthenticator();
 
   useEffect(() => {
-    if (loggedIn) return navigate('/');
+    if (loggedIn) return navigate("/");
   }, [loggedIn]);
 
   return (
@@ -20,7 +20,7 @@ const LoginPage = () => {
         <SectionContainer>
           <TabContainer>
             <StyledLink
-              className="tab"
+              className="tab login"
               style={{
                 borderRadius: "0.25rem 0 0 0.25rem",
                 backgroundColor: "#EDBEC4",
@@ -87,7 +87,7 @@ const MainSection = styled.section`
   justify-content: center;
   width: 50%;
   padding: 20px 0;
-  background: #f6f7fc;
+  // background: #f6f7fc;
 
   @media (max-width: 991px) {
     grid-area: form;
