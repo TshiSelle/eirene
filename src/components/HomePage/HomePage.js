@@ -212,6 +212,7 @@ const RaHeader = styled.h1`
   border-bottom: 1px solid #212529;
   padding-bottom: 10px;
   width: 60%;
+  font-weight: bold;
 `;
 
 const RaDescription = styled.p`
@@ -230,6 +231,7 @@ const MeditationSection = styled.section`
 const MediHeader = styled.h1`
   font-size: 30px;
   margin-top: 75px;
+  font-weight: bold;
 `;
 
 const MediFlex = styled.div`
@@ -248,6 +250,7 @@ const MediImage = styled.img`
 
 const MediName = styled.p`
   background-color: #ffffff;
-  font-size: 23px;
+  font-size: 21px;
   padding: 20px;
+  font-family: ProximaNova;
 `;

@@ -39,19 +39,46 @@ const NavBar = () => {
           <Dropdown.Toggle>
             <Image src={require("./images/placeholder.png")} />
           </Dropdown.Toggle>
-          {loggedIn
-            ? <Dropdown.Menu>
-                <Link to='/profile' style={{ marginLeft: 10 }}>Profile</Link>
+          {loggedIn ? (
+            <Dropdown.Menu>
+              <Link to="/profile" style={{ marginLeft: 10 }}>
+                Profile
+              </Link>
+              <Dropdown.Divider />
+              <button
+                onClick={userLogOut}
+                style={{ marginLeft: 5, fontSize: 14 }}
+              >
+                Log out
+              </button>
+            </Dropdown.Menu>
+          ) : (
+            <Dropdown.Menu>
+              <div>
+                <Link
+                  to="/SignIn"
+                  style={{
+                    marginLeft: 10,
+                    textDecoration: "none",
+                    color: "#212529",
+                  }}
+                >
+                  Login
+                </Link>
                 <Dropdown.Divider />
-                <button onClick={userLogOut} style={{ marginLeft: 5, fontSize: 14 }}>Log out</button>
-              </Dropdown.Menu>
-            : <Dropdown.Menu>
-                <div >
-                  <Link to='/SignIn' style={{ marginLeft: 10 }}>Login</Link>
-                  <Dropdown.Divider />
-                  <Link to='/SignUp' style={{ marginLeft: 10 }}>SignUp</Link>
-                </div>
-              </Dropdown.Menu>}
+                <Link
+                  to="/SignUp"
+                  style={{
+                    marginLeft: 10,
+                    textDecoration: "none",
+                    color: "#212529",
+                  }}
+                >
+                  SignUp
+                </Link>
+              </div>
+            </Dropdown.Menu>
+          )}
         </Dropdown>
       </Nav>
     </Header>
