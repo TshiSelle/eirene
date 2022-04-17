@@ -7,7 +7,7 @@ import "react-tabs/style/react-tabs.css";
 import "./Tabs.css";
 
 const JournalEntries = ({ setError, setMessage }) => {
-  const { journalEntries, removeJournalEntries, updateJournalEntries } = useJournal();
+  const { journalEntries, removeJournalEntries, updateJournalEntry, updateJournalEntries } = useJournal();
   const { authToken } = useAuthenticator();
   const [ newEntry, setNewEntry ] = useState(false);
   const [ newBody, setNewBody ] = useState(undefined);
@@ -54,6 +54,7 @@ const JournalEntries = ({ setError, setMessage }) => {
     if(newBody && newTitle && newBody.trim().length > 0) {
       addNewJournalEntry(newTitle, newBody);
     }
+    updateJournalEntries();
     setNewTitle('');
     setNewBody('');
   }
@@ -62,9 +63,9 @@ const JournalEntries = ({ setError, setMessage }) => {
   }, [setIsEditEnabled]);
 
   const handleUpdateEntry = useCallback((id, title, body) => {
-    updateJournalEntries(id, title, body);
+    updateJournalEntry(id, title, body);
     setIsEditEnabled(false);
-  }, [updateJournalEntries]);
+  }, [updateJournalEntry, setIsEditEnabled]);
 
   const handleNewJournal = () => {
     setNewEntry(true)

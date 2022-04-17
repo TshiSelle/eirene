@@ -8,7 +8,7 @@ const MediaPlayer = ({children}) => {
     return (
         <div>
             <ReactJkMusicPlayer showMediaSession showDownload={false} showThemeSwitch={false}
-                remove={false} audioLists={[{ name: 'tiddies', musicSrc: Music, cover: Image }]} />
+                autoHiddenCover={true} remove={false} audioLists={[{ name: 'tiddies', musicSrc: Music }]} />
         {children}
         </div>
     )

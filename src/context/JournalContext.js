@@ -19,9 +19,8 @@ export const JournalProvider = ({ children }) => {
   const { journalEntries } = state;
   const { authToken, loggedIn } = useAuthenticator();
 
-  useEffect((event) => {
-    if (event && event.preventDefault) event.preventDefault();
-    if(!loggedIn) return;
+  useEffect(() => {
+    if(!loggedIn || !authToken) return;
     const getJournalEntries = async () => {
       try {
         GetUserJournals(authToken)
@@ -41,11 +40,32 @@ export const JournalProvider = ({ children }) => {
       }
     };
     getJournalEntries();
-  }, [authToken, loggedIn, journalEntries]);
+  }, [authToken, loggedIn]);
 
-  const updateJournalEntries = useCallback((journalID, title, body) => {
+  const updateJournalEntries = useCallback(() => {
+    if(!loggedIn || !authToken) return;
+      try {
+        GetUserJournals(authToken)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: 'set-entries', data: response.data.journals });
+          } else {
+            console.log(' Failed: ', response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error.response.data.message, ' caught Error while retrieving journal Entries  ');
+          return;
+        });
+      } catch (error) {
+        console.log(error.message, ' Caught Error');
+    };
 
-    if (!loggedIn) return;
+  }, [authToken, loggedIn]);
+
+  const updateJournalEntry = useCallback((journalID, title, body) => {
+
+    if (!loggedIn || !authToken) return;
     try {
       UpdateJournal(authToken, journalID, title, body)
       .then((response) => {
@@ -70,7 +90,7 @@ export const JournalProvider = ({ children }) => {
   }, [authToken, loggedIn]);
 
   const removeJournalEntries = useCallback((journalID) => {
-    if (!loggedIn) return;
+    if (!loggedIn || !authToken) return;
     try {
       DeleteJournal(journalID, authToken)
         .then((response) => {
@@ -94,9 +114,10 @@ export const JournalProvider = ({ children }) => {
     return {
       journalEntries,
       removeJournalEntries,
+      updateJournalEntry,
       updateJournalEntries
     };
-  }, [journalEntries, removeJournalEntries, updateJournalEntries]);
+  }, [journalEntries, removeJournalEntries, updateJournalEntry, updateJournalEntries]);
 
   return (
     <JournalContext.Provider value={value}>
