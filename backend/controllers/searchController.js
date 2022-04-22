@@ -36,11 +36,11 @@ const searchTherapists = async (req, res) => {
 
             const numOfResults = await Therapist.countDocuments(query);
 
-            if (numOfResults > 0 && pageNum > Math.ceil(numOfResults / 10)) {
+            if (numOfResults > 0 && pageNum > Math.ceil(numOfResults / therapistsPerPage)) {
                 return res.status(400).json({ message: 'Page number too large', success: false, numOfResults })
             }
         
-            return res.status(200).json({ numOfResults, success: true, searchResults })
+            return res.status(200).json({ numOfResults, numOfPages: Math.ceil(numOfResults / therapistsPerPage), success: true, searchResults })
         } catch (error) {
             console.log(error)
             return res.status(400).json({ message: `Error occurred while searching for therapists`, success: false, error: error })
