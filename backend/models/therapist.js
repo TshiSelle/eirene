@@ -14,6 +14,7 @@ const therapistSchema = new Schema({
   description: { type: String },
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
+  profilePic: { type: String }
 }, { timestamps: true })
 
 therapistSchema.index({ fname: 'text', lname: 'text' });

@@ -15,7 +15,8 @@ const create =  (req, res) => {
       username: req.body.username,
       email: req.body.email,
       yearsOfExperience: req.body.yearsOfExperience,
-      title : req.body.title
+      title : req.body.title,
+      profilePic : req.body.profilePic ? req.body.profilePic : ''
     });
     newTherapist.save()
     .then(() => {

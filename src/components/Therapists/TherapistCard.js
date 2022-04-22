@@ -1,18 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Image, Transformation } from "cloudinary-react";
 
 const TherapistCard = ({ therapist }) => {
+  let imageSource =
+    therapist.gender === "male" ? "therapists/male/" : "therapists/female/";
+  imageSource += therapist.profilePic;
   return (
     <Card>
-      <CardImage src={require("./background.jpg")} />
+      <CardImage publicId={imageSource}>
+        <Transformation fetchFormat="auto" />
+      </CardImage>
 
       <CardDetails>
         <CardTitle>
           {therapist.fname} {therapist.lname}
         </CardTitle>
         <CardProfession>{therapist.title}</CardProfession>
-        <CardText>{therapist.description}</CardText>
+        {/* <CardText>{therapist.description}</CardText> */}
         <CardText>
           <bold>E:</bold> {therapist.email}
         </CardText>
@@ -38,8 +44,9 @@ const Card = styled.div`
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
 `;
 
-const CardImage = styled.img`
+const CardImage = styled(Image)`
   height: 100%;
+  width: 200px;
 `;
 
 const CardDetails = styled.div``;
