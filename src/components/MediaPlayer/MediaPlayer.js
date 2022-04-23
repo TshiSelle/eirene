@@ -8,6 +8,7 @@ const MediaPlayer = ({children}) => {
     return (
         <div>
             <ReactJkMusicPlayer showMediaSession showDownload={false} showThemeSwitch={false}
+                autoPlay={false}
                 autoHiddenCover={true} remove={false} audioLists={[{ name: 'Lofi cloudinary', musicSrc: Music }]} />
         {children}
         </div>

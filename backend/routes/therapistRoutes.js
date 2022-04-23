@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.get('/search', searchTherapists);
 router.get('/therapist-description/:id', therapists.getTherapist);
-router.post('/createTherapist', therapists.create)
-
+router.post('/createTherapist', therapists.create);
 
 module.exports = router;
