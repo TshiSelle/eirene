@@ -6,7 +6,7 @@
 
 ------
 
-#### Installation :
+## Installation :
 
 ```
 git clone https://github.com/TshiSelle/eirene.git
@@ -16,7 +16,7 @@ git clone https://github.com/TshiSelle/eirene.git
 
 ------
 
-#### Setup :
+## Setup :
 
 * **Server** :
 
@@ -44,7 +44,7 @@ git clone https://github.com/TshiSelle/eirene.git
 
 ------
 
-#### .env File Format :
+## .env file format :
 
 ```
 
