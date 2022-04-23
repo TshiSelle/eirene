@@ -8,7 +8,11 @@
 
 #### Installation :
 
-`git clone https://github.com/TshiSelle/eirene.git`
+```
+git clone https://github.com/TshiSelle/eirene.git
+```
+
+
 
 ------
 
@@ -16,17 +20,27 @@
 
 * **Server** :
 
-  `cd .\backend`
-
-  `node server_connect.js`
+  ```
+  cd .\backend
+  
+  node server_connect.js
+  ```
 
   or
 
-  `nodemon server_connect.js`
+  ```
+  nodemon server_connect.js
+  ```
+
+  
 
 - **Client** :
 
-  `npm start`
+  ```
+  npm start
+  ```
+
+  
 
 ------
 
