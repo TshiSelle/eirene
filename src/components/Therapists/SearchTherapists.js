@@ -48,7 +48,7 @@ const searchTherapists = () => {
           id="search"
           onChange={setQueryValue}
         />
-        <label for="search"></label>
+        <label htmlFor="search"></label>
       </Form>
       <div className="therapist-parent-container">
         {data.map((therapist, key) => {
