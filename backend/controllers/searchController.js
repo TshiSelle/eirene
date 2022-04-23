@@ -25,6 +25,7 @@ const searchTherapists = async (req, res) => {
                     { gender : gender || { $regex: /.*/ } },
                     { degree : degree || { $regex: /.*/ } },
                     { yearsOfExperience : yoe || { $gte: 0 } },
+                    // { yearsOfExperience : { $gte : minYOE , $lte : maxYoe } }, //future feature
                     { title : { $regex: title ?  ".*"+title+".*" : /.*/, $options: "i" } },
                 ],
             };
