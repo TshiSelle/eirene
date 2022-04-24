@@ -100,7 +100,18 @@ app.post('/upload', fileUpload(),);
 }
 */
 
+const fetchPic = async (req, res) => {
+	const dbUser = await User.findById(req.user.id);
+	if (dbUser.profilePic) {
+		res.status(200).json({ image_url: dbUser.profilePic, succes: true });
+	} else {
+		res.status(400).json({ message: 'User does not have profile picture set', succes: false })
+	}
+}
+
+
 module.exports = { 
 	changeName,
-	setProfilePicture
+	setProfilePicture,
+	fetchPic
 };

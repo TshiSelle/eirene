@@ -218,3 +218,24 @@ export function ModifyUserAppointment(authToken, eventID, title, description, da
 
   return PatchAxiosCall(`/calendar/modify/${eventID}`, data, { 'x-access-token': authToken });
 }
+
+export function UploadProfilePicture(file, authToken) {
+	if (!file || file.size <= 0) {
+		console.log('File is empty')
+		return;
+	}
+	const formData = new FormData();
+	formData.append('File', file);
+	console.log('sending to server')
+	return PostAxiosCall(
+		'/profile/setProfilePic', 
+		formData, 
+		{ 
+		'Content-Type': 'multipart/form-data' ,
+		'x-access-token' : authToken
+	});
+}
+
+export function GetUserPicture(authToken) {
+	return GetAxiosCall('/getProfilePic', { 'x-access-token': authToken })
+}
