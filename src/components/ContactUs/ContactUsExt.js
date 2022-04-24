@@ -110,10 +110,10 @@ const ContactUsExt = () => {
     waiting,
     finished,
   } = state;
-  console.log(
-    "🚀 ~ file: ContactUsExt.js ~ line 112 ~ ContactUsExt ~ submissionErrorMessage",
-    submissionErrorMessage
-  );
+  // console.log(
+  //   "🚀 ~ file: ContactUsExt.js ~ line 112 ~ ContactUsExt ~ submissionErrorMessage",
+  //   submissionErrorMessage
+  // );
 
   const setFirstName = useCallback(
     (e) => dispatch({ type: "set-first-name", value: e.target.value }),

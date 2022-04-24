@@ -71,7 +71,7 @@ app.use('*', (req, res) => {
 //Get all routes
 //uncomment to show
 
-//getAllRoutes();
+// getAllRoutes();
 
 function getAllRoutes() {
 	let str = '';
