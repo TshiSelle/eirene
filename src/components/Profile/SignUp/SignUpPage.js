@@ -56,6 +56,7 @@ const SignUpPage = () => {
         <StyledImage
           publicId={"samples/Profile/login-image.jpg"}
           alt="Eirene plant"
+          rel="preconnect"
         >
           <Transformation fetchFormat="auto" />
         </StyledImage>
