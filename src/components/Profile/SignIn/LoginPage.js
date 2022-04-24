@@ -48,6 +48,7 @@ const LoginPage = () => {
       </MainSection>
       <StyledImage
         alt="Eirene plant"
+        rel="preconnect"
         publicId="samples/Profile/login-image.jpg"
       >
         <Transformation fetchFormat="auto" />
