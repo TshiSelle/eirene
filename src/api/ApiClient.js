@@ -237,5 +237,5 @@ export function UploadProfilePicture(file, authToken) {
 }
 
 export function GetUserPicture(authToken) {
-	return GetAxiosCall('/getProfilePic', { 'x-access-token': authToken })
+	return GetAxiosCall('/profile/getProfilePic', { 'x-access-token': authToken })
 }
