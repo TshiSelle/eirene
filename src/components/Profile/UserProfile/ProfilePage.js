@@ -45,6 +45,7 @@ const ProfilePage = () => {
     // we retrieved the files of the image, now we turn it into a URL so it can be processed as an image...
     setImageSrc(URL.createObjectURL(files[0]));
   };
+  // public_id={`user_pics/${image_src}`}
 
   return (
     <>
