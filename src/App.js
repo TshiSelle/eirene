@@ -30,7 +30,6 @@ const App = () => {
           <CalendarProvider>
             <JournalProvider>
               <Suspense fallback={<FullPageSpinner />}>
-                {/* This is where we will have to put the top navigation bar */}
                 <Suspense fallback={<FullPageSpinner />}>
                   <Router>
                     <NavBar />
@@ -55,7 +54,6 @@ const App = () => {
                       <SiteFooter />
                   </Router>
                 </Suspense>
-                {/* This is where we will have to put Footer (IF IT EXISTS)*/}
               </Suspense>
             </JournalProvider>
           </CalendarProvider>

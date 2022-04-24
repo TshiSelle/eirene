@@ -38,7 +38,7 @@ const NavBar = () => {
         </StyledLink>
         <Dropdown className="btn">
           <Dropdown.Toggle>
-            <StyledImage publicId={'samples/Profile/navbar-profile'} />
+            <StyledImage publicId={'samples/Profile/navbar-profile'} alt='user profile' />
           </Dropdown.Toggle>
           {loggedIn ? (
             <Dropdown.Menu>
