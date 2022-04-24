@@ -5,7 +5,7 @@ import "./HomePage.css";
 import { useAuthenticator } from "../../context/AuthContext";
 import { Dropdown } from "react-bootstrap";
 import { useUser } from "../../context/UserContext";
-import { Image } from 'cloudinary-react';
+import { Image, Transformation } from "cloudinary-react";
 
 const NavBar = () => {
   const location = useLocation();
@@ -38,7 +38,9 @@ const NavBar = () => {
         </StyledLink>
         <Dropdown className="btn">
           <Dropdown.Toggle>
-            <StyledImage publicId={'samples/Profile/navbar-profile'} alt='user profile' />
+            <StyledImage publicId={"samples/Profile/navbar-profile"}>
+              <Transformation fetchFormat="auto" />
+            </StyledImage>
           </Dropdown.Toggle>
           {loggedIn ? (
             <Dropdown.Menu>

@@ -145,7 +145,7 @@ const MainContainer = styled.div`
       rgba(33, 37, 41, 0.3),
       rgba(33, 37, 41, 0.3)
     ),
-    url(${background});
+    url("https://res.cloudinary.com/cloudloom/image/upload/f_auto/v1650233581/samples/Profile/login-image.jpg");
   background-size: cover;
   height: 100vh;
   font-family: "Roboto", sans-serif;

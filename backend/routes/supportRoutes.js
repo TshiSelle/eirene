@@ -7,4 +7,4 @@ const router = express.Router();
 router.post('/user', verifyJWT, support.fromUser);
 router.post('/external', support.external);
 
-module.exports = router
+module.exports = router;

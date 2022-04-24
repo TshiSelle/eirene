@@ -30,7 +30,7 @@
     "react-jinke-music-player": "^4.24.2",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "^5.0.0",
+    "react-scripts": "^5.0.1",
     "react-tabs": "^4.2.0",
     "spa-http-server": "^0.9.0",
     "styled-components": "^5.3.3",
