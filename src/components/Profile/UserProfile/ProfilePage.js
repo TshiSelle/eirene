@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 // import { GetUserAppointments } from "../../../api/ApiClient";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
+import { GetUserPicture, UploadProfilePicture } from "../../../api/ApiClient";
 // import { useUserCalendar } from "../../../context/CalendarContext";
 import { Link } from "react-router-dom";
 import Calendar from "react-awesome-calendar";
+import { Image } from "cloudinary-react";
 
 const events = [
   {
@@ -34,18 +36,43 @@ const ProfilePage = () => {
   const { user, userLogOut } = useUser();
   const [imageSrc, setImageSrc] = useState(undefined);
   // const { userCalendarAppointments } = useUserCalendar();
-  const { loggedIn } = useAuthenticator();
+  const { loggedIn, authToken } = useAuthenticator();
 
-  const handleImageUpload = () => {
+  const handleImageUpload = useCallback(() => {
+    if (!loggedIn) return;
     const imageFile = document.querySelector('input[type="file"]');
     // destructure the files array from the resulting object
     const files = imageFile.files;
-    console.log(files);
     if (!files.length) return;
-    // we retrieved the files of the image, now we turn it into a URL so it can be processed as an image...
-    setImageSrc(URL.createObjectURL(files[0]));
-  };
-  // public_id={`user_pics/${image_src}`}
+    UploadProfilePicture(files[0], authToken)
+      .then((response) => {
+        if (response.data.success) {
+          setImageSrc(response.data.result.public_id);
+        } else {
+          setImageSrc(undefined);
+        }
+      })
+      .catch((error) => {
+        setImageSrc(undefined);
+        return;
+      });
+  }, [loggedIn, authToken, setImageSrc]);
+
+  useEffect(() => {
+    if (!loggedIn) return;
+    GetUserPicture(authToken)
+      .then((response) => {
+        if (response.data.success) {
+          setImageSrc(response.data.image_url);
+        } else {
+          setImageSrc(undefined);
+        }
+      })
+      .catch((error) => {
+        setImageSrc(undefined);
+        return;
+      });
+  }, [loggedIn, authToken, setImageSrc]);
 
   return (
     <>
@@ -61,8 +88,8 @@ const ProfilePage = () => {
                 <input type="file" accepts="image/*" />
               </div>
               {imageSrc && (
-                <img
-                  src={imageSrc}
+                <Image
+                  publicId={imageSrc}
                   alt="user image"
                   style={{ width: 100, height: 100 }}
                 />
