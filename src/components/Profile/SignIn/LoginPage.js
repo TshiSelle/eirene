@@ -5,7 +5,7 @@ import "./loginStyle.css";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import "./icomoon/style.css";
-import { Image } from "cloudinary-react";
+import { Image, Transformation } from "cloudinary-react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -46,7 +46,13 @@ const LoginPage = () => {
           <LoginForm />
         </SectionContainer>
       </MainSection>
-      <StyledImage alt="Eirene plant" rel="preconnect" publicId="samples/Profile/login-image.jpg" />
+      <StyledImage
+        alt="Eirene plant"
+        rel="preconnect"
+        publicId="samples/Profile/login-image.jpg"
+      >
+        <Transformation fetchFormat="auto" />
+      </StyledImage>
     </MainContainer>
   );
 };

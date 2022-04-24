@@ -2,9 +2,7 @@ import React from "react";
 // import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "./HomePage.css";
-import JournalImg from "./images/img2.jpg";
-import BannerImg from "./images/banner.jpg";
-import { Image } from "cloudinary-react";
+import { Image, Transformation } from "cloudinary-react";
 
 const HomePage = () => {
   return (
@@ -18,7 +16,9 @@ const HomePage = () => {
         </BannerSection>
 
         <TherapistSection>
-          <ThImage publicId={"samples/Profile/home-img1.jpg"} />
+          <ThImage publicId={"samples/Profile/home-img1.jpg"}>
+            <Transformation fetchFormat="auto" />
+          </ThImage>
 
           <ThDetails>
             <ThHeader>Find The Therapist For You</ThHeader>
@@ -47,8 +47,9 @@ const HomePage = () => {
           <JrHeader>Why Journaling?</JrHeader>
           <JrPara>It can help with</JrPara>
 
-          <JrImage publicId={"samples/Profile/arrow.png"} />
-
+          <JrImage publicId={"samples/Profile/arrow.png"}>
+            <Transformation fetchFormat="auto" />
+          </JrImage>
           <JrSection>
             <JrDetails></JrDetails>
           </JrSection>
@@ -70,17 +71,23 @@ const HomePage = () => {
 
         <MediFlex>
           <MediItem>
-            <MediImage src={require("./images/img3.jpg")} />
+            <MediImage publicId={"samples/Profile/home-img3.jpg"}>
+              <Transformation fetchFormat="auto" />
+            </MediImage>
             <MediName>5 minute meditation for anxiety</MediName>
           </MediItem>
 
           <MediItem>
-            <MediImage src={require("./images/img3.jpg")} />
+            <MediImage publicId={"samples/Profile/home-img3.jpg"}>
+              <Transformation fetchFormat="auto" />
+            </MediImage>
             <MediName>5 minute meditation for anxiety</MediName>
           </MediItem>
 
           <MediItem>
-            <MediImage src={require("./images/img3.jpg")} />
+            <MediImage publicId={"samples/Profile/home-img3.jpg"}>
+              <Transformation fetchFormat="auto" />
+            </MediImage>
             <MediName>5 minute meditation for anxiety</MediName>
           </MediItem>
         </MediFlex>
@@ -92,6 +99,7 @@ const HomePage = () => {
 export default HomePage;
 
 const Container = styled.div`
+  font-display: swap;
   font-family: FuturaLight;
   line-height: 1.5;
   color: #212529;
@@ -111,8 +119,9 @@ const Main = styled.main`
   margin: 108px auto 0;
   display: grid;
 `;
+
 const BannerSection = styled.section`
-  background-image: url(${BannerImg});
+  background-image: url("https://res.cloudinary.com/cloudloom/image/upload/f_auto/v1650234147/samples/Profile/home-banner.jpg");
   height: 600px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -185,8 +194,9 @@ const JrImage = styled(Image)`
   height: 30px;
   margin-top: 20px;
 `;
+
 const JrSection = styled.section`
-  background-image: url(${JournalImg});
+  background-image: url("https://res.cloudinary.com/cloudloom/image/upload/f_auto/v1650234147/samples/Profile/home-img2.jpg");
   background-size: cover;
   height: 822px;
   display: flex;
@@ -245,7 +255,7 @@ const MediItem = styled.div`
   width: 300px;
 `;
 
-const MediImage = styled.img`
+const MediImage = styled(Image)`
   width: 100%;
 `;
 

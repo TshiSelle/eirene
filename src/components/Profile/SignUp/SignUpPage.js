@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import CheckEmailModal from "./verify/CheckEmailModal";
-import { Image } from "cloudinary-react";
+import { Image, Transformation } from "cloudinary-react";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -54,10 +54,12 @@ const SignUpPage = () => {
           </SectionContainer>
         </MainSection>
         <StyledImage
-          rel="preconnect"
           publicId={"samples/Profile/login-image.jpg"}
           alt="Eirene plant"
-        />
+          rel="preconnect"
+        >
+          <Transformation fetchFormat="auto" />
+        </StyledImage>
       </MainContainer>
       <CheckEmailModal
         handleHomeRedirect={handleHomeRedirect}
