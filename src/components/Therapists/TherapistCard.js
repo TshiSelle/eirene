@@ -14,10 +14,10 @@ const TherapistCard = ({ therapist }) => {
         <CardProfession>{therapist.title}</CardProfession>
         <CardText>{therapist.description}</CardText>
         <CardText>
-          <bold>E:</bold> {therapist.email}
+          E: {therapist.email}
         </CardText>
         <CardText>
-          <bold>P:</bold> {therapist.phone}
+          P: {therapist.phone}
         </CardText>
 
         <Link to={`/therapist-description/${therapist._id}`}>

@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo } from "react";
-import { GetUserAppointments } from "../../../api/ApiClient";
+import React, { useState } from "react";
+// import { GetUserAppointments } from "../../../api/ApiClient";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
-import { useUserCalendar } from "../../../context/CalendarContext";
+// import { useUserCalendar } from "../../../context/CalendarContext";
 import { Link } from "react-router-dom";
 import Calendar from 'react-awesome-calendar';
 
@@ -28,30 +28,35 @@ const events = [{
 
 const ProfilePage = () => {
   const { user, userLogOut } = useUser();
-  const { userCalendarAppointments } = useUserCalendar();
-  const { loggedIn, authToken } = useAuthenticator();
-  // console.log(userCalendarAppointments, ' apppintments');
-  var today = new Date();
-  // console.log(today.setHours(today.getHours() + 4));
-  const optimizedCalendarAppointments = useMemo(() => {
-    return userCalendarAppointments && userCalendarAppointments.map(x => (
-      {
-        id: x._id,
-        color: '#3694DF',
-        from: x.date,
-        to: x.date,
-        title: x.title
-      }))
-  }, [userCalendarAppointments]);
-console.log(optimizedCalendarAppointments, 'optimized')
-  
+  const [ imageSrc, setImageSrc ] = useState(undefined);
+  // const { userCalendarAppointments } = useUserCalendar();
+  const { loggedIn } = useAuthenticator();
+
+  const handleImageUpload = () => {
+    const imageFile = document.querySelector('input[type="file"]');
+    // destructure the files array from the resulting object
+    const files = imageFile.files;
+    console.log(files);
+    if (!files.length) return;
+    // we retrieved the files of the image, now we turn it into a URL so it can be processed as an image...
+    setImageSrc(URL.createObjectURL(files[0]));
+  };
+
   return (
     <>
       {loggedIn
         ? <div>
           <h2>{user?.fname} {user?.lname}</h2>
           <h2>{user?.email}</h2>
-          {/* <button onClick={() => deleteAppointment()}>DELETE EVENT HARDCODED</button> */}
+          <section className="left-side">
+          <form>
+            <div className="form-group">
+              <input type="file" accepts="image/*" />
+            </div>
+            { imageSrc && <img src={imageSrc} alt="user image" style={{ width: 100, height: 100 }}/>}
+            <button type="button" className="btn" onClick={handleImageUpload}>Submit</button>
+          </form>
+        </section>
           <div>
             <Calendar events={events} onClickTimeLine={() => console.log(' clicked timeLine')}/>
           </div>

@@ -46,7 +46,7 @@ const LoginPage = () => {
           <LoginForm />
         </SectionContainer>
       </MainSection>
-      <StyledImage alt="Eirene plant" publicId="samples/Profile/login-image.jpg" />
+      <StyledImage alt="Eirene plant" rel="preconnect" publicId="samples/Profile/login-image.jpg" />
     </MainContainer>
   );
 };

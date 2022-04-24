@@ -53,7 +53,11 @@ const SignUpPage = () => {
             <SignUpForm handleModal={handleModal} />
           </SectionContainer>
         </MainSection>
-        <StyledImage publicId={"samples/Profile/login-image.jpg"} alt="Eirene plant" />
+        <StyledImage
+          rel="preconnect"
+          publicId={"samples/Profile/login-image.jpg"}
+          alt="Eirene plant"
+        />
       </MainContainer>
       <CheckEmailModal
         handleHomeRedirect={handleHomeRedirect}
