@@ -10,6 +10,7 @@ const userSchema = new Schema(
 		email: { type: String, required: true, unique: true },
 		password: { type: String, required: true },
 		verified: { type: Boolean, default: false },
+		profilePic: { type: String, default: undefined },
 		emailVerificationToken: { type: String, unique: true },
 		passResetToken: { type: String, expires: '1hr' },
 		passResetTokenExpirationDate: { type: Number, expires: '1hr' },

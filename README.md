@@ -58,5 +58,7 @@ JWT_SECRET = 'securekey'
 
 LOOM_EMAIL_PASSWORD = 'emailpass'
 
+CLOUDINARY_URL = 'thisissecret'
+
 ```
 
