@@ -234,7 +234,7 @@ export function UploadProfilePicture(file, authToken) {
 }
 
 export function GetUserPicture(authToken) {
-	return GetAxiosCall('/getProfilePic', { 'x-access-token': authToken });
+	return GetAxiosCall('/profile/getProfilePic', { 'x-access-token': authToken })
 }
 
 export function CreateTherapistAppointment(id, title, description, date, repeat) {
@@ -266,3 +266,4 @@ export function ModifyTherapistAppointment(therapistID, eventID, title, descript
 
 	return PatchAxiosCall(`/calendar/therapist/modify/${eventID}`, data);
 }
+
