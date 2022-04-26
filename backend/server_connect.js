@@ -51,7 +51,7 @@ app.use('/journal', verifyJWT, journal);
 app.use('/contact', supportRoutes);
 app.use('/profile', verifyJWT, profileRoutes);
 app.use('/', therapistRoutes);
-app.use('/calendar', verifyJWT, calendarRoutes);
+app.use('/calendar', calendarRoutes);
 app.post('/register', register);
 app.get('/verifyToken', verifyLoggedInUser);
 app.get('/user-info', verifyJWT, getUser);
