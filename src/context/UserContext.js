@@ -1,7 +1,6 @@
 import React, { useReducer, useMemo, useCallback, useContext, useEffect } from 'react';
-// import axios from 'axios';
 import { useAuthenticator } from './AuthContext';
-import { GetUserInfo } from '../api/ApiClient';
+import { GetUserInfo, GetUserPicture } from '../api/ApiClient';
 
 const UserContext = React.createContext();
 const KEY = 'user_data';
@@ -10,16 +9,32 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'set-user': return { ...state, user: action.userInfo };
     case 'clear-user': return { ...state, user: null };
+    case 'set-user-image': return { ...state, userImage: action.userImage };
+    case 'clear-user-image': return { ...state, userImage: undefined };
     default: throw new Error(`Unhandled action ${action.type}!`);
   }
 };
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, {
-    user: null
+    user: null,
+    userImage: undefined
   });
-  const { user } = state;
+  const { user, userImage } = state;
   const { authToken, removeAuthToken, loggedIn } = useAuthenticator();
+
+  useEffect(() => {
+    if (!loggedIn) return;
+    GetUserPicture(authToken)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: 'set-user-image', userImage: response.data.image_url});
+        } else {
+          dispatch({ type: 'clear-user-image' });
+          console.log('Unsuccessful user image fetch...', response.data);
+        }
+      })
+  }, [loggedIn, authToken]);
 
   const updateUser = useCallback((userInfo) => {
     if (!loggedIn) return;
@@ -75,16 +90,18 @@ export const UserProvider = ({ children }) => {
   const userLogOut = useCallback(() => {
     if (authToken == null || !loggedIn) return;
     // we log the user out by terminating his authToken that we store...
+    dispatch({ type: 'clear-user-image' });
     removeAuthToken(authToken);
   }, [authToken, removeAuthToken, loggedIn]);
 
   const value = useMemo(() => {
     return {
       user,
+      userImage,
       userLogOut,
       updateUser
     };
-  }, [user, userLogOut, updateUser]);
+  }, [user, userImage, userLogOut, updateUser]);
 
   return (
     <UserContext.Provider value={value}>

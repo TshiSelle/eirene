@@ -10,7 +10,7 @@ import { Image, Transformation } from "cloudinary-react";
 const NavBar = () => {
   const location = useLocation();
   const { loggedIn } = useAuthenticator();
-  const { userLogOut } = useUser();
+  const { userLogOut, userImage } = useUser();
 
   return (
     <Header pathname={location.pathname}>
@@ -38,19 +38,19 @@ const NavBar = () => {
         </StyledLink>
         <Dropdown className="btn">
           <Dropdown.Toggle>
-            <StyledImage publicId={"samples/Profile/navbar-profile"}>
+            <StyledImage publicId={userImage ?  userImage : "samples/Profile/navbar-profile"}>
               <Transformation fetchFormat="auto" />
             </StyledImage>
           </Dropdown.Toggle>
           {loggedIn ? (
             <Dropdown.Menu>
-              <Link to="/profile" style={{ marginLeft: 10 }}>
+              <Link to="/profile" style={{ marginLeft: 10, textDecorationLine: 'none', color: '#212529' }}>
                 Profile
               </Link>
               <Dropdown.Divider />
               <button
                 onClick={userLogOut}
-                style={{ marginLeft: 5, fontSize: 14 }}
+                style={{ marginLeft: 5, fontSize: 15, fontWeight: '500' }}
               >
                 Log out
               </button>

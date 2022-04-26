@@ -47,8 +47,7 @@ const setProfilePicture = async (req, res) => {
 		const hasProfilePic = !!dbUser.profilePic;
 		let file = req.files.File;
 		console.log(req.files);
-		const filetype = file.mimetype.substring(file.mimetype.indexOf('/') + 1);
-		file.name = hasProfilePic ? dbUser.profilePic : `${dbUser.username}_${crypto.randomBytes(20).toString('hex')}.${filetype}` 
+		file.name = hasProfilePic ? dbUser.profilePic : `${dbUser.username}_${crypto.randomBytes(20).toString('hex')}` 
 		// File.name = `${dbUser.username}_${crypto.randomBytes(20).toString('hex')}`;
 		fs.outputFileSync(`./tmp/${file.name}`, file.data)
 		cloudinary.uploader.upload(
@@ -63,7 +62,7 @@ const setProfilePicture = async (req, res) => {
 				if (!err) {
 					try {
 						if (!hasProfilePic) {
-							dbUser.profilePic = file.name;
+							dbUser.profilePic = `user_pics/${file.name}`;
 							await dbUser.save()
 						}
 						res.status(201).json({ message: 'Image upload complete', success: true, result });
@@ -103,9 +102,9 @@ app.post('/upload', fileUpload(),);
 const fetchPic = async (req, res) => {
 	const dbUser = await User.findById(req.user.id);
 	if (dbUser.profilePic) {
-		res.status(200).json({ image_url: dbUser.profilePic, succes: true });
+		res.status(200).json({ image_url: dbUser.profilePic, success: true });
 	} else {
-		res.status(400).json({ message: 'User does not have profile picture set', succes: false })
+		res.status(400).json({ message: 'User does not have profile picture set', success: false })
 	}
 }
 
