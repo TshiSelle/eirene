@@ -36,7 +36,7 @@ const NavBar = () => {
         <StyledLink to={"/contact"} className="navlink">
           Contact
         </StyledLink>
-        <Dropdown className="btn">
+        <Dropdown className="btn-primary">
           <Dropdown.Toggle>
             <StyledImage publicId={userImage ?  userImage : "samples/Profile/navbar-profile"}>
               <Transformation fetchFormat="auto" />

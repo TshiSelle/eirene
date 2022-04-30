@@ -25,11 +25,11 @@
   transition: color 0.2s linear;
 }
 
-/* .btn-primary {
+.btn-primary {
   color: #fff;
   background-color: transparent !important;
   border-color: transparent !important;
-} */
+}
 .navlink:hover {
   color: #8da86d;
   transition: color 0.2s linear;
