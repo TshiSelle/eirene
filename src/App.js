@@ -18,9 +18,9 @@ import MeditationPage from "./components/Meditations/MeditationPage";
 import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 import { UserProvider } from "./context/UserContext";
 import { CalendarProvider } from './context/CalendarContext';
-import ContactUsExt from "./components/ContactUs/ContactUsExt";
 import MediaPlayer from "./components/MediaPlayer/MediaPlayer";
 import { CloudinaryContext } from "cloudinary-react";
+import ContactUsRoute from "./components/ContactUs/ContactUsRoute";
 
 const App = () => {
   return (
@@ -48,7 +48,7 @@ const App = () => {
                         <Route path="/therapist-description/:id" element={<TherapistDescription />} />
                         <Route path="/verify/:username/:token" element={<VerifyAccount />} />
                         <Route path="/Journal" element={<Journal />} />
-                        <Route path="/contact" element={<ContactUsExt />} />
+                        <Route path="/contact" element={<ContactUsRoute />} />
                       </Routes>
                       </MediaPlayer>
                       <SiteFooter />
