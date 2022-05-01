@@ -237,6 +237,10 @@ export function GetUserPicture(authToken) {
 	return GetAxiosCall('/profile/getProfilePic', { 'x-access-token': authToken })
 }
 
+export function RemoveUserPicture(authToken) {
+	return DeleteAxiosCall('/profile/removeProfilePic', { 'x-access-token': authToken });
+}
+
 export function CreateTherapistAppointment(id, title, description, date, repeat) {
 	const data = JSON.stringify({
 		id,
