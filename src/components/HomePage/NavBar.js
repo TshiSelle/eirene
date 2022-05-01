@@ -44,42 +44,38 @@ const NavBar = () => {
           </Dropdown.Toggle>
           {loggedIn ? (
             <Dropdown.Menu>
-              <Link to="/profile" style={{ marginLeft: 10, textDecorationLine: 'none', color: '#212529' }}>
+			  <Dropdown.Item as={Link} to="/profile" style={{ textDecorationLine: 'none', color: '#212529' }}>
                 Profile
-              </Link>
+			  </Dropdown.Item>
               <Dropdown.Divider />
-              <button
+              <Dropdown.Item
                 onClick={userLogOut}
-                style={{ marginLeft: 5, fontSize: 15, fontWeight: '500' }}
+                style={{ fontSize: 15, fontWeight: '500' }}
               >
                 Log out
-              </button>
+              </Dropdown.Item>
             </Dropdown.Menu>
           ) : (
             <Dropdown.Menu>
-              <div>
-                <Link
-                  to="/SignIn"
-                  style={{
-                    marginLeft: 10,
-                    textDecoration: "none",
-                    color: "#212529",
-                  }}
-                >
+              <Dropdown.Item 
+			  as={Link} 
+			  to="/SignIn"
+              style={{
+                textDecoration: "none",
+                color: "#212529",
+			  }}>
                   Login
-                </Link>
-                <Dropdown.Divider />
-                <Link
-                  to="/SignUp"
-                  style={{
-                    marginLeft: 10,
-                    textDecoration: "none",
-                    color: "#212529",
-                  }}
-                >
-                  SignUp
-                </Link>
-              </div>
+			  </Dropdown.Item>
+              <Dropdown.Divider />
+			  <Dropdown.Item 
+			  as={Link} 
+			  to="/SignUp"
+              style={{
+                textDecoration: "none",
+                color: "#212529",
+			  }}>
+                  Sign Up
+			  </Dropdown.Item>
             </Dropdown.Menu>
           )}
         </Dropdown>
