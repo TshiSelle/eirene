@@ -12,14 +12,17 @@ const Journal = () => {
   return (
     <div>
       {loggedIn ? (
-        journalEntries?.length === 0 
-          ? <>
-              <h2>Looks like you dont have any journals yet...</h2>
-              <p>Start your first journal right away!</p>
-              <JournalEntries setMessage={setMessage} setError={setError} />
+        // journalEntries?.length === 0
+          // ? <>
+            <>
+              <div class="journal-banner">
+                <h2>Journal</h2>
+                <p>Express Your Thoughts</p>
+              </div>
               
+              <JournalEntries setMessage={setMessage} setError={setError} />
             </>
-          : <JournalEntries setMessage={setMessage} setError={setError} />
+          // : <JournalEntries setMessage={setMessage} setError={setError} />
       ) : (
         <h2>Please login to access the journal</h2>
       )}
@@ -35,4 +38,5 @@ const Journal = () => {
     </div>
   );
 };
+
 export default Journal;

@@ -107,11 +107,12 @@ const JournalEntries = ({ setError, setMessage }) => {
                 </form>
                 </div>
             : <div className="bodyAndButtonsContainer">
-                <div style={{ padding: 25, textAlign: 'left', flex: 3 }}>
+                <div style={{ padding: 25, textAlign: 'left', flex: 3, fontFamily: 'FuturaLight', color: '#212529', }}>
                   <h5>{body}</h5>
                 </div>
                 <button className="new-journal-button"
-                  onClick={handleNewJournal}>Create a new journal!</button>
+              onClick={handleNewJournal}>+</button>
+            {/* change to pencil and trash from icomoon mdkawndwkandk */}
                   <button className="btn btn-sm btn-success edit-button"
                     onClick={editJournalEntry}>Edit</button>
                   <button className="btn btn-sm btn-danger" style={{ marginRight: 20, width: 140 }}
@@ -132,7 +133,7 @@ const JournalEntries = ({ setError, setMessage }) => {
   );
   reversedTabPanels.push(
     <TabPanel key={1} style={{ flex: 5, paddingBottom: 20, paddingLeft: 12 }}>
-      <h1 style={{paddingTop: 5 }}>Add a title: </h1>
+      {/* <h1 style={{paddingTop: 5 }}>Title </h1> */}
       <textarea className="form-control text-area"
         value={newTitle}
         onChange={e => setNewTitle(e.target.value)} 
@@ -140,10 +141,11 @@ const JournalEntries = ({ setError, setMessage }) => {
         rows={1}
         id="title" 
         maxLength={15}
+        placeholder="Title"
         ref={fieldRef} />
-      <h1 style={{paddingTop: 15 }}>Express your thoughts! </h1>
+      {/* <h1 style={{paddingTop: 15 }}>Express your thoughts! </h1> */}
       <textarea
-        className="form-control text-area"
+        className="form-control text-area entry-text"
         value={newBody}
         onChange={e => setNewBody(e.target.value)} 
         type="text"
@@ -153,7 +155,7 @@ const JournalEntries = ({ setError, setMessage }) => {
         {newEntry &&
         <form>
           <button disabled={typeof(newBody) === 'string' && newBody.trim().length === 0} 
-            className="btn btn-success form-control" style={{ marginRight: 20 }}
+            className="btn btn-success form-control submit-entry-button" style={{ marginRight: 20 }}
             type="submit" onClick={handleOnSubmit}>Submit</button>
         </form>}
     </TabPanel>
