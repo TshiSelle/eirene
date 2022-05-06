@@ -104,7 +104,7 @@ const ContactUs = () => {
   );
   return (
     <>
-      <Header>We would love to hear from you.</Header>
+      <Header>Your Health Starts Here</Header>
       {/* <Paragraph>We would love to hear your feedback</Paragraph> */}
 
       <FormContainer>
@@ -129,9 +129,6 @@ const ContactUs = () => {
                   name="username"
                   value={supportMessage}
                   onChange={setMessage}
-                  style={{
-                    marginTop: "15px",
-                  }}
                 />
               </Form.Group>
 

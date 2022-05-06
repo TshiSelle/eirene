@@ -39,7 +39,7 @@ const changeName = (req, res) => {
 
 const setProfilePicture = async (req, res) => {
 	// console.log(req.files.File);
-	if (!req.files || req.files.File?.size <= 0)
+	if (!req.files || req.files.File.size <= 0)
 		res.status(400).send({ message: 'No files uploaded, please provide an image', success: false });
 	else {
 		const dbUser = await User.findById(req.user.id);
@@ -91,7 +91,7 @@ const deleteProfilePic = async (req, res) => {
 		cloudinary.uploader.destroy(dbUser.profilePic, {
 			resource_type: 'image',
 		}, (err, result) => {
-			if (!err && result?.result == 'ok') {
+			if (!err && result.result == 'ok') {
 				dbUser.profilePic = undefined;
 				dbUser.save()
 				.then(() => res.status(200).json({ message: 'User profile picture deleted', success: true }))
