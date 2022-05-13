@@ -71,7 +71,7 @@ const setProfilePicture = async (req, res) => {
 				} else {
 					res.status(400).json({ message: 'Error occurred while uploading image', err, result, success: false });
 				}
-				fs.removeSync('./tmp');
+				if (fs.existsSync('./tmp')) fs.removeSync('./tmp');
 				console.log('in async')
 			}
 		);
