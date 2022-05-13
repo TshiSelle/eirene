@@ -72,7 +72,7 @@ const ProfilePage = () => {
         setImageSrc(undefined);
         return;
       });
-  }, [loggedIn, authToken, setImageSrc]);
+  }, [loggedIn, authToken, imageSrc]);
 
   return (
     <>
