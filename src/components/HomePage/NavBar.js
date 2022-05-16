@@ -24,9 +24,6 @@ const NavBar = () => {
         <StyledLink to={"/Journal"} className="navlink">
           Journal
         </StyledLink>
-        <StyledLink to={"/radio"} className="navlink">
-          Radio
-        </StyledLink>
         <StyledLink to={"/Meditations"} className="navlink">
           Meditations
         </StyledLink>
