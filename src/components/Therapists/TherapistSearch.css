@@ -40,7 +40,13 @@ bold {
   background-color: #e1ebd5;
   padding: 50px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+}
+
+.searchBar {
+	display: flex;
+	justify-content: center;
 }
 
 .searchField {
@@ -80,4 +86,30 @@ bold {
 
 .searchField:focus {
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+}
+
+.collapsible {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+}
+
+.dropdown {
+	width: fit-content;
+	border-radius: 6px;
+}
+
+.optionBtn {
+	color : green;
+	margin-bottom: 20px;
+}
+
+.optionBtn:focus {
+	box-shadow: 0 0;
+	color : green;
+}
+
+.optionBtn:active {
+	box-shadow: 0 0;
+	color : green;
 }
