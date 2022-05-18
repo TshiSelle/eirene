@@ -11,6 +11,7 @@ import {
   validateConfirmPassword,
 } from "../../../validators/validators";
 import "./signupStyle.css";
+import { useAuthenticator } from "../../../context/AuthContext";
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
@@ -139,6 +140,7 @@ const SignUpForm = ({ handleModal }) => {
     username,
   } = state;
 
+  const { updateAuthToken } = useAuthenticator();
   // The useCallbacks basically take the values set in the input forms and sends them to their desired destination
   const setFirstName = useCallback(
     (e) => dispatch({ type: "set-first-name", value: e.target.value }),
@@ -259,14 +261,20 @@ const SignUpForm = ({ handleModal }) => {
           dispatch({ type: "sign-up-success" });
           handleModal();
           console.log("Successful signup!");
+		  updateAuthToken(response.data.token)
         } else {
+		  
           dispatch({ type: "sign-up-failure", message: response.data.message });
         }
       })
       .catch((error) => {
+		const { fname, lname, name, gender, email, username, password, confirmPassword } = error.response.data
+		const probableErrors = [fname, lname, name, gender, email, username, password, confirmPassword];
+		const specificErrors = probableErrors.filter((element) => !!element)
+		console.log('yes')
         dispatch({
           type: "sign-up-failure",
-          message: error.response.data.message,
+          message: error.response.data.message || specificErrors[0] ,
         });
         return;
       });

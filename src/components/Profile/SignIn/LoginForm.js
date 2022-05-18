@@ -48,7 +48,7 @@ const reducer = (state, action) => {
   }
 };
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const [state, dispatch] = useReducer(reducer, {
     password: "",
     username: "",
@@ -232,4 +232,4 @@ const ForgotPassword = styled.a`
   color: #888888;
 `;
 
-export default SignUpForm;
+export default SignInForm;

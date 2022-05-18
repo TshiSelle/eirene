@@ -50,7 +50,21 @@ const register = async (req, res) => {
 				.save()
 				.then(() => {
 					sendEmailVerification(dbUser.username, dbUser.email, dbUser.emailVerificationToken);
-					res.status(201).json({ message: 'Successfully created user account', success: true });
+					const payload = { id: dbUser._id, username: dbUser.username };
+					//sign a jsonwebtoken with user's data as payload, a secret key, token expires in 1 day
+					jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 86400 }, (err, token) => {
+						if (err) {
+							return res
+								.status(500)
+								.json({ message: `Error during token creation : ${err}`, success: false });
+						} else {
+							return res.status(201).json({
+								message: 'Successfully created user account',
+								token: 'Bearer ' + token,
+								success: true,
+							});
+						}
+					});
 				})
 				.catch((err) => {
 					res.status(400).json({ message: `Failed: ${err}`, success: false });
