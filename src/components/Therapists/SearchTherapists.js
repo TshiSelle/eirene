@@ -2,19 +2,35 @@ import React, { useState, useCallback, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import TherapistCard from "./TherapistCard";
 import { FilterTherapists } from "../../api/ApiClient";
-import { Alert, Form } from "react-bootstrap";
+import { Alert, Button, Collapse, Dropdown, DropdownButton, Form, FormSelect } from "react-bootstrap";
 import "./TherapistSearch.css";
 
 const searchTherapists = () => {
   const [query, setQuery] = useState("");
+  const [therapistTitleoption, setTherapistTitleOption] = useState("");
+  const [genderoption, setGenderOption] = useState("");
+  const [degreeoption, setDegreeOption] = useState("");
+  const [yoeoption, setYoeOption] = useState("");
+  const [pageNumberoption, setpageNumberOption] = useState("");
   const [error, setError] = useState("");
   const [data, setData] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const therapistTitles = [
+		'Marriage and Family','Addiction','Behavioral','Divorce','Child','Clinical','Cognitive','Cognitive-behavioral',
+		'Eating disorder','Exercise','Youth','Social work','School','Trauma','Nutritional','Dialectical','Psychodynamic',
+  ];
+  let years = [];
+  for (let i = 0 ; i <= 20 ; i++) 
+	years.push(<option key={i} value={i} >{i}</option>);
 
   useEffect(
     (event) => {
+		// console.log(therapistTitleoption, genderoption, degreeoption, yoeoption)
       if (event) event.preventDefault();
       if (!query) return;
-      FilterTherapists(query)
+	  
+      FilterTherapists(query, therapistTitleoption, genderoption, degreeoption, yoeoption)
         .then((response) => {
           if (response.data.success) {
             setData(response.data.searchResults);
@@ -30,7 +46,7 @@ const searchTherapists = () => {
           return;
         });
     },
-    [query]
+    [query,therapistTitleoption, genderoption, degreeoption, yoeoption]
   );
 
   const setQueryValue = useCallback((e) => setQuery(e.target.value));
@@ -38,17 +54,42 @@ const searchTherapists = () => {
   return (
     <div>
       <Form className="therapistSearch" onSubmit={() => event.preventDefault()}>
-        <Form.Control
-          className="searchField"
-          type="text"
-          value={query}
-          isInvalid={error}
-          placeholder="Search..."
-          name="Search For Therapists"
-          id="search"
-          onChange={setQueryValue}
-        />
-        <label htmlFor="search"></label>
+		<div className="searchBar">
+          <Form.Control
+            className="searchField"
+            type="text"
+            value={query}
+            isInvalid={error}
+            placleholder="Search..."
+            name="Search For Therapists"
+            id="search"
+            onChange={setQueryValue}
+          />
+          <label htmlFor="search"></label>
+		<Button className="optionBtn" onClick={() => setOpen(!open)}>Options </Button>
+		</div>
+		<Collapse in={open} className="collapsible">
+			<Form.Group >
+				<Form.Select as="select" className="dropdown" value={therapistTitleoption} onChange={(e) => setTherapistTitleOption(e.target.value)}>
+					<option key='' value=''>Therapist title (Any)</option>
+					{therapistTitles.map((title) => <option key={title} value={title}>{title}</option>)}
+				</Form.Select> 
+				<Form.Select as="select" className="dropdown"  value={genderoption} onChange={(e) => setGenderOption(e.target.value)}>
+					<option key='' value=''>Gender (Any)</option>
+					<option key="male" value="male">Male</option>
+					<option key="female" value="female">Female</option>
+				</Form.Select>
+				<Form.Select as="select" className="dropdown"  value={degreeoption} onChange={(e) => setDegreeOption(e.target.value)}>
+					<option key='' value=''>Degree (Any)</option>
+					<option value="Masters">Masters</option>
+					<option value="Phd">Phd</option>
+				</Form.Select>
+				<Form.Select as="select" className="dropdown"  value={yoeoption} onChange={(e) => setYoeOption(e.target.value)}>
+					<option key='' value=''>Years of Experience (Any)</option>
+					{years}
+				</Form.Select>
+			</Form.Group>
+		</Collapse>
       </Form>
       <div className="therapist-parent-container">
         {data.map((therapist, key) => {
