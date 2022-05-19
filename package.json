@@ -48,6 +48,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "build": {
+    
+  },
   "browserslist": {
     "production": [
       ">0.2%",
