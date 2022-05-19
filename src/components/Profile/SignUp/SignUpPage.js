@@ -2,8 +2,9 @@ import React, { useEffect, useCallback, useState } from "react";
 import SignUpForm from "./SignUpForm";
 import styled from "styled-components";
 import { useAuthenticator } from "../../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import CheckEmailModal from './verify/CheckEmailModal';
+import { useNavigate, Link } from "react-router-dom";
+import CheckEmailModal from "./verify/CheckEmailModal";
+import { Image, Transformation } from "cloudinary-react";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -12,49 +13,59 @@ const SignUpPage = () => {
   const handleModal = useCallback(() => setShowModal(true), []);
 
   const handleHomeRedirect = useCallback(() => {
-    return navigate('/');
+    return navigate("/");
   }, [navigate]);
 
   useEffect(() => {
-    if (loggedIn) return navigate('/');
+    if (loggedIn) return navigate("/");
   }, [loggedIn, navigate]);
 
   return (
     <>
-    <MainContainer>
-      <MainSection>
-        <SectionContainer>
-          <TabContainer>
-            <Anchor
-              className="tab"
-              style={{
-                borderRadius: "0.25rem 0 0 0.25rem",
-                backgroundColor: "#EFEFEF",
-                color: "#212529",
-              }}
-              href="/SignIn"
-            >
-              Login
-            </Anchor>
+      <MainContainer>
+        <MainSection>
+          <SectionContainer>
+            <TabContainer>
+              <StyledLink
+                className="tab"
+                style={{
+                  borderRadius: "0.25rem 0 0 0.25rem",
+                  backgroundColor: "#EFEFEF",
+                  color: "#212529",
+                }}
+                to="/SignIn"
+              >
+                Login
+              </StyledLink>
 
-            <Anchor
-              className="tab signup"
-              style={{
-                borderRadius: "0 0.25rem 0.25rem 0",
-                backgroundColor: "#EDBEC4",
-              }}
-              href={"/SignUp"}
-            >
-              Sign Up
-            </Anchor>
-          </TabContainer>
+              <StyledLink
+                className="tab signup"
+                style={{
+                  borderRadius: "0 0.25rem 0.25rem 0",
+                  backgroundColor: "#EDBEC4",
+                }}
+                to={"/SignUp"}
+              >
+                Sign Up
+              </StyledLink>
+            </TabContainer>
 
-          <SignUpForm handleModal={handleModal} />
-        </SectionContainer>
-      </MainSection>
-      <Image src={require("./bg_4.jpg")} alt="Eirene plant" />
-    </MainContainer>
-    <CheckEmailModal handleHomeRedirect={handleHomeRedirect} showModal={showModal} handleModal={handleModal}/>
+            <SignUpForm handleModal={handleModal} />
+          </SectionContainer>
+        </MainSection>
+        <StyledImage
+          publicId={"samples/Profile/login-image.jpg"}
+          alt="Eirene plant"
+          rel="preconnect"
+        >
+          <Transformation fetchFormat="auto" />
+        </StyledImage>
+      </MainContainer>
+      <CheckEmailModal
+        handleHomeRedirect={handleHomeRedirect}
+        showModal={showModal}
+        handleModal={handleModal}
+      />
     </>
   );
 };
@@ -77,7 +88,7 @@ const MainContainer = styled.main`
 `;
 
 // right side
-const Image = styled.img`
+const StyledImage = styled(Image)`
   width: 50%;
   object-fit: cover;
   object-position: right;
@@ -96,7 +107,7 @@ const MainSection = styled.section`
   justify-content: center;
   width: 50%;
   padding: 20px 0;
-  background: #f6f7fc;
+  // background: #f6f7fc;
 
   @media (max-width: 991px) {
     grid-area: form;
@@ -116,7 +127,7 @@ const TabContainer = styled.div`
   display: flex;
   margin-bottom: 3rem;
 `;
-const Anchor = styled.a`
+const StyledLink = styled(Link)`
   cursor: pointer;
   height: 54px;
   border: none;

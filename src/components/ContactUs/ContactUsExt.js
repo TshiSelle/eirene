@@ -2,12 +2,13 @@ import React, { useCallback, useReducer } from "react";
 import styled from "styled-components";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ContactSupportExternal } from "../../api/ApiClient";
-import { 
+import {
   validateName,
   validateEmail,
   validateMessage,
- } from "../../validators/validators";
+} from "../../validators/validators";
 import { Alert, Form } from "react-bootstrap";
+import "./contactus.css";
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
@@ -87,7 +88,7 @@ const ContactUsExt = () => {
     lastName: "",
     email: "",
     message: "",
-    submissionErrorMessage: null,
+    submissionErrorMessage: "",
     firstNameError: null,
     lastNameError: null,
     emailError: null,
@@ -109,6 +110,10 @@ const ContactUsExt = () => {
     waiting,
     finished,
   } = state;
+  // console.log(
+  //   "🚀 ~ file: ContactUsExt.js ~ line 112 ~ ContactUsExt ~ submissionErrorMessage",
+  //   submissionErrorMessage
+  // );
 
   const setFirstName = useCallback(
     (e) => dispatch({ type: "set-first-name", value: e.target.value }),
@@ -127,167 +132,173 @@ const ContactUsExt = () => {
     []
   );
 
-  const sendSupportMessage = useCallback((event) => {
-    event.preventDefault();
-    if (waiting || finished) return;
-    const firstNameValidation = validateName(firstName, "First name");
-    if (!firstNameValidation.success) {
-      dispatch({
-        type: "first-name-error",
-        firstNameError: firstNameValidation.message,
-        message: firstNameValidation.message,
-      });
-      return;
-    }
-    const lastNameValidation = validateName(lastName, "Last name");
-    if (!lastNameValidation.success) {
-      dispatch({
-        type: "last-name-error",
-        lastNameError: lastNameValidation.message,
-        message: lastNameValidation.message,
-      });
-      return;
-    }
-    const emailValidation = validateEmail(email);
-    if (!emailValidation.success) {
-      dispatch({
-        type: "email-error",
-        emailError: emailValidation.message,
-        message: emailValidation.message,
-      });
-      return;
-    }
-    const messageValidation = validateMessage()
-
-    dispatch({ type: "support-message-start" });
-    console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ message", message)
-    console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ email", email)
-    console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ lastName", lastName)
-    console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ firstName", firstName)
-    // make axios post request
-    ContactSupportExternal(
-      firstName,
-      lastName,
-      email,
-      message,
-    )
-      .then((response) => {
-        if (response.data.success) {
-          dispatch({ type: "support-message-success" });
-          handleModal();
-          console.log("Message Sent!");
-        } else {
-          dispatch({ type: "support-message-failure", message: response.data.message });
-        }
-      })
-      .catch((error) => {
-        if (error.response) {
-          dispatch({
-            type: "support-message-failure",
-            message: error.response.data.message,
-          });
-        }
+  const sendSupportMessage = useCallback(
+    (event) => {
+      event.preventDefault();
+      if (waiting || finished) return;
+      const firstNameValidation = validateName(firstName, "First name");
+      if (!firstNameValidation.success) {
+        dispatch({
+          type: "first-name-error",
+          firstNameError: firstNameValidation.message,
+          message: firstNameValidation.message,
+        });
         return;
-      });
-  }, [
-    waiting,
-    finished,
-    firstName,
-    lastName,
-    email,
-  ]);
+      }
+      const lastNameValidation = validateName(lastName, "Last name");
+      if (!lastNameValidation.success) {
+        dispatch({
+          type: "last-name-error",
+          lastNameError: lastNameValidation.message,
+          message: lastNameValidation.message,
+        });
+        return;
+      }
+      const emailValidation = validateEmail(email);
+      if (!emailValidation.success) {
+        dispatch({
+          type: "email-error",
+          emailError: emailValidation.message,
+          message: emailValidation.message,
+        });
+        return;
+      }
+      const messageValidation = validateMessage();
+
+      dispatch({ type: "support-message-start" });
+      // console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ message", message)
+      // console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ email", email)
+      // console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ lastName", lastName)
+      // console.log("🚀 ~ file: ContactUsExt.js ~ line 187 ~ sendSupportMessage ~ firstName", firstName)
+      // make axios post request
+      ContactSupportExternal(firstName, lastName, email, message)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: "support-message-success" });
+            console.log("Message Sent!");
+          } else {
+            dispatch({
+              type: "support-message-failure",
+              message: response.data.message,
+            });
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            dispatch({
+              type: "support-message-failure",
+              message: error.response.data.message,
+            });
+          }
+          return;
+        });
+    },
+    [waiting, finished, firstName, lastName, email]
+  );
   return (
     <>
-      <Header>Contact Us!</Header>
-      <Paragraph>We would love to hear your feedback</Paragraph>
-  
+      <Header>Your Health Starts Here</Header>
+      {/* <Paragraph>We would love to hear your feedback</Paragraph> */}
+
       <FormContainer>
-        <Form className="contact-form" onSubmit={(e) => sendSupportMessage(e)}>
-          <Form.Group className="mb-3">
-            <GridContainer>
-              <Label>First Name</Label>
-              <Label>Last Name</Label>
-  
+        <SizeContainer>
+          <Form
+            className="contact-form"
+            onSubmit={sendSupportMessage}
+          >
+            <Form.Group className="mb-3">
+              <GridContainer>
+                <Form.Control
+                  className="textfield"
+                  isInvalid={firstNameError}
+                  type="text"
+                  placeholder="First Name"
+                  value={firstName}
+                  name="firstName"
+                  onChange={setFirstName}
+                  style={{ width: "100%", boxSizing: "border-box" }}
+                />
+
+                <Form.Control
+                  className="textfield"
+                  type="text"
+                  value={lastName}
+                  isInvalid={lastNameError}
+                  placeholder="Last Name"
+                  name="lastName"
+                  onChange={setLastName}
+                />
+              </GridContainer>
+
               <Form.Control
-                className="textField"
-                isInvalid={firstNameError}
-                type="text"
-                placeholder=""
-                value={firstName}
-                name="firstName"
-                onChange={setFirstName}
-                style={{ width: "100%", boxSizing: "border-box" }}
+                className="textfield"
+                type="email"
+                isInvalid={emailError}
+                placeholder="Email"
+                name="email"
+                onChange={setEmail}
+                style={{
+                  marginTop: "15px",
+                }}
               />
-  
-              <Form.Control
-                className="textField"
-                type="text"
-                value={lastName}
-                isInvalid={lastNameError}
-                placeholder=""
-                name="lastName"
-                onChange={setLastName}
-              />
-            </GridContainer>
-  
-            <Label>Email</Label>
-            <Form.Control
-              className="textField"
-              type="email"
-              isInvalid={emailError}
-              placeholder=""
-              name="email"
-              onChange={setEmail}
-            />
-  
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Message</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                type="text"
-                isInvalid={messageError}
-                placeholder=""
-                name="username"
-                value={message}
-                onChange={setMessage}
-              />
+
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <Form.Control
+                  className="textarea"
+                  as="textarea"
+                  rows={3}
+                  type="text"
+                  isInvalid={messageError}
+                  placeholder="Message"
+                  name="username"
+                  value={message}
+                  onChange={setMessage}
+                  style={{
+                    marginTop: "15px",
+                  }}
+                />
+              </Form.Group>
+
+              {submissionErrorMessage && (
+                <div style={{ paddingTop: 20 }}>
+                  <Alert variant="danger">{submissionErrorMessage}</Alert>
+                </div>
+              )}
+              <Button
+                value="Submit Message"
+                type="submit"
+                onClick={sendSupportMessage}
+                disabled={submissionErrorMessage}
+                style={{
+                  width: "50px",
+                  justifySelf: "center",
+                  marginTop: "10px",
+                }}
+              >
+                Send
+              </Button>
             </Form.Group>
-            
-  
-            {submissionErrorMessage && (
-              <div style={{ paddingTop: 20 }}>
-                <Alert variant="danger">{submissionErrorMessage}</Alert>
-              </div>
-            )}
-            <Button
-              value="Submit Message"
-              type="submit"
-              disabled={submissionErrorMessage}
-              style={{
-                width: "100%",
-                margin: "2rem 0 0",
-                backgroundColor: "#edbec4",
-                color: "#ffffff",
-              }}
-            >
-              Send
-            </Button>
-          </Form.Group>
-        </Form>
+          </Form>
+        </SizeContainer>
       </FormContainer>
     </>
   );
 };
-  
-
 
 export default ContactUsExt;
 
-const FormContainer = styled.div``;
+const FormContainer = styled.div`
+  display: grid;
+  justify-items: center;
+`;
+
+const SizeContainer = styled.div`
+  width: 50%;
+  margin-top: 50px;
+`;
 
 const Button = styled.button`
   cursor: pointer;
@@ -295,6 +306,8 @@ const Button = styled.button`
   border: none;
   border-radius: 0.25rem;
   font-size: 1rem;
+  color: #212529;
+  font-weight: 100;
 `;
 
 const Header = styled.h3`
@@ -302,11 +315,13 @@ const Header = styled.h3`
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
+  text-align: center;
 `;
 
 const Paragraph = styled.p`
   margin-bottom: 1.5rem;
   color: #b3b3b3;
+  text-align: center;
 `;
 
 const Label = styled.label`
@@ -316,5 +331,5 @@ const Label = styled.label`
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 10px;
+  gap: 0 20px;
 `;

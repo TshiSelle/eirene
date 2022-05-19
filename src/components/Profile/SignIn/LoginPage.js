@@ -3,15 +3,16 @@ import LoginForm from "./LoginForm";
 import styled from "styled-components";
 import "./loginStyle.css";
 import { useAuthenticator } from "../../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./icomoon/style.css";
+import { Image, Transformation } from "cloudinary-react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { loggedIn } = useAuthenticator();
 
   useEffect(() => {
-    if (loggedIn) return navigate('/');
+    if (loggedIn) return navigate("/");
   }, [loggedIn]);
 
   return (
@@ -19,32 +20,39 @@ const LoginPage = () => {
       <MainSection>
         <SectionContainer>
           <TabContainer>
-            <Anchor
+            <StyledLink
               className="tab login"
               style={{
                 borderRadius: "0.25rem 0 0 0.25rem",
                 backgroundColor: "#EDBEC4",
               }}
+              to="/SignIn"
             >
               Login
-            </Anchor>
+            </StyledLink>
 
-            <Anchor
+            <StyledLink
               className="tab"
               style={{
                 borderRadius: "0.25rem 0 0 0.25rem",
                 backgroundColor: "#EFEFEF",
                 color: "#212529",
               }}
-              href={"/SignUp"}
+              to={"/SignUp"}
             >
               Sign Up
-            </Anchor>
+            </StyledLink>
           </TabContainer>
           <LoginForm />
         </SectionContainer>
       </MainSection>
-      <Image src={require("./bg_4.jpg")} alt="Eirene plant" />
+      <StyledImage
+        alt="Eirene plant"
+        rel="preconnect"
+        publicId="samples/Profile/login-image.jpg"
+      >
+        <Transformation fetchFormat="auto" />
+      </StyledImage>
     </MainContainer>
   );
 };
@@ -67,7 +75,7 @@ const MainContainer = styled.main`
 `;
 
 // right side
-const Image = styled.img`
+const StyledImage = styled(Image)`
   width: 50%;
   object-fit: cover;
   object-position: right;
@@ -86,7 +94,7 @@ const MainSection = styled.section`
   justify-content: center;
   width: 50%;
   padding: 20px 0;
-  background: #f6f7fc;
+  // background: #f6f7fc;
 
   @media (max-width: 991px) {
     grid-area: form;
@@ -114,7 +122,8 @@ const Button = styled.button`
   border-radius: 0.25rem;
   font-size: 1rem;
 `;
-const Anchor = styled.a`
+
+const StyledLink = styled(Link)`
   cursor: pointer;
   height: 54px;
   border: none;

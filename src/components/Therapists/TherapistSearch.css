@@ -1,9 +1,115 @@
-h1 {
-  font-size: 1rem;
+@font-face {
+  font-display: swap;
+  font-family: FuturaLight;
+  src: url(./font/Futura-Light.woff);
 }
 
-.therapistContainer {
+@font-face {
+  font-display: swap;
+  font-family: ProximaNova;
+  src: url(./font/Proxima-Nova-Regular.woff);
+}
+
+h1, h3 {
+  font-size: 16px;
+}
+
+bold {
+  font-weight: bold;
+}
+
+.therapist-parent-container {
   flex-direction: row;
   justify-content: space-between;
-  background-color: '#333';
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.therapist-container {
+  padding: 20px;
+  flex-basis: 33.3333333%;
+}
+
+@media (max-width: 800px) {
+  .therapist-parent-container {
+    flex: 100%;
+  }
+}
+
+.therapistSearch {
+  background-color: #e1ebd5;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.searchBar {
+	display: flex;
+	justify-content: center;
+}
+
+.searchField {
+    width: 50%;
+    border-radius: 4px 0 0 4px;
+    font-family: FuturaLight;
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 1rem;
+    height: 54px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    font-size: 1rem;
+}
+
+.therapistSearch label {
+  background-color: #ffffff;
+  height: 54px;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.therapistSearch label::after {
+  font-family: 'icomoon';
+  content: '\f002';
+  font-size: 16px;
+  color: #e1ebd5;
+}
+
+.therapistSearch label:hover {
+  cursor: pointer;
+}
+
+.searchField:focus {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+}
+
+.collapsible {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+}
+
+.dropdown {
+	width: fit-content;
+	border-radius: 6px;
+}
+
+.optionBtn {
+	color : green;
+	margin-bottom: 20px;
+}
+
+.optionBtn:focus {
+	box-shadow: 0 0;
+	color : green;
+}
+
+.optionBtn:active {
+	box-shadow: 0 0;
+	color : green;
 }

@@ -5,4 +5,50 @@
   --Main-Background: rgb(246, 247, 252);
   --Background: rgb(245, 164, 145);
   --Green-Leaf: rgb(180, 158, 127);
+  --Green: #e1ebd5;
+  --DarkGreen: #8da86d;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: FuturaLight;
+  src: url(./font/Futura-Light.woff);
+}
+
+@font-face {
+  font-display: swap;
+  font-family: ProximaNova;
+  src: url(./font/Proxima-Nova-Regular.woff);
+}
+
+.navlink {
+  transition: color 0.2s linear;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+.navlink:hover {
+  color: #8da86d;
+  transition: color 0.2s linear;
+}
+.btn {
+  background-color: transparent;
+}
+.btn:focus {
+  outline: none !important;
+  outline-offset: none !important;
+}
+.btn:hover {
+  outline: none !important;
+  outline-offset: none !important;
+}
+.loginnav {
+  position: absolute;
+  right: 5%;
+  display: flex;
+  gap: 10px;
+  color: #8da86d !important;
 }

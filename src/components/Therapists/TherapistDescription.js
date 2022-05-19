@@ -26,13 +26,13 @@ const TherapistDescription = () => {
         return;
       });
   }, [id]);
-
   return (
     <>
       <div>
         <h1>{data.fname}</h1>
         <h3>{data.email}</h3>
       </div>
+      <h4>{data.fname}'s schedule:</h4>
       {error && (
         <div style={{ paddingTop: 20, flex: 1 }}>
           <Alert variant="danger">{error}</Alert>

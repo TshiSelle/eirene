@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect((event) => {
     if (event && event.preventDefault) event.preventDefault();
-    if (authToken === null ) return;
+    if (authToken === null) return;
     IsUserTokenValid(authToken)
         .then((response) => {
           if (response.data.success) {
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          removeAuthToken();
           return;
         });
   }, [authToken, updateAuthToken, removeAuthToken]);
