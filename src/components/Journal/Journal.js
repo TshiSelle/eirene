@@ -13,18 +13,20 @@ const Journal = () => {
     <div>
       {loggedIn ? (
         // journalEntries?.length === 0
-          // ? <>
-            <>
-              <div class="journal-banner">
-                <h2>Journal</h2>
-                <p>Express Your Thoughts</p>
-              </div>
-              
-              <JournalEntries setMessage={setMessage} setError={setError} />
-            </>
-          // : <JournalEntries setMessage={setMessage} setError={setError} />
+        // ? <>
+        <>
+          <div class="journal-banner">
+            <h2>Journal</h2>
+            <p>Express Your Thoughts</p>
+          </div>
+
+          <JournalEntries setMessage={setMessage} setError={setError} />
+        </>
+        // : <JournalEntries setMessage={setMessage} setError={setError} />
       ) : (
-        <h2>Please login to access the journal</h2>
+        <div className="journal-header-login">
+          <h2>Please login to access the journal</h2>
+        </div>
       )}
       {error ? (
         <div style={{ paddingTop: 20, flex: 1 }}>
