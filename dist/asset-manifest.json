@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9548ee71.css",
+    "main.js": "/static/js/main.a7e1a911.js",
+    "static/media/icomoon.svg?10si43": "/static/media/icomoon.9cc47145c3e61b03d8b8.svg",
+    "static/media/bg_4.jpg": "/static/media/bg_4.aa144e8c8a0147d333cb.jpg",
+    "static/media/icomoon.eot?10si43": "/static/media/icomoon.8b8f9ff3c2746bcd479b.eot",
+    "static/media/icomoon.woff?10si43": "/static/media/icomoon.ea68cea3e4f47f1e3338.woff",
+    "static/media/icomoon.ttf?10si43": "/static/media/icomoon.46b5067758e501c1cc60.ttf",
+    "static/media/banner.jpg": "/static/media/banner.c3c66ab21f7ba95c2f52.jpg",
+    "static/media/Proxima-Nova-Regular.woff": "/static/media/Proxima-Nova-Regular.301436a277ff50c2ffc0.woff",
+    "static/media/Futura-Light.woff": "/static/media/Futura-Light.033f3cf8bcb285acbb41.woff",
+    "index.html": "/index.html",
+    "main.9548ee71.css.map": "/static/css/main.9548ee71.css.map",
+    "main.a7e1a911.js.map": "/static/js/main.a7e1a911.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9548ee71.css",
+    "static/js/main.a7e1a911.js"
+  ]
+}
