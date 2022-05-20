@@ -2,10 +2,12 @@ import React, { useCallback, useReducer } from "react";
 import styled from "styled-components";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ContactSupport } from "../../api/ApiClient";
-import {validateMessage} from "../../validators/validators";
+import { validateMessage } from "../../validators/validators";
 import { Alert, Form } from "react-bootstrap";
 import "./contactus.css";
 import { useAuthenticator } from "../../context/AuthContext";
+
+
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
@@ -21,7 +23,7 @@ const reducer = (state, action) => {
         submissionErrorMessage: action.message,
       };
     case "set-content":
-        console.log("🚀 ~ file: ContactUs.js ~ line 29 ~ reducer ~ action.value", action.value)
+      console.log("🚀 ~ file: ContactUs.js ~ line 29 ~ reducer ~ action.value", action.value)
       return {
         ...state,
         supportMessage: action.value,
@@ -60,7 +62,7 @@ const ContactUs = () => {
     waiting,
     finished,
   } = state;
-  
+
   const setMessage = useCallback(
     (e) => dispatch({ type: "set-content", value: e.target.value }),
     []
@@ -69,15 +71,15 @@ const ContactUs = () => {
   const sendSupportMessage = useCallback(
     (event) => {
       event.preventDefault();
-      if (waiting || finished) return;      
+      if (waiting || finished) return;
       const { success, message } = validateMessage(supportMessage);
       console.log("🚀 ~ file: ContactUs.js ~ line 78 ~ ContactUs ~ supportMessage", supportMessage)
-	  if (!success) {
-		  dispatch({ type: "support-message-failure", message })
-		  return;
-	  }
+      if (!success) {
+        dispatch({ type: "support-message-failure", message })
+        return;
+      }
       dispatch({ type: "support-message-start" });
-	  // make axios post request
+      // make axios post request
       ContactSupport(authToken, supportMessage)
         .then((response) => {
           if (response.data.success) {
@@ -114,7 +116,7 @@ const ContactUs = () => {
             onSubmit={sendSupportMessage}
           >
             <Form.Group className="mb-3">
-              
+
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlTextarea1"

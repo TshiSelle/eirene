@@ -1,11 +1,14 @@
 import React from "react";
+
 // import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "./HomePage.css";
 import { Image, Transformation } from "cloudinary-react";
 
+
 const HomePage = () => {
   return (
+
     <Container>
       <GreenBackground></GreenBackground>
 
@@ -40,6 +43,7 @@ const HomePage = () => {
               neque veniam. Magnam accusantium accusamus laudantium magni ipsum
               enim assumenda ipsam!
             </ThPara>
+
           </ThDetails>
         </TherapistSection>
 
@@ -78,12 +82,14 @@ const HomePage = () => {
                   <h5>Point 5</h5>
                   <p> yalla ja3alneha ?</p>
                 </div>
+
                 <div className="point6 reasons">
                   <h5>Go to page</h5>
                   <p>yal</p>
                   <p></p>
                 </div>
               </div>
+              
 
             </JrDetails>
           </JrSection>
