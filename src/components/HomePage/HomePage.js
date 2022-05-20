@@ -54,29 +54,31 @@ const HomePage = () => {
             <JrDetails className="journal-reason">
 
               <div className="tell-me-why">
-                <div className="reasons">
+
+                <div className="point1 reasons">
                   <h5>Point 1</h5>
                   <p>mofeede lal so7a ya bro shu bek man khalas roo2 chill</p>
                 </div>
-                <div className="reasons">
+
+                <div className="point2 reasons">
                   <h5>Point 2</h5>
                   <p>because i said so aal sari3 yalla</p>
                 </div>
-                <div className="reasons">
+                <div className="point3 reasons">
                   <h5>Point 3</h5>
                   <p> because i know where you live and i know where your parents live</p>
                 </div>
               </div>
               <div className="tell-me-why2">
-                <div className="reasons">
+                <div className="point4 reasons">
                   <h5>Point 4</h5>
                   <p>oxombellah ba3mlak helicopter</p>
                 </div>
-                <div className="reasons">
+                <div className="point5 reasons">
                   <h5>Point 5</h5>
                   <p> yalla ja3alneha ?</p>
                 </div>
-                <div className="reasons">
+                <div className="point6 reasons">
                   <h5>Go to page</h5>
                   <p>yal</p>
                   <p></p>
