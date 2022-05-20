@@ -9,6 +9,11 @@
       name="description"
       content="Web site created using create-react-app"
     />
+    <style>
+      df-messenger {
+        --df-messenger-button-titlebar-color: #000000;
+      }
+    </style>
     <link rel="apple-touch-icon" href="./logo192.png" />
 
     <link rel="manifest" href="./manifest.json" />
@@ -16,16 +21,23 @@
     <title>Project EIRENE</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger
+      chat-title="Eirene"
+      agent-id="0ffba258-1ae3-4dcd-9497-7476a1c9819c"
+      language-code="en"
+      chat-icon="https://res.cloudinary.com/cloudloom/image/upload/v1653046865/logo/eirene_face_tzjqqu.webp"
+    ></df-messenger>
     <script>
-      if('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-              navigator.serviceWorker.register('./serviceworker.js')
-                  .then((reg) => console.log('Success: ', reg.scope))
-                  .catch((err) => console.log('Failure: ', err));
-          })
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('./serviceworker.js')
+            .then((reg) => console.log('Success: ', reg.scope))
+            .catch((err) => console.log('Failure: ', err));
+        });
       }
-  </script>
+    </script>
   </body>
 </html>
