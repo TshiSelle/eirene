@@ -52,3 +52,24 @@
   gap: 10px;
   color: #8da86d !important;
 }
+.journal-reason {
+  display: grid;
+  grid-template-areas:
+    'tell-my-why'
+    'tell-me-why2';
+}
+
+.tell-me-why {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas: 'point1 point2 point3';
+}
+.tell-me-why2 {
+  display: grid;
+  grid-template-columns: 2.1fr 0.8fr 0.8fr;
+  grid-template-areas: 'point1 point2 point3';
+}
+.reasons {
+  border: solid black;
+}
