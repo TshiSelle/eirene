@@ -1,12 +1,14 @@
 import axios from 'axios';
 
+const host = process.env.NODE_ENV == 'development' ? 'http://localhost:8080' : 'https://eireneserver.herokuapp.com/';
+
 function PostAxiosCall(endpoint, data, headers) {
 	if (!data) data = {};
 	if (!headers) headers = {};
 
 	return axios({
 		method: 'post',
-		url: `http://localhost:8080${endpoint}`,
+		url: `${host}${endpoint}`,
 		data: data,
 		headers: headers,
 	});
@@ -16,7 +18,7 @@ function GetAxiosCall(endpoint, headers) {
 	if (!headers) headers = {};
 	return axios({
 		method: 'get',
-		url: `http://localhost:8080${endpoint}`,
+		url: `${host}${endpoint}`,
 		headers: headers,
 	});
 }
@@ -27,7 +29,7 @@ function PatchAxiosCall(endpoint, data, headers) {
 
 	return axios({
 		method: 'patch',
-		url: `http://localhost:8080${endpoint}`,
+		url: `${host}${endpoint}`,
 		data: data,
 		headers: headers,
 	});
@@ -39,7 +41,7 @@ function DeleteAxiosCall(endpoint, data, headers) {
 
 	return axios({
 		method: 'delete',
-		url: `http://localhost:8080${endpoint}`,
+		url: `${host}${endpoint}`,
 		data: data,
 		headers: headers,
 	});

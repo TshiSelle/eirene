@@ -60,5 +60,7 @@ LOOM_EMAIL_PASSWORD = 'emailpass'
 
 CLOUDINARY_URL = 'thisissecret'
 
+NODE_ENV = 'production' or 'development'
+
 ```
 
