@@ -1,6 +1,7 @@
 import axios from 'axios';
+import globalVars from '../clientEnvVars'
 
-const host = process.env.NODE_ENV == 'development' ? 'http://localhost:8080' : 'https://eireneserver.herokuapp.com/';
+const host = globalVars.NODE_ENV == 'development' ? 'http://localhost:8080' : 'https://eireneserver.herokuapp.com';
 
 function PostAxiosCall(endpoint, data, headers) {
 	if (!data) data = {};
