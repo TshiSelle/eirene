@@ -25,26 +25,23 @@ const HomePage = () => {
           </ThImage>
 
           <ThDetails>
-            <ThHeader>Find The Therapist For You</ThHeader>
-            <ThPara>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-              totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
-              neque veniam. Magnam accusantium accusamus laudantium magni ipsum
-              enim assumenda ipsam!
-            </ThPara>
-            <ThPara>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-              totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
-              neque veniam. Magnam accusantium accusamus laudantium magni ipsum
-              enim assumenda ipsam!
-            </ThPara>
-            <ThPara>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-              totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
-              neque veniam. Magnam accusantium accusamus laudantium magni ipsum
-              enim assumenda ipsam!
-            </ThPara>
+            <h1 className="TherapistHeader">Find The Therapist For You</h1>
+            <hr></hr>
+            <div className="findTherapist">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
+                neque veniam. Magnam accusantium accusamus laudantium magni ipsum
+                enim assumenda ipsam!</p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
+                neque veniam. Magnam accusantium accusamus laudantium magni ipsum
+                enim assumenda ipsam!</p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
+                neque veniam. Magnam accusantium accusamus laudantium magni ipsum
+                enim assumenda ipsam!</p>
 
+            </div>
           </ThDetails>
         </TherapistSection>
 
@@ -98,7 +95,7 @@ const HomePage = () => {
 
         <RadioSection>
           <RaHeader>Radio</RaHeader>
-          <RaDescription>
+          <RaDescription className="radioDesc">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis totam,
             suscipit ipsa ipsum impedit, libero harum autem qui optio neque
             veniam. Magnam accusantium accusamus laudantium magni ipsum enim
