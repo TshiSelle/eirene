@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from "react";
+import React, { useReducer, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Form, Alert } from "react-bootstrap";
 import {
@@ -8,6 +8,7 @@ import {
 import "./loginStyle.css";
 import { LoginApiCall } from "../../../api/ApiClient";
 import { useAuthenticator } from "../../../context/AuthContext";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
@@ -68,6 +69,7 @@ const SignInForm = () => {
     waiting,
   } = state;
 
+  const [isLoading, setLoading] = useState(false);
   const { updateAuthToken } = useAuthenticator();
   // The useCallbacks basically take the values set in the input forms and sends them to their desired destination
   const setUsername = useCallback(
@@ -106,8 +108,9 @@ const SignInForm = () => {
     // TODO
     // Now we should call the api to register user since all userInput has been validated...
     dispatch({ type: "sign-in-start" });
+	setLoading(true);
     LoginApiCall(username, password)
-      .then((response) => {
+      .then((response,error) => {
         if (response.data.success) {
           updateAuthToken(response.data.token);
           dispatch({ type: "sign-in-success" });
@@ -115,12 +118,15 @@ const SignInForm = () => {
         } else {
           dispatch({ type: "sign-in-failure", message: response.data.message });
         }
+		setLoading(false);
       })
       .catch((error) => {
         dispatch({
           type: "sign-in-failure",
           message: error.response.data.message,
         });
+		setLoading(false)
+		console.log('stopped loading')
         return;
       });
   }, [username, password, waiting, finished]);
@@ -190,6 +196,7 @@ const SignInForm = () => {
           </Form.Group>
         </Form>
       </FormContainer>
+		<LoadingSpinner display={isLoading}/>
     </>
   );
 };

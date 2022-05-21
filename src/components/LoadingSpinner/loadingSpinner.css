@@ -1,4 +1,7 @@
 .loading {
+  position: fixed;
+  top: 40vh;
+  right: 50vw;
   display: flex;
   justify-content: center;
 }
@@ -15,7 +18,11 @@
   background-image: url(./eirene_logo.svg);
   opacity: 0.5;
   border-radius: 50%;
-  animation: loading-2 0.7s ease-in-out infinite alternate;
+  animation: loading 0.7s ease-in-out infinite alternate;
+}
+
+.hide {
+	display: none;
 }
 
 @keyframes loading {

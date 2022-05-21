@@ -1,0 +1,5 @@
+df-messenger {
+	--df-messenger-button-titlebar-color: #000000;
+	position: fixed;
+	bottom: 200px;
+}
