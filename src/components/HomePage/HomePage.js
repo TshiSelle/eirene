@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 // import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -61,35 +62,35 @@ const HomePage = () => {
 
                 <div className="point1 reasons">
                   <h5>Point 1</h5>
-                  <p>mofeede lal so7a ya bro shu bek man khalas roo2 chill</p>
+                  <p>According to all know laws of aviation, there is no way a bee should be able to fly.</p>
                 </div>
 
                 <div className="point2 reasons">
                   <h5>Point 2</h5>
-                  <p>because i said so aal sari3 yalla</p>
+                  <p>According to all know laws of aviation, there is no way a bee should be able to fly.</p>
                 </div>
                 <div className="point3 reasons">
                   <h5>Point 3</h5>
-                  <p> because i know where you live and i know where your parents live</p>
+                  <p>According to all know laws of aviation, there is no way a bee should be able to fly.</p>
                 </div>
               </div>
               <div className="tell-me-why2">
                 <div className="point4 reasons">
                   <h5>Point 4</h5>
-                  <p>oxombellah ba3mlak helicopter</p>
+                  <p>According to all know laws of aviation, there is no way a bee should be able to fly.</p>
                 </div>
                 <div className="point5 reasons">
                   <h5>Point 5</h5>
-                  <p> yalla ja3alneha ?</p>
+                  <p>According to all know laws of aviation, there is no way a bee should be able to fly.</p>
                 </div>
 
                 <div className="point6 reasons">
                   <h5>Go to page</h5>
-                  <p>yal</p>
+                  <p><Link to={'/Journal'}>Journal.</Link></p>
                   <p></p>
                 </div>
               </div>
-              
+
 
             </JrDetails>
           </JrSection>

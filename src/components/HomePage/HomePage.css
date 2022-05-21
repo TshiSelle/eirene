@@ -71,11 +71,49 @@
   grid-template-areas: 'point1 point2 point3';
 }
 .reasons {
-  border: solid black;
+  border: 1px solid #e1ebd5;
+}
+.point1,
+.point2,
+.point3,
+.point4,
+.point5 {
+  display: flex;
+  flex-direction: column;
+  padding: 10% 10% 0 10%;
+  text-align: left !important;
 }
 
 @media screen and (max-width: 990px) {
   .kYdVCz {
     flex-direction: column;
+  }
+  .tell-me-why {
+    display: grid;
+    grid-template-columns: 0.7fr 0.4fr 0.4fr;
+    grid-template-areas: 'point1 point2 point3';
+  }
+  .tell-me-why2 {
+    display: grid;
+    grid-template-columns: 1.1fr 0.3fr 0.3fr;
+    grid-template-areas: 'point1 point2 point3';
+  }
+  .reasons {
+    font-size: 85%;
+  }
+}
+@media screen and (max-width: 810px) {
+  .tell-me-why {
+    display: grid;
+    grid-template-columns: 34% 33% 33%;
+    grid-template-areas: 'point1 point2 point3';
+  }
+  .tell-me-why2 {
+    display: grid;
+    grid-template-columns: 37% 33% 30%;
+    grid-template-areas: 'point1 point2 point3';
+  }
+  .reasons {
+    font-size: 70%;
   }
 }
