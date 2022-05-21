@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import ReactJkMusicPlayer from 'react-jinke-music-player'
 import 'react-jinke-music-player/assets/index.css'
-import Image from '../HomePage/images/banner.jpg';
 import "./styling.css"
 
 const MediaPlayer = ({children}) => {
     const Music = "https://res.cloudinary.com/cloudloom/video/upload/v1650269930/samples/music/2_Minutes___Lofi_hip_hop_mix_study_sleep_homework_music_vtisxm.ogg";
-	const [playerMode, setPlayerMode] = useState('mini')
-	if (document.querySelector('df-messenger')) {
+	const [playerMode, setPlayerMode] = useState('mini');
+	if (document && document?.querySelector('df-messenger')) {
 		if (playerMode == 'full' ) {
 			document.querySelector('df-messenger').shadowRoot.querySelector('.df-messenger-wrapper').querySelector('#widgetIcon').style.bottom = "10vh"
 		} else {
@@ -30,10 +29,9 @@ const MediaPlayer = ({children}) => {
     		language-code="en"
     		chat-icon="https://res.cloudinary.com/cloudloom/image/upload/v1653046865/logo/eirene_face_tzjqqu.webp"
     		></df-messenger>
-			
 		</>
-		
     )
 };
+
 
 export default MediaPlayer;

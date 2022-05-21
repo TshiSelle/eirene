@@ -3,7 +3,7 @@ const { Therapist } = require('../models/therapist');
 const { validateSearchInput } = require('../helperFunctions/inputValidation');
 
 const searchTherapists = async (req, res) => {
-	let { searchString, pageNum, gender, degree, yoe, title } = req.query;
+	let { searchString, pageNum, gender, degree, minYOE, maxYOE, title } = req.query;
 	if (isEmpty(searchString)) {
 		return res.status(400).json({
 			message: 'Search field is empty, please add input',
@@ -11,7 +11,7 @@ const searchTherapists = async (req, res) => {
 		});
 	}
 
-	const therapistsPerPage = 10;
+	const therapistsPerPage = 12;
 	pageNum = isEmpty(pageNum) || pageNum < 1 ? 1 : pageNum;
 	const { errors, isValid } = validateSearchInput(req.query);
 
@@ -28,8 +28,7 @@ const searchTherapists = async (req, res) => {
 				$and: [
 					{ gender: gender || { $regex: /.*/ } },
 					{ degree: degree || { $regex: /.*/ } },
-					{ yearsOfExperience: yoe || { $gte: 0 } },
-					// { yearsOfExperience : { $gte : minYOE , $lte : maxYoe } }, //future feature
+					{ yearsOfExperience : { $gte : minYOE || 0, $lte : maxYOE || 20 } }, 
 					{
 						title: {
 							$regex: title ? '.*' + title + '.*' : /.*/,

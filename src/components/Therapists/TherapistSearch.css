@@ -27,6 +27,7 @@ bold {
 }
 
 .therapist-container {
+  max-width: 477.26px;
   padding: 20px;
   flex-basis: 33.3333333%;
 }
@@ -97,8 +98,12 @@ bold {
 
 .dropdown {
   width: fit-content;
+  height: fit-content;
   border-radius: 6px;
 }
+
+
+
 .form-select {
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
   border: 1px solid #e1ebd5;
@@ -117,4 +122,10 @@ bold {
 .optionBtn:active {
   box-shadow: 0 0;
   color: green;
+}
+
+
+.pagesContainer {
+	display: flex;
+	justify-content: center;
 }

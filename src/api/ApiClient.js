@@ -107,13 +107,14 @@ export function ChangeUserPass(authToken, oldPassword, newPassword, confirmPassw
 	return PostAxiosCall('/account/changePass', data, { 'x-access-token': authToken });
 }
 
-export function FilterTherapists(query, therapistTitle, gender, degree, yoe, pageNumber) {
+export function FilterTherapists(query, therapistTitle, gender, degree, minYOE, maxYOE, pageNumber) {
 	let title = therapistTitle ? `&title=${therapistTitle}` : ''; //therapist job title (string-anything)
 	let tgender = gender ? `&gender=${gender}` : ''; // 'female'/'male'
 	let tdegree = degree ? `&degree=${degree}` : ''; // 'Phd' / 'Masters'
-	let yearsOfExp = yoe ? `&yoe=${yoe}` : ''; // number (preferably between 0-20)
+	let MinyearsOfExp = minYOE ? `&minYOE=${minYOE}` : '&minYOE=0'; 
+	let MaxyearsOfExp = maxYOE ? `&maxYOE=${maxYOE}` : ''; 
 	let pageNum = pageNumber ? `&pageNum=${pageNumber}` : ''; //number (preferably between 1-maxPageNum)
-	return GetAxiosCall(`/search?searchString=${query}${title}${tgender}${tdegree}${yearsOfExp}${pageNum}`);
+	return GetAxiosCall(`/search?searchString=${query}${title}${tgender}${tdegree}${MinyearsOfExp}${MaxyearsOfExp}${pageNum}`);
 }
 
 export function GetFilteredTherapist(id) {
