@@ -145,7 +145,7 @@ export function DeactivateAccount(authToken) {
 	return PostAxiosCall('/account/deactivate', {}, { 'x-access-token': authToken });
 }
 
-export function StopAccountDeactivation(authToken) {
+export function ReactivateAccount(authToken) {
 	return PostAxiosCall('/account/undeactivate', {}, { 'x-access-token': authToken });
 }
 

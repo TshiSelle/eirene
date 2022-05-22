@@ -2,11 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 // import { GetUserAppointments } from "../../../api/ApiClient";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
-import { GetUserPicture, UploadProfilePicture } from "../../../api/ApiClient";
+import { GetUserPicture, ReactivateAccount, UploadProfilePicture } from "../../../api/ApiClient";
 // import { useUserCalendar } from "../../../context/CalendarContext";
 import { Link } from "react-router-dom";
 import Calendar from "react-awesome-calendar";
 import { Image } from "cloudinary-react";
+import DeactivationModal from "./DeactivationModal";
 
 const events = [
   {
@@ -35,8 +36,27 @@ const events = [
 const ProfilePage = () => {
   const { user, userLogOut } = useUser();
   const [imageSrc, setImageSrc] = useState(undefined);
-  // const { userCalendarAppointments } = useUserCalendar();
+  const [deactivateModalOpen, setDeactivateModalOpen] = useState(false);
   const { loggedIn, authToken } = useAuthenticator();
+  const userDeactivationDate = user?.deactivationDate == undefined ? undefined : user.deactivationDate;
+  // const { userCalendarAppointments } = useUserCalendar();
+  console.log(user);
+  const handleAccountStatus = useCallback(() => {
+    if (userDeactivationDate != undefined) {
+      ReactivateAccount(authToken).then((response) => {
+        if (response.data.success) {
+          console.log(response.data);
+          return response.data.message;
+        } else {
+          console.log(response.data);
+          return response.data.message;
+        }
+      });
+    }else {
+      setDeactivateModalOpen(true)
+    }
+    
+  }, []);
 
   const handleImageUpload = useCallback(() => {
     if (!loggedIn) return;
@@ -99,6 +119,9 @@ const ProfilePage = () => {
               </button>
             </form>
           </section>
+          <button onClick={handleAccountStatus}>
+            {userDeactivationDate && userDeactivationDate != undefined ? 'Activate Account': 'Deactivate Account'}
+          </button>
           <div>
             <Calendar
               events={events}
@@ -116,6 +139,11 @@ const ProfilePage = () => {
           <Link to="/SignIn">Go to Login</Link>
         </div>
       )}
+      <DeactivationModal
+        showModal={deactivateModalOpen}
+        closeModal={() => setDeactivateModalOpen(false)}
+        authToken={authToken}
+      />
     </>
   );
 };
