@@ -56,15 +56,16 @@ const App = () => {
                         <Route path="*" element={<NotFoundRoute />} />
                       </Routes>
                     </MediaPlayer>
-                  
-                </Router>
+                    {/* </SiteFooter > */}
+                  </Router>
+                </Suspense>
               </Suspense>
-            </Suspense>
-          </JournalProvider>
-        </CalendarProvider>
-      </UserProvider>
-    </AuthProvider>
+            </JournalProvider>
+          </CalendarProvider>
+        </UserProvider>
+      </AuthProvider>
     </CloudinaryContext >
+
   );
 };
 
