@@ -56,7 +56,7 @@ const App = () => {
                         <Route path="*" element={<NotFoundRoute />} />
                       </Routes>
                     </MediaPlayer>
-                    {/* </SiteFooter > */}
+                    <SiteFooter />
                   </Router>
                 </Suspense>
               </Suspense>

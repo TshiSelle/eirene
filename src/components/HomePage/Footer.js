@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useLocation, Link } from "react-router-dom";
 import "./HomePage.css";
+import "./footer.css"
 
 
 const SiteFooter = () => {
@@ -37,12 +38,12 @@ const SiteFooter = () => {
       <div class="footer-right col-md-4 col-sm-6">
         <h2> Eirene<span> <img src="./images/eirene_logo.svg" /></span></h2>
         <p class="menu">
-          <Link to={'/'}>Home.</Link>
-          <Link to={'/find-therapists'}>Therapists.</Link>
-          <Link to={'/Journal'}>Journal.</Link>
-          <Link to={'/Meditations'}>Meditation.</Link>
-          <Link to={'/about'}>About Us.</Link>
-          <Link to={'/contact'}>Contact.</Link>
+          <Link to={'/'}>Home</Link> |
+          <Link to={'/find-therapists'}> Therapists</Link> |
+          <Link to={'/Journal'}> Journal</Link> |
+          <Link to={'/Meditations'}> Meditation</Link> |
+          <Link to={'/about'}> About Us  </Link> |
+          <Link to={'/contact'}> Contact</Link>
         </p>
         <p class="name"> Eirene &copy; 2022</p>
       </div>
