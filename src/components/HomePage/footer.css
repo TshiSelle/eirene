@@ -142,6 +142,10 @@
   margin: 0;
 }
 
+.eireneImg {
+  background-image: url(./images/eirene_logo.svg);
+}
+
 @media (max-width: 767px) {
   .footer {
     font-size: 14px;
