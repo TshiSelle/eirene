@@ -5,8 +5,9 @@ const MeditationPage = () => {
 
     return (
         <div>
+            { /* <MeditationPlayer> */}
             <h2>Play meditation videos</h2>
-            <MeditationPlayer />
+            { /* </MeditationPlayer> */}
         </div>
     )
 }

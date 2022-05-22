@@ -26,44 +26,45 @@ import NotFoundRoute from "./components/NotFound/NotFoundRoute";
 
 const App = () => {
   return (
-  
-  <CloudinaryContext cloudName="cloudloom">
-    <AuthProvider>
-      <UserProvider>
-        <CalendarProvider>
-          <JournalProvider>
-            <Suspense fallback={<FullPageSpinner />}>
+
+    <CloudinaryContext cloudName="cloudloom">
+      <AuthProvider>
+        <UserProvider>
+          <CalendarProvider>
+            <JournalProvider>
               <Suspense fallback={<FullPageSpinner />}>
-                <Router>
-                  <NavBar />
-                  <MediaPlayer>
-                    <Routes>
-                      {/* Every page we create needs to have a route so we can navigate to it,
+                <Suspense fallback={<FullPageSpinner />}>
+                  <Router>
+                    <NavBar />
+
+                    <MediaPlayer>
+                      <Routes>
+                        {/* Every page we create needs to have a route so we can navigate to it,
                             Imitate the routes below with a proper path when adding a new page */}
-                      <Route path="/" element={<HomePage />} />
-                      <Route path="/Profile" element={<ProfilePage />} />
-                      <Route path="/SignUp" element={<SignUpPage />} />
-                      <Route path="/SignIn" element={<LoginPage />} />
-                      <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-                      <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
-                      <Route path="/find-therapists" element={<SearchTherapists />} />
-                      <Route path="/Meditations" element={<MeditationPage />} />
-                      <Route path="/therapist-description/:id" element={<TherapistDescription />} />
-                      <Route path="/verify/:username/:token" element={<VerifyAccount />} />
-                      <Route path="/Journal" element={<Journal />} />
-                      <Route path="/contact" element={<ContactUsRoute />} />
-                      <Route path="*" element={<NotFoundRoute />} />
-                    </Routes>
-                  </MediaPlayer>
-                  <SiteFooter />
-                </Router>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/Profile" element={<ProfilePage />} />
+                        <Route path="/SignUp" element={<SignUpPage />} />
+                        <Route path="/SignIn" element={<LoginPage />} />
+                        <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+                        <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
+                        <Route path="/find-therapists" element={<SearchTherapists />} />
+                        <Route path="/Meditations" element={<MeditationPage />} />
+                        <Route path="/therapist-description/:id" element={<TherapistDescription />} />
+                        <Route path="/verify/:username/:token" element={<VerifyAccount />} />
+                        <Route path="/Journal" element={<Journal />} />
+                        <Route path="/contact" element={<ContactUsRoute />} />
+                        <Route path="*" element={<NotFoundRoute />} />
+                      </Routes>
+                    </MediaPlayer>
+                    <SiteFooter />
+                  </Router>
+                </Suspense>
               </Suspense>
-            </Suspense>
-          </JournalProvider>
-        </CalendarProvider>
-      </UserProvider>
-    </AuthProvider>
-  </CloudinaryContext>
+            </JournalProvider>
+          </CalendarProvider>
+        </UserProvider>
+      </AuthProvider>
+    </CloudinaryContext>
   );
 };
 
