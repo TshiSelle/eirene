@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ReactJkMusicPlayer from 'react-jinke-music-player'
 import 'react-jinke-music-player/assets/index.css'
 import "./styling.css"
@@ -6,11 +6,12 @@ import "./styling.css"
 const MediaPlayer = ({children}) => {
     const Music = "https://res.cloudinary.com/cloudloom/video/upload/v1650269930/samples/music/2_Minutes___Lofi_hip_hop_mix_study_sleep_homework_music_vtisxm.ogg";
 	const [playerMode, setPlayerMode] = useState('mini');
-	if (document && document?.querySelector('df-messenger')) {
+	const chatbot = useRef(null);
+	if (chatbot.current) {
 		if (playerMode == 'full' ) {
-			document.querySelector('df-messenger').shadowRoot.querySelector('.df-messenger-wrapper').querySelector('#widgetIcon').style.bottom = "10vh"
+			chatbot.current.shadowRoot.querySelector('.df-messenger-wrapper').querySelector('#widgetIcon').style.bottom = "10vh"
 		} else {
-			document.querySelector('df-messenger').shadowRoot.querySelector('.df-messenger-wrapper').querySelector('#widgetIcon').style.bottom = "0vh"
+			chatbot.current.shadowRoot.querySelector('.df-messenger-wrapper').querySelector('#widgetIcon').style.bottom = "0vh"
 		}
 	}
 
@@ -24,6 +25,7 @@ const MediaPlayer = ({children}) => {
     		{children}
     		</div>
 			<df-messenger
+			ref={chatbot}
     		chat-title="Eirene"
     		agent-id="0ffba258-1ae3-4dcd-9497-7476a1c9819c"
     		language-code="en"
