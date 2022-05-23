@@ -15,7 +15,7 @@ const Journal = () => {
         // journalEntries?.length === 0
         // ? <>
         <>
-          <div class="journal-banner">
+          <div className="journal-banner">
             <h2>Journal</h2>
             <p>Express Your Thoughts</p>
           </div>

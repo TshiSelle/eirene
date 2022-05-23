@@ -34,9 +34,6 @@
   color: #8da86d;
   transition: color 0.2s linear;
 }
-.btn {
-  /* background-color: transparent; */
-}
 .btn:focus {
   outline: none !important;
   outline-offset: none !important;
