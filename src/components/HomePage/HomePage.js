@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import Footer from './Footer'
-
-// import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "./HomePage.css";
 import { Image, Transformation } from "cloudinary-react";
 
+import ContactUs from "../ContactUs/ContactUsRoute.js";
 
 const HomePage = () => {
   return (
@@ -130,6 +129,10 @@ const HomePage = () => {
           </MediItem>
         </MediFlex>
       </MeditationSection>
+
+      <div className="home-contact">
+        <ContactUs />
+      </div>
 
     </Container >
   );
@@ -319,7 +322,7 @@ const JrSection = styled.section`
 
 const JrDetails = styled.section`
   background-color: #ffffff;
-  height: 463px;
+  min-height: 463px;
   width: 60%;
 
   @media (max-width: 1166px) {
@@ -416,4 +419,8 @@ const MediName = styled.p`
   font-size: 21px;
   padding: 20px;
   font-family: ProximaNova;
+
+  @media (max-width: 991px) {
+    font-size: 16px;
+  }
 `;

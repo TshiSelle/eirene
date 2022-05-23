@@ -197,6 +197,7 @@ const ContactUsExt = () => {
   );
   return (
     <>
+      <div className="contact-container">
       <Header>Your Health Starts Here</Header>
       {/* <Paragraph>We would love to hear your feedback</Paragraph> */}
 
@@ -283,7 +284,8 @@ const ContactUsExt = () => {
             </Form.Group>
           </Form>
         </SizeContainer>
-      </FormContainer>
+        </FormContainer>
+        </div>
     </>
   );
 };
@@ -298,6 +300,10 @@ const FormContainer = styled.div`
 const SizeContainer = styled.div`
   width: 50%;
   margin-top: 50px;
+
+  @media (max-width: 991px) {
+    width: 90%;
+  }
 `;
 
 const Button = styled.button`
@@ -332,4 +338,9 @@ const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0 20px;
+
+  @media (max-width: 991px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 `;
