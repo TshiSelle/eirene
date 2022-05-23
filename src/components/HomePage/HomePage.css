@@ -21,117 +21,60 @@
   src: url(./font/Proxima-Nova-Regular.woff);
 }
 
-.navlink {
-  transition: color 0.2s linear;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: transparent !important;
-  border-color: transparent !important;
-}
-.navlink:hover {
-  color: #8da86d;
-  transition: color 0.2s linear;
-}
-.btn:focus {
-  outline: none !important;
-  outline-offset: none !important;
-}
-.btn:hover {
-  outline: none !important;
-  outline-offset: none !important;
-}
-.loginnav {
-  position: absolute;
-  right: 5%;
-  display: flex;
-  gap: 10px;
-  color: #8da86d !important;
-}
-.TherapistHeader {
-  font-size: 245%;
-  font-weight: bold;
-}
-.findTherapist {
-  display: flex;
-  flex-direction: column;
-  font-size: 130%;
-}
+/* journal section */
 .journal-reason {
   display: grid;
-  grid-template-areas:
-    'tell-my-why'
-    'tell-me-why2';
+  grid-template-rows: 1fr 1fr;
+  outline: 1px solid #212325;
+  outline-offset: -20px;
 }
 
 .tell-me-why {
   display: grid;
   grid-template-columns: 1.7fr 1fr 1fr;
   gap: 0px 0px;
-  grid-template-areas: 'point1 point2 point3';
+  margin: 20px 20px 0;
 }
+
 .tell-me-why2 {
   display: grid;
   grid-template-columns: 2.1fr 0.8fr 0.8fr;
-  grid-template-areas: 'point1 point2 point3';
+  margin: 0 20px 20px;
 }
+
 .reasons {
-  border: 1px solid #e1ebd5;
-}
-.point1,
-.point2,
-.point3,
-.point4,
-.point5 {
+  /* border: 1px solid #e1ebd5; */
   display: flex;
   flex-direction: column;
-  padding: 10% 10% 0 10%;
+  padding: 20px;
   text-align: left !important;
 }
 
-@media screen and (max-width: 990px) {
-  .TherapistHeader {
-    font-size: 200%;
-  }
-  .kYdVCz {
-    flex-direction: column;
-  }
-  .tell-me-why {
-    display: grid;
-    grid-template-columns: 0.7fr 0.4fr 0.4fr;
-    grid-template-areas: 'point1 point2 point3';
-  }
-  .tell-me-why2 {
-    display: grid;
-    grid-template-columns: 1.1fr 0.3fr 0.3fr;
-    grid-template-areas: 'point1 point2 point3';
-  }
-  .reasons {
-    font-size: 85%;
-  }
+.point1, .point2, .point3 {
+  border-bottom: 1px solid #212325;
 }
-@media screen and (max-width: 810px) {
-  .TherapistHeader {
-    font-size: 90%;
+
+.point2, .point5 {
+  border-left: 1px solid #212325;
+  border-right: 1px solid #212325;
+}
+
+@media screen and (max-width: 991px) {
+  .tell-me-why, .tell-me-why2 {
+    display: block;
   }
+
   .tell-me-why {
-    display: grid;
-    grid-template-columns: 34% 33% 33%;
-    grid-template-areas: 'point1 point2 point3';
+    margin: 25px 20px 0;
   }
-  .tell-me-why2 {
-    display: grid;
-    grid-template-columns: 37% 33% 30%;
-    grid-template-areas: 'point1 point2 point3';
+
+  .point1, .point2, .point3, .point4, .point5 {
+    border-bottom: 1px solid #212325;
+    border-left: unset;
+    border-right: unset;
   }
+
   .reasons {
-    font-size: 70%;
-  }
-  .radioDesc {
-    font-size: 90% !important;
-  }
-  .findTherapist {
-    font-size: 70%;
+    padding: 10px;
   }
 }
