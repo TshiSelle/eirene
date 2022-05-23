@@ -1,39 +1,105 @@
-import React, { useRef, useState } from 'react';
-import ReactJkMusicPlayer from 'react-jinke-music-player'
-import 'react-jinke-music-player/assets/index.css'
-import "./styling.css"
+import React, { useRef, useState } from "react";
+import ReactJkMusicPlayer from "react-jinke-music-player";
+import "react-jinke-music-player/assets/index.css";
+import "./styling.css";
 
-const MediaPlayer = ({children}) => {
-    const Music = "https://res.cloudinary.com/cloudloom/video/upload/v1650269930/samples/music/2_Minutes___Lofi_hip_hop_mix_study_sleep_homework_music_vtisxm.ogg";
-	const [playerMode, setPlayerMode] = useState('mini');
-	const chatbot = useRef(null);
-	if (chatbot.current) {
-		if (playerMode == 'full' ) {
-			chatbot.current.shadowRoot.querySelector('.df-messenger-wrapper').querySelector('#widgetIcon').style.bottom = "10vh"
-		} else {
-			chatbot.current.shadowRoot.querySelector('.df-messenger-wrapper').querySelector('#widgetIcon').style.bottom = "0vh"
-		}
-	}
+const MediaPlayer = ({ children }) => {
+  const Music = [
+    {
+      cover:
+        "https://res.cloudinary.com/cloudloom/image/upload/v1653326866/Meditations/10_min_meditation_for_sleep-modified_b8zjdb.png",
+      musicSrc:
+        "https://res.cloudinary.com/cloudloom/video/upload/v1653142307/Meditations/5-MinuteMeditationYou_CanDoAnywhere_u33cj7.mp3",
+      name: "MEDITATION - 5 Min Anywhere Meditation ",
+    },
+    ,
+    {
+      cover:
+        "https://res.cloudinary.com/cloudloom/image/upload/v1653326865/Meditations/meditation-modified_rolswx.png",
+      musicSrc:
+        "https://res.cloudinary.com/cloudloom/video/upload/v1653142347/Meditations/10-MinuteMeditationForAnxiety_ebbzcv.mp3",
+      name: "MEDITATION - 10 min Meditation for Anxiety",
+    },
+    {
+      cover:
+        "https://res.cloudinary.com/cloudloom/image/upload/v1653326865/Meditations/10_min_meditation_stress-modified_jz5g3s.png",
+      musicSrc:
+        "https://res.cloudinary.com/cloudloom/video/upload/v1653142342/Meditations/10-MinuteMeditationForStress_kc5m9f.mp3",
+      name: "MEDITATION - 10 min Meditation for Stress",
+    },
+    {
+      cover:
+        "https://res.cloudinary.com/cloudloom/image/upload/v1653326865/Meditations/5min_meditation-modified_clrusx.png",
+      musicSrc:
+        "https://res.cloudinary.com/cloudloom/video/upload/v1653142343/Meditations/10-MinuteMeditationForSleep_wknfdo.mp3",
+      name: "MEDITATION - 10 min Meditation for Sleep",
+    },
+    {
+      cover:
+        "https://res.cloudinary.com/cloudloom/image/upload/v1653326863/Meditations/desert-modified_gnix26.png",
+      musicSrc:
+        "https://res.cloudinary.com/cloudloom/video/upload/v1653324040/Meditations/MUSIC_-_Middle_Eastern_LOFI_j6m3fp.mp3",
+      name: "MUSIC - Middle Eastern LOFI",
+    },
+    {
+      cover:
+        "https://res.cloudinary.com/cloudloom/image/upload/v1653326865/Meditations/rain-modified_onn1gi.png",
+      musicSrc:
+        "https://res.cloudinary.com/cloudloom/video/upload/v1653323311/Meditations/MUSIC_-_Rain_Sounds_zpfhnw.mp3",
+      name: "MUSIC - Rain",
+    },
+    {
+      cover:
+        "https://res.cloudinary.com/cloudloom/image/upload/v1653326866/Meditations/ocean-modified_mkea5h.png",
+      musicSrc:
+        "https://res.cloudinary.com/cloudloom/video/upload/v1653323370/Meditations/MUSIC_-_Ocean_Sounds_oskpip.mp3",
+      name: "MUSIC - Ocean",
+    },
+  ];
+  const [playerMode, setPlayerMode] = useState("mini");
+  const chatbot = useRef(null);
+  if (chatbot.current) {
+    if (playerMode == "full") {
+      chatbot.current.shadowRoot
+        .querySelector(".df-messenger-wrapper")
+        .querySelector("#widgetIcon").style.bottom = "10vh";
+    } else {
+      chatbot.current.shadowRoot
+        .querySelector(".df-messenger-wrapper")
+        .querySelector("#widgetIcon").style.bottom = "0vh";
+    }
+  }
 
-    return (
-		<>
-    		<div>
-    		    <ReactJkMusicPlayer showMediaSession showDownload={false} showThemeSwitch={false}
-    		        autoPlay={false}
-					onModeChange={(mode) => setPlayerMode(mode)}
-    		        autoHiddenCover={true} remove={false} audioLists={[{ name: 'Lofi cloudinary', musicSrc: Music }]} />
-    		{children}
-    		</div>
-			<df-messenger
-			ref={chatbot}
-    		chat-title="Eirene"
-    		agent-id="0ffba258-1ae3-4dcd-9497-7476a1c9819c"
-    		language-code="en"
-    		chat-icon="https://res.cloudinary.com/cloudloom/image/upload/v1653046865/logo/eirene_face_tzjqqu.webp"
-    		></df-messenger>
-		</>
-    )
+  return (
+    <>
+      <div>
+        <ReactJkMusicPlayer
+          theme="auto"
+          defaultVolume={70}
+          spaceBar={true}
+          responsive={true}
+          glassBg={true}
+          showMediaSession
+          showDownload={false}
+          showThemeSwitch={false}
+          showMiniModeCover={true}
+          autoPlay={false}
+          onModeChange={(mode) => setPlayerMode(mode)}
+          autoHiddenCover={true}
+          remove={false}
+          audioLists={Music}
+        />
+        {children}
+      </div>
+      <df-messenger
+        ref={chatbot}
+        chat-title="Eirene"
+        agent-id="0ffba258-1ae3-4dcd-9497-7476a1c9819c"
+        language-code="en"
+        chat-icon="https://res.cloudinary.com/cloudloom/image/upload/v1653046865/logo/eirene_face_tzjqqu.webp"
+      ></df-messenger>
+    </>
+  );
 };
-
 
 export default MediaPlayer;
