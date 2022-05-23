@@ -68,3 +68,8 @@
     top: 10px;
 	cursor: pointer;
 }
+
+/* footer */
+.footer-link:hover {
+	color: #8da86d;
+}
