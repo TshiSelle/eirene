@@ -129,3 +129,8 @@ bold {
 	display: flex;
 	justify-content: center;
 }
+
+/* banner */
+.banner {
+  width: 100%;
+}

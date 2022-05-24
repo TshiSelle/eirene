@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
-import Footer from './Footer'
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "./HomePage.css";
 import { Image, Transformation } from "cloudinary-react";
@@ -9,7 +8,6 @@ import ContactUs from "../ContactUs/ContactUsRoute.js";
 
 const HomePage = () => {
   return (
-
     <Container>
       <GreenBackground></GreenBackground>
 
@@ -28,18 +26,24 @@ const HomePage = () => {
             <ThHeader>Find The Therapist For You</ThHeader>
 
             <div>
-              <ThPara>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+              <ThPara>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
                 totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
-                neque veniam. Magnam accusantium accusamus laudantium magni ipsum
-                enim assumenda ipsam!</ThPara>
-              <ThPara>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                neque veniam. Magnam accusantium accusamus laudantium magni
+                ipsum enim assumenda ipsam!
+              </ThPara>
+              <ThPara>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
                 totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
-                neque veniam. Magnam accusantium accusamus laudantium magni ipsum
-                enim assumenda ipsam!</ThPara>
-              <ThPara>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                neque veniam. Magnam accusantium accusamus laudantium magni
+                ipsum enim assumenda ipsam!
+              </ThPara>
+              <ThPara>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
                 totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
-                neque veniam. Magnam accusantium accusamus laudantium magni ipsum
-                enim assumenda ipsam!</ThPara>
+                neque veniam. Magnam accusantium accusamus laudantium magni
+                ipsum enim assumenda ipsam!
+              </ThPara>
             </div>
           </ThDetails>
         </TherapistSection>
@@ -53,41 +57,55 @@ const HomePage = () => {
           </JrImage>
           <JrSection>
             <JrDetails className="journal-reason">
-
               <div className="tell-me-why">
                 <div className="point1 reasons">
                   <h5>Point 1</h5>
-                  <p>According to all know laws of aviation, there is no way a bee should be able to fly.</p>
+                  <p>
+                    According to all know laws of aviation, there is no way a
+                    bee should be able to fly.
+                  </p>
                 </div>
 
                 <div className="point2 reasons">
                   <h5>Point 2</h5>
-                  <p>According to all know laws of aviation, there is no way a bee should be able to fly.</p>
+                  <p>
+                    According to all know laws of aviation, there is no way a
+                    bee should be able to fly.
+                  </p>
                 </div>
                 <div className="point3 reasons">
                   <h5>Point 3</h5>
-                  <p>According to all know laws of aviation, there is no way a bee should be able to fly.</p>
+                  <p>
+                    According to all know laws of aviation, there is no way a
+                    bee should be able to fly.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="tell-me-why2">
                 <div className="point4 reasons">
                   <h5>Point 4</h5>
-                  <p>According to all know laws of aviation, there is no way a bee should be able to fly.</p>
+                  <p>
+                    According to all know laws of aviation, there is no way a
+                    bee should be able to fly.
+                  </p>
                 </div>
                 <div className="point5 reasons">
                   <h5>Point 5</h5>
-                  <p>According to all know laws of aviation, there is no way a bee should be able to fly.</p>
+                  <p>
+                    According to all know laws of aviation, there is no way a
+                    bee should be able to fly.
+                  </p>
                 </div>
 
                 <div className="point6 reasons">
                   <h5>Go to page</h5>
-                  <p><Link to={'/Journal'}>Journal.</Link></p>
+                  <p>
+                    <Link to={"/Journal"}>Journal.</Link>
+                  </p>
                   <p></p>
                 </div>
               </div>
-
-
             </JrDetails>
           </JrSection>
         </JournalSection>
@@ -133,8 +151,7 @@ const HomePage = () => {
       <div className="home-contact">
         <ContactUs />
       </div>
-
-    </Container >
+    </Container>
   );
 };
 
