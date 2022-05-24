@@ -55,7 +55,6 @@ const searchTherapists = () => {
     (event) => {
       // console.log(therapistTitleoption, genderoption, degreeoption, yoeoption)
       if (event) event.preventDefault();
-      if (!query) return;
       setLoading(true);
       FilterTherapists(
         query,
