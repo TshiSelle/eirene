@@ -377,7 +377,7 @@ const MeditationSection = styled.section`
   background-color: #e1ebd5;
   display: grid;
   justify-items: center;
-  margin-top: 200px;
+  margin-top: 150px;
 
   @media (max-width: 991px) {
     margin-top: 40px;
