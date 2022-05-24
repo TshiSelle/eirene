@@ -18,22 +18,6 @@ const NavBar = () => {
       <div className="hamburger-menu"></div>
 
       <Nav>
-        {/* <StyledLink to={"/"} className="navlink">
-          Home
-        </StyledLink>
-
-        <StyledLink to={"/find-therapists"} className="navlink">
-          Therapists
-        </StyledLink>
-
-        <StyledLink to={"/Journal"} className="navlink">
-          Journal
-        </StyledLink>
-
-        <StyledLink to={"/about"} className="navlink">
-          About Us
-        </StyledLink> */}
-
         <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/">Home</NavLink>
         <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/find-therapists">Therapists</NavLink>
         <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/Journal">Journal</NavLink>
