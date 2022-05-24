@@ -19,13 +19,12 @@ export const JournalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, {
     journalEntries: null,
   });
-  const [refresher, setRefresher] = useState(false);
+  const [refresher, setRefresher] = useState(1);
   const { journalEntries } = state;
   const { authToken, loggedIn } = useAuthenticator();
 
   useEffect(() => {
     if (!loggedIn || !authToken) return;
-    console.log("🚀 ~ file: JournalContext.js ~ line 33 ~ JournalProvider ~ journalEntries", journalEntries);
     const getJournalEntries = async () => {
       try {
         GetUserJournals(authToken)
@@ -54,8 +53,7 @@ export const JournalProvider = ({ children }) => {
         .then((response) => {
           if (response.data.success) {
             dispatch({ type: "set-entries", data: response.data.journals });
-            setRefresher(!refresher);
-			console.log("🚀 ~ file: JournalContext.js ~ line 108 ~ .then ~ refresher", refresher)
+            setRefresher(Math.random());
           } else {
             console.log(" Failed: ", response.data);
           }
@@ -76,8 +74,7 @@ export const JournalProvider = ({ children }) => {
         UpdateJournal(authToken, journalID, title, body)
           .then((response) => {
             if (response.data.success) {
-              setRefresher(!refresher);
-              console.log("🚀 ~ file: JournalContext.js ~ line 108 ~ .then ~ refresher", refresher)
+              setRefresher(Math.random());
               // The useEffect used will automatically update the journal entries..
               // so no need to handle it in this promise.
               console.log(response.data, " Successfuly updated");
@@ -105,11 +102,7 @@ export const JournalProvider = ({ children }) => {
         DeleteJournal(journalID, authToken)
           .then((response) => {
             if (response.data.success) {
-              setRefresher(!refresher);
-              console.log("🚀 ~ file: JournalContext.js ~ line 108 ~ .then ~ refresher", refresher)
-              console.log("successfully in delete journal", response.data);
-            } else {
-              console.log(" im here", response.data);
+              setRefresher(Math.random());
             }
           })
           .catch((error) => {
