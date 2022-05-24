@@ -259,6 +259,7 @@ const PageBanner = styled.div`
   display: grid;
   align-content: center;
   justify-content: center;
+  margin-top: 108px;
 `;
 
 const BannerHeader = styled.h1`

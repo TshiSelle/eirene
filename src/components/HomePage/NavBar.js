@@ -18,51 +18,81 @@ const NavBar = () => {
       <div className="hamburger-menu"></div>
 
       <Nav>
-        <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/">Home</NavLink>
-        <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/find-therapists">Therapists</NavLink>
-        <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/Journal">Journal</NavLink>
-        <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/about">About Us</NavLink>
+        <NavLink
+          className={({ isActive }) => "navlink " + (isActive && "active")}
+          to="/"
+        >
+          Home
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => "navlink " + (isActive && "active")}
+          to="/find-therapists"
+        >
+          Therapists
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => "navlink " + (isActive && "active")}
+          to="/Journal"
+        >
+          Journal
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => "navlink " + (isActive && "active")}
+          to="/about"
+        >
+          About Us
+        </NavLink>
 
         <Dropdown className="btn-primary">
           <Dropdown.Toggle>
-            <StyledImage publicId={userImage ?  userImage : "samples/Profile/navbar-profile"}>
+            <StyledImage
+              publicId={
+                userImage ? userImage : "samples/Profile/navbar-profile"
+              }
+            >
               <Transformation fetchFormat="auto" />
             </StyledImage>
           </Dropdown.Toggle>
           {loggedIn ? (
             <Dropdown.Menu>
-			  <Dropdown.Item as={Link} to="/profile" style={{ textDecorationLine: 'none', color: '#212529' }}>
+              <Dropdown.Item
+                as={Link}
+                to="/profile"
+                style={{ textDecorationLine: "none", color: "#212529" }}
+              >
                 Profile
-			  </Dropdown.Item>
+              </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item
                 onClick={userLogOut}
-                style={{ fontSize: 15, fontWeight: '500' }}
+                style={{ fontSize: 15, fontWeight: "500" }}
               >
                 Log out
               </Dropdown.Item>
             </Dropdown.Menu>
           ) : (
             <Dropdown.Menu>
-              <Dropdown.Item 
-			  as={Link} 
-			  to="/SignIn"
-              style={{
-                textDecoration: "none",
-                color: "#212529",
-			  }}>
-                  Login
-			  </Dropdown.Item>
+              <Dropdown.Item
+                as={Link}
+                to="/SignIn"
+                style={{
+                  textDecoration: "none",
+                  color: "#212529",
+                }}
+              >
+                Login
+              </Dropdown.Item>
               <Dropdown.Divider />
-			  <Dropdown.Item 
-			  as={Link} 
-			  to="/SignUp"
-              style={{
-                textDecoration: "none",
-                color: "#212529",
-			  }}>
-                  Sign Up
-			  </Dropdown.Item>
+              <Dropdown.Item
+                as={Link}
+                to="/SignUp"
+                style={{
+                  textDecoration: "none",
+                  color: "#212529",
+                }}
+              >
+                Sign Up
+              </Dropdown.Item>
             </Dropdown.Menu>
           )}
         </Dropdown>
@@ -74,7 +104,8 @@ const NavBar = () => {
 const Header = styled.header`
   background-color: white;
   height: 108px;
-  position: ${(props) => (props.pathname === "/" ? "fixed" : "")};
+  // position: ${(props) => (props.pathname === "/" ? "fixed" : "")};
+  position: fixed;
   width: 100%;
   top: 0;
   font-family: FuturaLight;
