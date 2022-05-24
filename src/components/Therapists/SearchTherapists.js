@@ -2,10 +2,20 @@ import React, { useState, useCallback, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import TherapistCard from "./TherapistCard";
 import { FilterTherapists } from "../../api/ApiClient";
-import { Alert, Button, Collapse, Dropdown, DropdownButton, Form, FormSelect, Pagination } from "react-bootstrap";
+import {
+  Alert,
+  Button,
+  Collapse,
+  Dropdown,
+  DropdownButton,
+  Form,
+  FormSelect,
+  Pagination,
+} from "react-bootstrap";
 import "./TherapistSearch.css";
 import Pages from "./Pages";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import styled from "styled-components";
 
 const searchTherapists = () => {
   const [query, setQuery] = useState("");
@@ -52,8 +62,8 @@ const searchTherapists = () => {
         therapistTitleoption,
         genderoption,
         degreeoption,
-        +yoeoption.split("-")[0],
-        +yoeoption.split("-")[1],
+        +yoeoption.toString().substring(0, 2),
+        +yoeoption.toString().substring(2),
         pageNumberoption
       )
         .then((response) => {
@@ -63,13 +73,22 @@ const searchTherapists = () => {
             setnumOfPages(response.data.numOfPages);
             setError("");
             const showNumbers = 11;
-            const start = pageNumberoption - Math.floor(showNumbers / 2) <= 0 ? 1 : pageNumberoption - Math.floor(showNumbers / 2);
+            const start =
+              pageNumberoption - Math.floor(showNumbers / 2) <= 0
+                ? 1
+                : pageNumberoption - Math.floor(showNumbers / 2);
             const end =
-              pageNumberoption + Math.floor(showNumbers / 2) > numOfPages ? numOfPages : pageNumberoption + Math.floor(showNumbers / 2);
+              pageNumberoption + Math.floor(showNumbers / 2) > numOfPages
+                ? numOfPages
+                : pageNumberoption + Math.floor(showNumbers / 2);
             let pages = [];
             for (let number = start; number <= end; number++) {
               pages.push(
-                <Pagination.Item key={number} active={number === pageNumberoption} onClick={(e) => setpageNumberOption(+e.target.text)}>
+                <Pagination.Item
+                  key={number}
+                  active={number === pageNumberoption}
+                  onClick={(e) => setpageNumberOption(+e.target.text)}
+                >
                   {number}
                 </Pagination.Item>
               );
@@ -88,13 +107,29 @@ const searchTherapists = () => {
           return;
         });
     },
-    [query, therapistTitleoption, genderoption, degreeoption, yoeoption, pageNumberoption]
+    [
+      query,
+      therapistTitleoption,
+      genderoption,
+      degreeoption,
+      yoeoption,
+      pageNumberoption,
+    ]
   );
 
   const setQueryValue = useCallback((e) => setQuery(e.target.value));
 
   return (
-    <div>
+    <PageContainer>
+      <PageBanner>
+        <BannerHeader>Search Therapists</BannerHeader>
+        <BannerPara>
+          Search for a specific therapist by their name or use filter options
+          according to preferred profession, gender, degree attained, or years
+          of experience.
+        </BannerPara>
+      </PageBanner>
+
       <Form className="therapistSearch" onSubmit={() => event.preventDefault()}>
         <div className="searchBar">
           <Form.Control
@@ -129,7 +164,12 @@ const searchTherapists = () => {
                 </option>
               ))}
             </Form.Select>
-            <Form.Select as="select" className="dropdown" value={genderoption} onChange={(e) => setGenderOption(e.target.value)}>
+            <Form.Select
+              as="select"
+              className="dropdown"
+              value={genderoption}
+              onChange={(e) => setGenderOption(e.target.value)}
+            >
               <option key="" value="">
                 Gender (Any)
               </option>
@@ -140,7 +180,12 @@ const searchTherapists = () => {
                 Female
               </option>
             </Form.Select>
-            <Form.Select as="select" className="dropdown" value={degreeoption} onChange={(e) => setDegreeOption(e.target.value)}>
+            <Form.Select
+              as="select"
+              className="dropdown"
+              value={degreeoption}
+              onChange={(e) => setDegreeOption(e.target.value)}
+            >
               <option key="" value="">
                 Degree (Any)
               </option>
@@ -150,23 +195,24 @@ const searchTherapists = () => {
             <Form.Select
               as="select"
               className="dropdown dropdownYears"
-              value={yoeoption}
-              onChange={(e) => setYoeOption(e.target.value)}
-              //   onChange={(e) => console.log(e.target.value)}
+              value={`${yoeoption[0]}-${yoeoption[1]}`}
+              onChange={(e) =>
+                setYoeOption([e.target.value[0], e.target.value[1]])
+              }
             >
               <option key="" value="">
                 Years of Experience (Any)
               </option>
-              <option key="0-5" value="0-5">
+              <option key="05" value="0005">
                 0-5
               </option>
-              <option key="5-10" value="5-10">
+              <option key="510" value="0510">
                 5-10
               </option>
-              <option key="10-15" value="10-15">
+              <option key="1015" value="1015">
                 10-15
               </option>
-              <option key="15-20" value="15-20">
+              <option key="1520" value="1520">
                 15-20
               </option>
             </Form.Select>
@@ -183,7 +229,12 @@ const searchTherapists = () => {
         })}
       </div>
       <div className="pagesContainer">
-        <Pages items={items} numOfPages={numOfPages} currpage={pageNumberoption} onChange={(e) => setpageNumberOption(e)} />
+        <Pages
+          items={items}
+          numOfPages={numOfPages}
+          currpage={pageNumberoption}
+          onChange={(e) => setpageNumberOption(e)}
+        />
       </div>
       <LoadingSpinner display={isLoading} />
       {error && (
@@ -191,8 +242,33 @@ const searchTherapists = () => {
           <Alert variant="danger">{error}</Alert>
         </div>
       )}
-    </div>
+    </PageContainer>
   );
 };
 
 export default searchTherapists;
+
+const PageContainer = styled.div`
+  font-display: swap;
+  font-family: FuturaLight;
+  line-height: 1.5;
+  color: #212529;
+`;
+
+const PageBanner = styled.div`
+  height: 255px;
+  text-align: center;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+`;
+
+const BannerHeader = styled.h1`
+  font-size: 30px;
+  font-weight: bold;
+`;
+
+const BannerPara = styled.p`
+  max-width: 600px;
+  margin-top: 10px;
+`;
