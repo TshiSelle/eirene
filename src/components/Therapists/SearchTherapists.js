@@ -62,8 +62,8 @@ const searchTherapists = () => {
         therapistTitleoption,
         genderoption,
         degreeoption,
-        +yoeoption.toString().substring(0, 2),
-        +yoeoption.toString().substring(2),
+        +yoeoption.split("-")[0],
+        +yoeoption.split("-")[1],
         pageNumberoption
       )
         .then((response) => {
@@ -104,7 +104,6 @@ const searchTherapists = () => {
           setError(error.response.data.message);
           setData([]);
           setLoading(false);
-		  setpageNumberOption(1)
           return;
         });
     },
@@ -196,24 +195,23 @@ const searchTherapists = () => {
             <Form.Select
               as="select"
               className="dropdown dropdownYears"
-              value={`${yoeoption[0]}-${yoeoption[1]}`}
-              onChange={(e) =>
-                setYoeOption([e.target.value[0], e.target.value[1]])
-              }
+              value={yoeoption}
+              onChange={(e) => setYoeOption(e.target.value)}
+              //   onChange={(e) => console.log(e.target.value)}
             >
               <option key="" value="">
                 Years of Experience (Any)
               </option>
-              <option key="05" value="0005">
+              <option key="0-5" value="0-5">
                 0-5
               </option>
-              <option key="510" value="0510">
+              <option key="5-10" value="5-10">
                 5-10
               </option>
-              <option key="1015" value="1015">
+              <option key="10-15" value="10-15">
                 10-15
               </option>
-              <option key="1520" value="1520">
+              <option key="15-20" value="15-20">
                 15-20
               </option>
             </Form.Select>
