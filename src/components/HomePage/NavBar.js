@@ -15,7 +15,7 @@ const NavBar = () => {
 
   return (
     <Header pathname={location.pathname}>
-      <div class="hamburger-menu"></div>
+      <div className="hamburger-menu"></div>
 
       <Nav>
         {/* <StyledLink to={"/"} className="navlink">
@@ -34,10 +34,10 @@ const NavBar = () => {
           About Us
         </StyledLink> */}
 
-        <NavLink activeClassName="active" className={"navlink"} to="/">Home</NavLink>
-        <NavLink activeClassName="active" className={"navlink"} to="/find-therapists">Therapists</NavLink>
-        <NavLink activeClassName="active" className={"navlink"} to="/Journal">Journal</NavLink>
-        <NavLink activeClassName="active" className={"navlink"} to="/about">About Us</NavLink>
+        <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/">Home</NavLink>
+        <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/find-therapists">Therapists</NavLink>
+        <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/Journal">Journal</NavLink>
+        <NavLink className={({ isActive  }) => "navlink " + (isActive && "active")} to="/about">About Us</NavLink>
 
         <Dropdown className="btn-primary">
           <Dropdown.Toggle>
