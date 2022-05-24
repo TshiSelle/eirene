@@ -27,6 +27,7 @@ const JournalEntries = ({ setError, setMessage }) => {
         CreateJournal(authToken, title, body)
         .then((response) => {
           if (response.data.success) {
+			updateJournalEntries()
             setMessage('Successfully created your journal!');
           } else {
             console.log(response.data.message);
