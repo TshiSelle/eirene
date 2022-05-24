@@ -130,7 +130,10 @@ bold {
 	justify-content: center;
 }
 
-/* banner */
-.banner {
-  width: 100%;
+/* description */
+@media (max-width: 991px) {
+  .hide-mobile {
+    display: none;
+  }
 }
+

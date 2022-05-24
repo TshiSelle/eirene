@@ -39,10 +39,10 @@ const TherapistDescription = () => {
           <ThProfilePic publicId={imageSource}>
             <Transformation fetchFormat="auto" />
           </ThProfilePic>
-          <ThDescPara style={{ fontWeight: "bold" }}>
+          <ThDescPara style={{ fontWeight: "bold" }} className="hide-mobile">
             {data.fname} {data.lname}
           </ThDescPara>
-          <ThDescPara>{data.title}</ThDescPara>
+          <ThDescPara className="hide-mobile">{data.title}</ThDescPara>
         </LeftThProfile>
 
         <RightThProfile>
@@ -132,6 +132,12 @@ const MainGrid = styled.div`
   gap: 35px;
   margin-top: 108px;
   padding-bottom: 40px;
+
+  @media (max-width: 991px) {
+    display: block;
+    margin-top: 73px;
+    padding-bottom: unset;
+  }
 `;
 
 const LeftThProfile = styled.div`
@@ -142,12 +148,22 @@ const LeftThProfile = styled.div`
   align-content: center;
   justify-items: center;
   margin-top: 40px;
+
+  @media (max-width: 991px) {
+    width: 100%;
+    height: 108px;
+    background-color: #5e6e4b;
+  }
 `;
 
 const RightThProfile = styled.div`
   background-color: #e1ebd5;
   padding: 30px;
   width: 660px;
+
+  @media (max-width: 991px) {
+    width: 100%;
+  }
 `;
 
 const ThProfilePic = styled(Image)`
@@ -156,25 +172,44 @@ const ThProfilePic = styled(Image)`
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 12px;
+
+  @media (max-width: 991px) {
+    margin: 80px 0 0;
+    border: 1px solid #e1ebd5;
+  }
 `;
 
 const ThDescPara = styled.p`
   margin: unset;
+
+  @media (max-width: 991px) {
+  }
 `;
 
 const ThDescHeader = styled.h1`
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 7px;
+
+  @media (max-width: 991px) {
+    padding-top: 50px;
+  }
 `;
 
 const ThDescSub = styled.h3`
   font-size: 20px;
   margin-bottom: 20px;
+
+  @media (max-width: 991px) {
+  }
 `;
 
 const ThDescGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
+
+  @media (max-width: 991px) {
+    grid-template-columns: 1fr;
+  }
 `;
