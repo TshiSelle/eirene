@@ -67,13 +67,9 @@ const MediaPlayer = ({ children }) => {
   const chatbot = useRef(null);
   if (chatbot.current) {
     if (playerMode == "full") {
-      chatbot.current.shadowRoot
-        .querySelector(".df-messenger-wrapper")
-        .querySelector("#widgetIcon").style.bottom = "10vh";
+      chatbot.current.shadowRoot.querySelector(".df-messenger-wrapper").querySelector("#widgetIcon").style.bottom = "10vh";
     } else {
-      chatbot.current.shadowRoot
-        .querySelector(".df-messenger-wrapper")
-        .querySelector("#widgetIcon").style.bottom = "0vh";
+      chatbot.current.shadowRoot.querySelector(".df-messenger-wrapper").querySelector("#widgetIcon").style.bottom = "0vh";
     }
   }
 

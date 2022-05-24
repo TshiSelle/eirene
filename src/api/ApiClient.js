@@ -176,9 +176,9 @@ export function DeleteJournal(journalID, authToken) {
 
 export function ContactSupport(authToken, supportMessage) {
 	//registered users
-	const data = JSON.stringify({
+	const data = {
 		supportMessage,
-	});
+	};
 
 	return PostAxiosCall('/contact/user', data, { 'x-access-token': authToken });
 }
