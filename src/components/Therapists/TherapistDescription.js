@@ -10,7 +10,7 @@ const TherapistDescription = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
-  console.log(loggedIn, ' and token: ', authToken);
+//   console.log(loggedIn, ' and token: ', authToken);
   useEffect(() => {
     GetFilteredTherapist(id)
       .then((response) => {

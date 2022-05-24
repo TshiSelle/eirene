@@ -271,7 +271,6 @@ const SignUpForm = ({ handleModal }) => {
 		const { fname, lname, name, gender, email, username, password, confirmPassword } = error.response.data
 		const probableErrors = [fname, lname, name, gender, email, username, password, confirmPassword];
 		const specificErrors = probableErrors.filter((element) => !!element)
-		console.log('yes')
         dispatch({
           type: "sign-up-failure",
           message: error.response.data.message || specificErrors[0] ,

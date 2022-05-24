@@ -48,7 +48,6 @@ const ForgotPasswordForm = () => {
     // check base cases then call api, we generally dont need to verify if the user email input
     // is actually a true email, since if its not it just wont send an email...
     if (waiting || finished) return;
-    console.log("25");
     const emailValidation = validateEmail(email);
     if (!emailValidation.success) {
       dispatch({
