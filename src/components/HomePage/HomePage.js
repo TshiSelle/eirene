@@ -1,9 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "./HomePage.css";
 import { Image, Transformation } from "cloudinary-react";
-
 import ContactUs from "../ContactUs/ContactUsRoute.js";
 
 const HomePage = () => {
@@ -27,38 +25,33 @@ const HomePage = () => {
 
             <div>
               <ThPara>
-                When faced with a personal conflict, relationship or family
-                troubles, or a mental health condition such as depression,
-                stress, or anxiety, many people turn to a therapist for help. A
-                therapist is a person who has received training to help treat
-                mental or physical health problems. In the context of
-                psychology, a therapist is a person who is trained and licensed
-                to practice psychotherapy.
+                Many people seek treatment from a therapist because they are
+                dealing with a personal dispute, relationship or family
+                problems, or a mental health condition such as depression,
+                stress, or anxiety. A therapist or psychologist is a
+                professional who has been trained to assist in the treatment of
+                mental or physical health issues.
               </ThPara>
               <ThPara>
-                Finding the right therapist can often be a lengthy and
-                challenging process, and some people may not know where to
-                begin. Determining what kind of therapist is best suited to
-                treat a particular issue may not be the easiest task, and a
-                therapist's ethics or credentials are also often a topic of
-                consideration. It may also be impractical, impossible, or even
-                dangerous for some individuals to spend any length of time on
-                the telephone, contacting potential therapists and describing
-                the issues they would like to explore in therapy.
+                Finding the right therapist may be a time-consuming and
+                challenging process, and some people may be unsure where to
+                begin. It's not always easy to figure out what kind of therapist
+                is ideal for a given problem, and a therapist's ethics or
+                credentials are frequently a factor to consider.
               </ThPara>
               <ThPara>
-                Because Eirene has high member standards, our directory is one
-                of the safest places to find a therapist online. We require all
-                therapists who list in our directory to have a graduate-level
-                education and to agree to the elements of healthy therapy. They
-                must also have a professional license or reside in a
-                jurisdiction in which it is legal to practice without a license
-                or as an intern under supervision.
+                Our directory is one of the safest sites to find a therapist
+                online because Eirene maintains high member criteria. All
+                therapists listed in our directory must have a graduate degree
+                and agree to follow the components of good therapy. They must
+                also have a professional license or reside in a state in which
+                it is permissibile to practice without one or as an intern under
+                supervision.
               </ThPara>
               <ThPara>
-                Finally, if you ever hesitate. You can always text your close
-                friend, Eirene. Because in the end, no matter what, she will
-                always be there for you.
+                Finally, if you have any hesitations, you can always text
+                Eirene, your close friend. Because, in the end, she will always
+                be there for you, no matter what.
               </ThPara>
             </div>
           </ThDetails>
@@ -75,42 +68,54 @@ const HomePage = () => {
             <JrDetails className="journal-reason">
               <div className="tell-me-why">
                 <div className="point1 reasons">
-                  <h5>Self-talk</h5>
+                  <h5>Self-Discovery</h5>
                   <p>
-                    It provides an opportunity for positive self-talk and
-                    identifying negative thoughts and behaviors
+                    We are constantly evolving. Journaling helps us to listen,
+                    bear witness to these changes, and simply get to know
+                    ourselves a whole lot better.
                   </p>
                 </div>
 
                 <div className="point2 reasons">
-                  <h5>Fears and Concerns</h5>
-                  <p>It helps you prioritize problems, fears, and concerns.</p>
+                  <h5>Sharpening Memory</h5>
+                  <p>
+                    Journaling boosts comprehension and increases working memory
+                    capacity.
+                  </p>
                 </div>
                 <div className="point3 reasons">
-                  <h5>Anxiety</h5>
-                  <p>It helps you to manage your anxiety.</p>
+                  <h5>Reducing Anxiety</h5>
+                  <p>
+                    Journaling can be a powerful tool for examining and shifting
+                    thoughts from anxious and ruminative to empowered and
+                    action-oriented.
+                  </p>
                 </div>
               </div>
 
               <div className="tell-me-why2">
                 <div className="point4 reasons">
-                  <h5>Triggers</h5>
+                  <h5>Processing Emotions</h5>
                   <p>
-                    Tt helps tracking any symptoms day-to-day so that you can
-                    recognize triggers and learn ways to better control them
+                    Journaling gives you the opportunity to process your
+                    emotions in a safe, contained space where difficult emotions
+                    become less overwhelming and easier to manage.
                   </p>
                 </div>
                 <div className="point5 reasons">
-                  <h5>Stress</h5>
-                  <p>It helps you cope with stress.</p>
+                  <h5>Reducing Stress</h5>
+                  <p>
+                    Journaling is a good-for-you habit that the lessens impact
+                    of physical stressors on your health.
+                  </p>
                 </div>
 
                 <div className="point6 reasons">
-                  <h5>Shall we begin?</h5>
+                  <h5>Boosting Mood</h5>
                   <p>
-                    <Link to={"/Journal"}>Journal.</Link>
+                    Journaling can improve your mood and give you a greater
+                    sense of overall emotional well-being and happiness.
                   </p>
-                  <p></p>
                 </div>
               </div>
             </JrDetails>
@@ -120,11 +125,11 @@ const HomePage = () => {
         <RadioSection>
           <RaHeader>Radio</RaHeader>
           <RaDescription className="radioDesc">
-            Music is a powerful tool for mood regulation and stress. The best
-            part is, it’s always available to anyone who needs it. Whether
-            you’re on edge or need a boost, even just one song can bring you
-            back to a more even and healthy place. When it comes to your mental
-            health, music can help you rest better, lift your mood, and reduce
+            Music can help with stress management and mood modulation. The best
+            feature is that it is always there for anyone who needs it. Whether
+            you're on the edge or need a slight lift, one song can send you back
+            to a more even and healthy place. When it comes to your mental
+            health, music can help you sleep better, raise your mood, and reduce
             stress.
           </RaDescription>
         </RadioSection>
@@ -132,6 +137,11 @@ const HomePage = () => {
 
       <MeditationSection>
         <MediHeader>Meditations</MediHeader>
+        <MediPara>
+          Meditation is the practice of focused concentration and bringing
+          yourself back to the moment over and over again. <br />
+          Here are some meditations found in Eirene.
+        </MediPara>
 
         <MediFlex>
           <MediItem>
@@ -298,12 +308,6 @@ const ThPara = styled.p`
   @media (max-width: 991px) {
     margin-top: 10px;
   }
-  @media (max-width: 1430px) {
-    font-size: 85% !important;
-  }
-  @media (max-width: 1085px) {
-    font-size: 80% !important;
-  }
 `;
 
 const JournalSection = styled.section`
@@ -331,6 +335,7 @@ const JrHeader = styled.h1`
 const JrPara = styled.p`
   height: 30px;
   margin-top: 20px;
+  text-align: center;
 
   @media (max-width: 991px) {
     margin-top: unset;
@@ -433,6 +438,17 @@ const MediHeader = styled.h1`
   @media (max-width: 991px) {
     font-size: 25px;
     margin-top: 30px;
+  }
+`;
+
+const MediPara = styled.p`
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: center;
+  padding: 0 10px;
+
+  @media (max-width: 991px) {
+    margin-top: 10px;
   }
 `;
 

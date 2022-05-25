@@ -4,26 +4,44 @@ import { Link } from "react-router-dom";
 import "./navbar.css";
 
 const SiteFooter = () => {
-
   return (
     <FooterContainer>
       <FooterGrid>
         <FooterHeader>Project: EIRENE</FooterHeader>
 
         <FooterAddress>
-          Beirut Arab University <br />Beirut, Lebanon <br />loom.senior@gmail.com
+          Beirut Arab University <br />
+          Beirut, Lebanon <br />
+          loom.senior@gmail.com
         </FooterAddress>
 
-        <FooterPara>The next step to self-care therapy. Driven to help with daily lives and support emotionally, Eirene will always lend a hand in times of need.</FooterPara>
+        <FooterPara>
+          The next step to self-care therapy. Driven to help with daily lives
+          and support emotionally, Eirene will always lend a hand in times of
+          need.
+        </FooterPara>
 
         <LinksMenu>
-          <StyledLink to={'/'} className="footer-link">Home</StyledLink> |
-          <StyledLink to={'/find-therapists'} className="footer-link"> Therapists</StyledLink> |
-          <StyledLink to={'/Journal'} className="footer-link"> Journal</StyledLink> |
-          <StyledLink to={'/about'} className="footer-link"> About Us</StyledLink>
+          <StyledLink to={"/"} className="footer-link">
+            Home
+          </StyledLink>{" "}
+          |
+          <StyledLink to={"/find-therapists"} className="footer-link">
+            {" "}
+            Therapists
+          </StyledLink>{" "}
+          |
+          <StyledLink to={"/Journal"} className="footer-link">
+            {" "}
+            Journal
+          </StyledLink>{" "}
+          |
+          <StyledLink to={"/about"} className="footer-link">
+            {" "}
+            About Us
+          </StyledLink>
         </LinksMenu>
       </FooterGrid>
-      
     </FooterContainer>
   );
 };

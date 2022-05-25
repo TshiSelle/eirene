@@ -6,7 +6,7 @@ import { useAuthenticator } from "../../context/AuthContext";
 import { Dropdown } from "react-bootstrap";
 import { useUser } from "../../context/UserContext";
 import { Image, Transformation } from "cloudinary-react";
-import "./font/icomoon/style.css";
+import "../Fonts/icomoon/style.css";
 
 const NavBar = () => {
   const location = useLocation();
