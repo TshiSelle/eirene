@@ -247,7 +247,6 @@ const searchTherapists = () => {
 export default searchTherapists;
 
 const PageContainer = styled.div`
-  font-display: swap;
   font-family: FuturaLight;
   line-height: 1.5;
   color: #212529;

@@ -1,4 +1,4 @@
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 0.3em;
   z-index: 5;
 }
@@ -14,15 +14,13 @@
 .react-tabs {
   display: flex;
   height: 100vh;
-  /* border: 1px solid #3c3e43; */
-  /* color: white; */
-  /* background: #1c1d1f; */
-  width: 90%;
   margin: 15px auto;
 }
+
 .scroll {
   overflow-y: scroll;
 }
+
 .react-tabs__tab-list {
   display: flex;
   height: '100%';
@@ -32,7 +30,6 @@
   padding: 10px;
   color: white;
   background: #dcedc8;
-
   border-radius: 15px;
 }
 
@@ -45,21 +42,19 @@
 }
 
 .react-tabs__tab--selected {
-  /* background: #1c1d1f; */
   border-top-right-radius: 0px;
-  /* border-color: #1c1d1f; */
-  /* color: white; */
 }
 
 .react-tabs__tab-panel {
   display: none;
-
   flex: 4 1;
-  padding-bottom: 20px;
-  padding-left: 12px;
-  /* margin-top: 12px; */
-  background: #fbfbfb;
   position: relative;
+  background-color: #e1ebd5;
+  outline: 1px solid;
+  outline-offset: -25px;
+  padding: 30px;
+  margin-left: 15px;
+  overflow-y: scroll;
 }
 
 .react-tabs__tab-panel--selected {
@@ -70,6 +65,7 @@
   padding-left: 24px;
   width: 100%;
 }
+
 .text-area {
   resize: none;
   border: unset;
@@ -101,18 +97,17 @@
 }
 
 .text-area:focus {
-  /* color: #FFF; */
   background-color: transparent;
   resize: none;
   box-shadow: unset;
   border-color: unset;
 }
+
 .react-tabs__tab--selected {
   padding-left: 21px;
 }
 
 .bodyAndButtonsContainer {
-  /* background-color: yellow; */
   flex-direction: row;
   text-align: right;
   height: 100%;
@@ -136,6 +131,7 @@
   font-size: 20px;
   color: #fbfbfb;
 }
+
 .panel-content {
   padding: 0px 0px 0px 5px;
   text-align: left;
@@ -153,42 +149,50 @@
 .react-tabs__tab-list {
   border-bottom: unset;
 }
-
-.journal-banner {
-  background-color: #dcedc8;
-  text-align: center;
-  height: 300px;
-  background: linear-gradient(
-      0deg,
-      rgba(33, 37, 41, 0.3),
-      rgba(33, 37, 41, 0.3)
-    ),
-    url('https://res.cloudinary.com/cloudloom/image/upload/v1651846893/samples/Profile/journal-banner_i7n6t8.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: grid;
-  justify-content: center;
+ */
+/*  */
+.react-tabs {
   font-family: FuturaLight;
+  line-height: 1.5;
   color: #212529;
+  min-height: 100vh;
 }
 
-.journal-banner h2 {
-  font-size: 70px;
+.entry-title {
   font-weight: bold;
-  align-self: end;
+  font-size: 30px;
+  margin-bottom: 25px;
 }
 
-.journal-banner p {
+.entry-body {
+  white-space: pre-wrap;
+}
+
+.new-journal-button div::after {
+  content: '\f067';
+}
+
+.edit-entry-button div::after {
+  content: '\f040';
+}
+
+.delete-entry-button div::after {
+  content: '\f1f8';
+}
+
+.new-journal-button div::after, .edit-entry-button div::after, .delete-entry-button div::after {
+  font-family: 'icomoon';
   font-size: 20px;
+  cursor: pointer;
 }
 
-.journal-header-login {
-  margin-bottom: 10%;
-  display: flex;
-  justify-content: center;
+.bodyAndButtonsContainer {
+  position: relative;
 }
 
-.journal-header-login h2 {
-  padding-top: 4%;
+.button-holder {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
 }
