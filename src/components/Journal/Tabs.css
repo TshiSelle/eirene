@@ -169,22 +169,30 @@
 }
 
 .new-journal-button div::after {
-  font-family: 'icomoon';
   content: '\f067';
-  font-size: 30px;
-  cursor: pointer;
 }
 
 .edit-entry-button div::after {
-  font-family: 'icomoon';
   content: '\f040';
-  font-size: 30px;
-  cursor: pointer;
 }
 
 .delete-entry-button div::after {
-  font-family: 'icomoon';
   content: '\f1f8';
-  font-size: 30px;
+}
+
+.new-journal-button div::after, .edit-entry-button div::after, .delete-entry-button div::after {
+  font-family: 'icomoon';
+  font-size: 20px;
   cursor: pointer;
+}
+
+.bodyAndButtonsContainer {
+  position: relative;
+}
+
+.button-holder {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
 }
