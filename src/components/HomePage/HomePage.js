@@ -27,22 +27,38 @@ const HomePage = () => {
 
             <div>
               <ThPara>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
-                neque veniam. Magnam accusantium accusamus laudantium magni
-                ipsum enim assumenda ipsam!
+                When faced with a personal conflict, relationship or family
+                troubles, or a mental health condition such as depression,
+                stress, or anxiety, many people turn to a therapist for help. A
+                therapist is a person who has received training to help treat
+                mental or physical health problems. In the context of
+                psychology, a therapist is a person who is trained and licensed
+                to practice psychotherapy.
               </ThPara>
               <ThPara>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
-                neque veniam. Magnam accusantium accusamus laudantium magni
-                ipsum enim assumenda ipsam!
+                Finding the right therapist can often be a lengthy and
+                challenging process, and some people may not know where to
+                begin. Determining what kind of therapist is best suited to
+                treat a particular issue may not be the easiest task, and a
+                therapist's ethics or credentials are also often a topic of
+                consideration. It may also be impractical, impossible, or even
+                dangerous for some individuals to spend any length of time on
+                the telephone, contacting potential therapists and describing
+                the issues they would like to explore in therapy.
               </ThPara>
               <ThPara>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                totam, suscipit ipsa ipsum impedit, libero harum autem qui optio
-                neque veniam. Magnam accusantium accusamus laudantium magni
-                ipsum enim assumenda ipsam!
+                Because Eirene has high member standards, our directory is one
+                of the safest places to find a therapist online. We require all
+                therapists who list in our directory to have a graduate-level
+                education and to agree to the elements of healthy therapy. They
+                must also have a professional license or reside in a
+                jurisdiction in which it is legal to practice without a license
+                or as an intern under supervision.
+              </ThPara>
+              <ThPara>
+                Finally, if you ever hesitate. You can always text your close
+                friend, Eirene. Because in the end, no matter what, she will
+                always be there for you.
               </ThPara>
             </div>
           </ThDetails>
@@ -59,47 +75,38 @@ const HomePage = () => {
             <JrDetails className="journal-reason">
               <div className="tell-me-why">
                 <div className="point1 reasons">
-                  <h5>Point 1</h5>
+                  <h5>Self-talk</h5>
                   <p>
-                    According to all know laws of aviation, there is no way a
-                    bee should be able to fly.
+                    It provides an opportunity for positive self-talk and
+                    identifying negative thoughts and behaviors
                   </p>
                 </div>
 
                 <div className="point2 reasons">
-                  <h5>Point 2</h5>
-                  <p>
-                    According to all know laws of aviation, there is no way a
-                    bee should be able to fly.
-                  </p>
+                  <h5>Fears and Concerns</h5>
+                  <p>It helps you prioritize problems, fears, and concerns.</p>
                 </div>
                 <div className="point3 reasons">
-                  <h5>Point 3</h5>
-                  <p>
-                    According to all know laws of aviation, there is no way a
-                    bee should be able to fly.
-                  </p>
+                  <h5>Anxiety</h5>
+                  <p>It helps you to manage your anxiety.</p>
                 </div>
               </div>
 
               <div className="tell-me-why2">
                 <div className="point4 reasons">
-                  <h5>Point 4</h5>
+                  <h5>Triggers</h5>
                   <p>
-                    According to all know laws of aviation, there is no way a
-                    bee should be able to fly.
+                    Tt helps tracking any symptoms day-to-day so that you can
+                    recognize triggers and learn ways to better control them
                   </p>
                 </div>
                 <div className="point5 reasons">
-                  <h5>Point 5</h5>
-                  <p>
-                    According to all know laws of aviation, there is no way a
-                    bee should be able to fly.
-                  </p>
+                  <h5>Stress</h5>
+                  <p>It helps you cope with stress.</p>
                 </div>
 
                 <div className="point6 reasons">
-                  <h5>Go to page</h5>
+                  <h5>Shall we begin?</h5>
                   <p>
                     <Link to={"/Journal"}>Journal.</Link>
                   </p>
@@ -113,10 +120,12 @@ const HomePage = () => {
         <RadioSection>
           <RaHeader>Radio</RaHeader>
           <RaDescription className="radioDesc">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis totam,
-            suscipit ipsa ipsum impedit, libero harum autem qui optio neque
-            veniam. Magnam accusantium accusamus laudantium magni ipsum enim
-            assumenda ipsam!
+            Music is a powerful tool for mood regulation and stress. The best
+            part is, it’s always available to anyone who needs it. Whether
+            you’re on edge or need a boost, even just one song can bring you
+            back to a more even and healthy place. When it comes to your mental
+            health, music can help you rest better, lift your mood, and reduce
+            stress.
           </RaDescription>
         </RadioSection>
       </Main>
