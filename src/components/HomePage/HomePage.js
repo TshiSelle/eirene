@@ -298,6 +298,12 @@ const ThPara = styled.p`
   @media (max-width: 991px) {
     margin-top: 10px;
   }
+  @media (max-width: 1430px) {
+    font-size: 85% !important;
+  }
+  @media (max-width: 1085px) {
+    font-size: 80% !important;
+  }
 `;
 
 const JournalSection = styled.section`

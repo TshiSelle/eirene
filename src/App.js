@@ -21,6 +21,8 @@ import MediaPlayer from "./components/MediaPlayer/MediaPlayer";
 import { CloudinaryContext } from "cloudinary-react";
 import ContactUsRoute from "./components/ContactUs/ContactUsRoute";
 import NotFoundRoute from "./components/NotFound/NotFoundRoute";
+import Footer from "./components/AboutUs/AboutUs";
+import AboutUs from "./components/AboutUs/AboutUs";
 
 const App = () => {
   return (
@@ -63,6 +65,7 @@ const App = () => {
                           element={<VerifyAccount />}
                         />
                         <Route path="/Journal" element={<Journal />} />
+                        <Route path="/about" element={<AboutUs />} />
                         <Route path="/contact" element={<ContactUsRoute />} />
                         <Route path="*" element={<NotFoundRoute />} />
                       </Routes>
