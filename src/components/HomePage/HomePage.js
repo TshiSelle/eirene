@@ -18,7 +18,7 @@ const HomePage = () => {
         </BannerSection>
 
         <TherapistSection>
-          <ThImage publicId={"samples/Profile/home-img1.jpg"}>
+          <ThImage publicId={"samples/Profile/home-img1.jpg"} alt="hand">
             <Transformation fetchFormat="auto" />
           </ThImage>
 
@@ -52,7 +52,7 @@ const HomePage = () => {
           <JrHeader>Why Journaling?</JrHeader>
           <JrPara>It can help with</JrPara>
 
-          <JrImage publicId={"samples/Profile/arrow.png"}>
+          <JrImage publicId={"samples/Profile/arrow.png"} alt="arrow">
             <Transformation fetchFormat="auto" />
           </JrImage>
           <JrSection>
@@ -126,21 +126,30 @@ const HomePage = () => {
 
         <MediFlex>
           <MediItem>
-            <MediImage publicId={"samples/Profile/home-img3.jpg"}>
+            <MediImage
+              publicId={"samples/Profile/home-img3.jpg"}
+              alt="meditation"
+            >
               <Transformation fetchFormat="auto" />
             </MediImage>
             <MediName>5 minute meditation for anxiety</MediName>
           </MediItem>
 
           <MediItem>
-            <MediImage publicId={"samples/Profile/home-img3.jpg"}>
+            <MediImage
+              publicId={"samples/Profile/home-img3.jpg"}
+              alt="meditation1"
+            >
               <Transformation fetchFormat="auto" />
             </MediImage>
             <MediName>5 minute meditation for anxiety</MediName>
           </MediItem>
 
           <MediItem>
-            <MediImage publicId={"samples/Profile/home-img3.jpg"}>
+            <MediImage
+              publicId={"samples/Profile/home-img3.jpg"}
+              alt="meditation2"
+            >
               <Transformation fetchFormat="auto" />
             </MediImage>
             <MediName>5 minute meditation for anxiety</MediName>

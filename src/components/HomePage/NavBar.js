@@ -49,6 +49,7 @@ const NavBar = () => {
               publicId={
                 userImage ? userImage : "samples/Profile/navbar-profile"
               }
+              alt="profile"
             >
               <Transformation fetchFormat="auto" />
             </StyledImage>
