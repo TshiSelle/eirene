@@ -136,32 +136,32 @@ const HomePage = () => {
         <MediFlex>
           <MediItem>
             <MediImage
-              publicId={"samples/Profile/home-img3.jpg"}
+              publicId={"Meditations/meditation_lezixo.jpg"}
               alt="meditation"
             >
               <Transformation fetchFormat="auto" />
             </MediImage>
-            <MediName>5 minute meditation for anxiety</MediName>
+            <MediName>10 minute meditation for anxiety</MediName>
           </MediItem>
 
           <MediItem>
             <MediImage
-              publicId={"samples/Profile/home-img3.jpg"}
+              publicId={"Meditations/10_min_meditation_for_sleep_a45ext.jpg"}
               alt="meditation1"
             >
               <Transformation fetchFormat="auto" />
             </MediImage>
-            <MediName>5 minute meditation for anxiety</MediName>
+            <MediName>10 minute meditation for sleep</MediName>
           </MediItem>
 
           <MediItem>
             <MediImage
-              publicId={"samples/Profile/home-img3.jpg"}
+              publicId={"Meditations/10_min_meditation_stress_iwvnuo.jpg"}
               alt="meditation2"
             >
               <Transformation fetchFormat="auto" />
             </MediImage>
-            <MediName>5 minute meditation for anxiety</MediName>
+            <MediName>10 minute meditation for stress</MediName>
           </MediItem>
         </MediFlex>
       </MeditationSection>
