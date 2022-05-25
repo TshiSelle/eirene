@@ -29,7 +29,12 @@ const reducer = (state, action) => {
     case "support-message-start":
       return { ...state, waiting: true };
     case "support-message-success":
-      return { ...state, waiting: false, finished: true, successMessage: action.message };
+      return {
+        ...state,
+        waiting: false,
+        finished: true,
+        successMessage: action.message,
+      };
     case "support-message-failure":
       return {
         ...state,
@@ -52,9 +57,19 @@ const ContactUs = () => {
   });
   const { authToken } = useAuthenticator();
 
-  const { supportMessage, submissionErrorMessage, messageError, waiting, finished, successMessage } = state;
+  const {
+    supportMessage,
+    submissionErrorMessage,
+    messageError,
+    waiting,
+    finished,
+    successMessage,
+  } = state;
 
-  const setMessage = useCallback((e) => dispatch({ type: "set-content", value: e.target.value }), []);
+  const setMessage = useCallback(
+    (e) => dispatch({ type: "set-content", value: e.target.value }),
+    []
+  );
 
   const sendSupportMessage = useCallback(
     (event) => {
@@ -70,7 +85,10 @@ const ContactUs = () => {
       ContactSupport(authToken, supportMessage)
         .then((response) => {
           if (response.data.success) {
-            dispatch({ type: "support-message-success", message: response.data.message });
+            dispatch({
+              type: "support-message-success",
+              message: response.data.message,
+            });
             console.log("Message Sent!");
           } else {
             dispatch({
@@ -100,7 +118,10 @@ const ContactUs = () => {
         <SizeContainer>
           <Form className="contact-form" onSubmit={sendSupportMessage}>
             <Form.Group className="mb-3">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
                 <Form.Control
                   className="textarea"
                   as="textarea"
@@ -125,7 +146,7 @@ const ContactUs = () => {
                   <Alert variant="success">{successMessage}</Alert>
                 </div>
               )}
-			  
+
               <Button
                 value="Submit Message"
                 type="submit"
@@ -157,6 +178,10 @@ const FormContainer = styled.div`
 const SizeContainer = styled.div`
   width: 50%;
   margin-top: 50px;
+
+  @media (max-width: 991px) {
+    width: 90%;
+  }
 `;
 
 const Button = styled.button`
