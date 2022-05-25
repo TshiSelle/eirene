@@ -9,7 +9,7 @@ import background from "./bg_4.jpg";
 const reducer = (state, action) => {
   switch (action.type) {
     case "change-email":
-      return { ...state, email: action.value };
+      return { ...state, email: action.value, errorMessage: '' };
     case "validation-error":
       return {
         ...state,
