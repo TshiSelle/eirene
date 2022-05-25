@@ -103,7 +103,7 @@ const NavBar = () => {
 };
 
 const Header = styled.header`
-  background-color: white;
+  background-color: #ffffff;
   height: 108px;
   // position: ${(props) => (props.pathname === "/" ? "fixed" : "")};
   position: fixed;
@@ -111,6 +111,7 @@ const Header = styled.header`
   top: 0;
   font-family: FuturaLight;
   padding-bottom: 15px;
+  z-index: 1;
 
   @media (max-width: 991px) {
     height: 73px;
@@ -125,14 +126,9 @@ const Nav = styled.nav`
   height: 100%;
 `;
 
-// const StyledLink = styled(Link)`
-//   font-size: 15px;
-//   text-decoration: none;
-//   color: #212529;
-// `;
-
 const StyledImage = styled(Image)`
   height: 25px;
+  width: 25px;
   border-radius: 50%;
 `;
 
