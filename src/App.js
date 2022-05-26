@@ -44,26 +44,11 @@ const App = () => {
                         <Route path="/Profile" element={<ProfilePage />} />
                         <Route path="/SignUp" element={<SignUpPage />} />
                         <Route path="/SignIn" element={<LoginPage />} />
-                        <Route
-                          path="/forgot-password"
-                          element={<ForgotPasswordForm />}
-                        />
-                        <Route
-                          path="/forgot-password/:username/:token"
-                          element={<ForgotPasswordResetForm />}
-                        />
-                        <Route
-                          path="/find-therapists"
-                          element={<SearchTherapists />}
-                        />
-                        <Route
-                          path="/therapist-description/:id"
-                          element={<TherapistDescription />}
-                        />
-                        <Route
-                          path="/verify/:username/:token"
-                          element={<VerifyAccount />}
-                        />
+                        <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+                        <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
+                        <Route path="/find-therapists" element={<SearchTherapists />} />
+                        <Route path="/therapist-description/:id" element={<TherapistDescription />} />
+                        <Route path="/verify/:username/:token" element={<VerifyAccount />} />
                         <Route path="/Journal" element={<Journal />} />
                         <Route path="/about" element={<AboutUs />} />
                         <Route path="/contact" element={<ContactUsRoute />} />

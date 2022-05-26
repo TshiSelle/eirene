@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 const hpp = require('hpp');
-const morgan = require('morgan');
+
 
 //file modules
 const accountRoutes = require('./routes/accountRoutes');
@@ -26,7 +26,9 @@ dotenv.config();
 const app = express();
 
 //middleware
-if (process.env.NODE_ENV == 'development') app.use(morgan('dev'));
+if (process.env.NODE_ENV == 'development') {
+	app.use(require('morgan')('dev'));
+}
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //can now access url encoded form request bodies with req.body
 app.use(helmet()); //secure app by setting http headers
