@@ -261,19 +261,19 @@ const SignUpForm = ({ handleModal }) => {
           dispatch({ type: "sign-up-success" });
           handleModal();
           console.log("Successful signup!");
-		  updateAuthToken(response.data.token)
+          updateAuthToken(response.data.token)
         } else {
-		  
+
           dispatch({ type: "sign-up-failure", message: response.data.message });
         }
       })
       .catch((error) => {
-		const { fname, lname, name, gender, email, username, password, confirmPassword } = error.response.data
-		const probableErrors = [fname, lname, name, gender, email, username, password, confirmPassword];
-		const specificErrors = probableErrors.filter((element) => !!element)
+        const { fname, lname, name, gender, email, username, password, confirmPassword } = error.response.data
+        const probableErrors = [fname, lname, name, gender, email, username, password, confirmPassword];
+        const specificErrors = probableErrors.filter((element) => !!element)
         dispatch({
           type: "sign-up-failure",
-          message: error.response.data.message || specificErrors[0] ,
+          message: error.response.data.message || specificErrors[0],
         });
         return;
       });
@@ -401,6 +401,7 @@ const SignUpForm = ({ handleModal }) => {
               </div>
             )}
             <Button
+              className="signUpButton"
               value="Sign Up"
               type="submit"
               disabled={submissionErrorMessage}

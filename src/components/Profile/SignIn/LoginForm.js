@@ -181,6 +181,7 @@ const SignInForm = () => {
             )}
 
             <Button
+              className="loginButton"
               disabled={submissionErrorMessage}
               value="Sign Up"
               type="submit"
@@ -189,6 +190,8 @@ const SignInForm = () => {
                 margin: "3rem 0 0",
                 backgroundColor: "#edbec4",
                 color: "#ffffff",
+
+
               }}
             >
               Login
@@ -197,8 +200,8 @@ const SignInForm = () => {
         </Form>
       </FormContainer>
       <LoadingSpinner display={isLoading} />
-      {/* <LoadingSpinner display={true} /> */} 
-	  {/* for styling loading icon */}
+      {/* <LoadingSpinner display={true} /> */}
+      {/* for styling loading icon */}
     </>
   );
 };
@@ -211,6 +214,7 @@ const Button = styled.button`
   border: none;
   border-radius: 0.25rem;
   font-size: 1rem;s
+  
 `;
 
 const Header = styled.h3`

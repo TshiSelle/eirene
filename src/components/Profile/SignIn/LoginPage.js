@@ -32,7 +32,7 @@ const LoginPage = () => {
             </StyledLink>
 
             <StyledLink
-              className="tab"
+              className="tab signUp"
               style={{
                 borderRadius: "0.25rem 0 0 0.25rem",
                 backgroundColor: "#EFEFEF",

@@ -27,7 +27,7 @@ const SignUpPage = () => {
           <SectionContainer>
             <TabContainer>
               <StyledLink
-                className="tab"
+                className="tab secondaryButton"
                 style={{
                   borderRadius: "0.25rem 0 0 0.25rem",
                   backgroundColor: "#EFEFEF",
@@ -39,7 +39,7 @@ const SignUpPage = () => {
               </StyledLink>
 
               <StyledLink
-                className="tab signup"
+                className="tab signup signUpButton "
                 style={{
                   borderRadius: "0 0.25rem 0.25rem 0",
                   backgroundColor: "#EDBEC4",
