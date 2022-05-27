@@ -16,9 +16,6 @@ const HomePage = () => {
         const user = response.data.dbUser;
         if (response.data.success && !user.verified && (Date.now() - Date.parse(user.createdAt)) < 20000) {
           setShowPopUp(true);
-        } else {
-          console.log("Bad response");
-          console.log(response.data);
         }
       })
       .catch((error) => console.log(error.response.data.message));
