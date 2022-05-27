@@ -130,13 +130,12 @@ const ProfilePage = () => {
           <button onClick={handleAccountStatus}>
             {userDeactivationDate && userDeactivationDate != undefined ? 'Activate Account': 'Deactivate Account'}
           </button>
-          <div>
+          {/* <div>
             <Calendar
               events={events}
               onClickTimeLine={() => console.log(" clicked timeLine")}
             />
-          </div>
-          <button onClick={userLogOut}>LOG OUt!</button>
+          </div> */}
         </div>
       ) : (
         <div>
