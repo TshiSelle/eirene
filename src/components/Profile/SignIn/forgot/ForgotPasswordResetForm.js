@@ -5,7 +5,7 @@ import {
   validatePassword,
   validateConfirmPassword,
 } from "../../../../validators/validators";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   PasswordResetWithToken,
   IsEmailTokenValid,
@@ -56,6 +56,7 @@ const reducer = (state, action) => {
 
 const ForgotPasswordResetForm = () => {
   const { username, token } = useParams();
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, {
     password: "",
     confirmPassword: "",
@@ -130,7 +131,7 @@ const ForgotPasswordResetForm = () => {
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: "forgot-password-success" });
-          console.log("Successful qwerqwrqwerqerq!");
+		  setTimeout(() => navigate("/"),2000)
         } else {
           dispatch({
             type: "forgot-password-failure",
@@ -189,6 +190,7 @@ const ForgotPasswordResetForm = () => {
                   >
                     Reset Password
                   </Button>
+				  {finished && <Alert variant="success">Password reset successfully!</Alert> }
                 </Form>
               </ResponsiveContainer>
             </FormContainer>
