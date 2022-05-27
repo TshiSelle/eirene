@@ -196,7 +196,9 @@ const SignInForm = () => {
           </Form.Group>
         </Form>
       </FormContainer>
-      <LoadingSpinner display={true} />
+      <LoadingSpinner display={isLoading} />
+      {/* <LoadingSpinner display={true} /> */} 
+	  {/* for styling loading icon */}
     </>
   );
 };
