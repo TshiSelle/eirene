@@ -70,6 +70,15 @@ const MediaPlayer = ({ children }) => {
     <>
       {loggedIn && (
         <>
+          <df-messenger
+            ref={chatbot}
+            chat-title="Eirene"
+            agent-id="0ffba258-1ae3-4dcd-9497-7476a1c9819c"
+            language-code="en"
+            chat-icon="https://res.cloudinary.com/cloudloom/image/upload/v1653046865/logo/eirene_face_tzjqqu.webp"
+          ></df-messenger>
+        </>
+      )}
           <div>
             <ReactJkMusicPlayer
               theme="dark"
@@ -88,15 +97,6 @@ const MediaPlayer = ({ children }) => {
               audioLists={Music}
             />
           </div>
-          <df-messenger
-            ref={chatbot}
-            chat-title="Eirene"
-            agent-id="0ffba258-1ae3-4dcd-9497-7476a1c9819c"
-            language-code="en"
-            chat-icon="https://res.cloudinary.com/cloudloom/image/upload/v1653046865/logo/eirene_face_tzjqqu.webp"
-          ></df-messenger>
-        </>
-      )}
       {children}
     </>
   );

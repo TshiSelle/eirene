@@ -138,7 +138,7 @@ const verifyEmail = async (req, res) => {
 				res.status(400).json({ error: err.name + ': ' + err.message, success: false });
 			});
 	} else {
-		res.status(401).json({ message: 'User not found', success: false });
+		res.status(401).json({ message: 'Invalid Link!', success: false });
 	}
 };
 

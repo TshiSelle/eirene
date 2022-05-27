@@ -224,7 +224,6 @@ const SignUpForm = ({ handleModal }) => {
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: "sign-up-success" });
-          handleModal();
           console.log("Successful signup!");
 		  setLoading(false);
           updateAuthToken(response.data.token);
