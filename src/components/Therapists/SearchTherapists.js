@@ -196,7 +196,7 @@ const searchTherapists = () => {
               className="dropdown dropdownYears"
               value={yoeoption}
               onChange={(e) => setYoeOption(e.target.value)}
-              //   onChange={(e) => console.log(e.target.value)}
+            //   onChange={(e) => console.log(e.target.value)}
             >
               <option key="" value="">
                 Years of Experience (Any)

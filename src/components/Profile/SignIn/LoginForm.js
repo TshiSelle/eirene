@@ -108,9 +108,9 @@ const SignInForm = () => {
     // TODO
     // Now we should call the api to register user since all userInput has been validated...
     dispatch({ type: "sign-in-start" });
-	setLoading(true);
+    setLoading(true);
     LoginApiCall(username, password)
-      .then((response,error) => {
+      .then((response, error) => {
         if (response.data.success) {
           updateAuthToken(response.data.token);
           dispatch({ type: "sign-in-success" });
@@ -118,15 +118,15 @@ const SignInForm = () => {
         } else {
           dispatch({ type: "sign-in-failure", message: response.data.message });
         }
-		setLoading(false);
+        setLoading(false);
       })
       .catch((error) => {
         dispatch({
           type: "sign-in-failure",
           message: error.response.data.message,
         });
-		setLoading(false)
-		console.log('stopped loading')
+        setLoading(false)
+        console.log('stopped loading')
         return;
       });
   }, [username, password, waiting, finished]);
@@ -196,7 +196,7 @@ const SignInForm = () => {
           </Form.Group>
         </Form>
       </FormContainer>
-		<LoadingSpinner display={isLoading}/>
+      <LoadingSpinner display={true} />
     </>
   );
 };
