@@ -108,7 +108,7 @@ const ForgotPasswordResetForm = () => {
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: "forgot-password-success" });
-          setTimeout(() => navigate("/"), 2000);
+          setTimeout(() => navigate("/SignIn"), 2000);
         } else {
           dispatch({
             type: "forgot-password-failure",
