@@ -15,8 +15,6 @@ const getUser = (req, res) => {
 			passResetTokenExpirationDate: 0,
 			__v: 0,
 			_id: 0,
-			verified: 0,
-			createdAt: 0,
 			updatedAt: 0,
 		}
 	)

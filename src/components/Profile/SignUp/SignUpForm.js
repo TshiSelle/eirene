@@ -1,17 +1,12 @@
-import React, { useReducer, useCallback } from "react";
+import React, { useReducer, useCallback, useState } from "react";
 import styled from "styled-components";
 import { SignUpApiCall } from "../../../api/ApiClient";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Alert } from "react-bootstrap";
-import {
-  validateName,
-  validatePassword,
-  validateEmail,
-  validateGender,
-  validateConfirmPassword,
-} from "../../../validators/validators";
+import { validateName, validatePassword, validateEmail, validateGender, validateConfirmPassword } from "../../../validators/validators";
 import "./signupStyle.css";
 import { useAuthenticator } from "../../../context/AuthContext";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
@@ -140,36 +135,16 @@ const SignUpForm = ({ handleModal }) => {
     username,
   } = state;
 
+  const [isLoading, setLoading] = useState(false);
   const { updateAuthToken } = useAuthenticator();
   // The useCallbacks basically take the values set in the input forms and sends them to their desired destination
-  const setFirstName = useCallback(
-    (e) => dispatch({ type: "set-first-name", value: e.target.value }),
-    []
-  );
-  const setLastName = useCallback(
-    (e) => dispatch({ type: "set-last-name", value: e.target.value }),
-    []
-  );
-  const setUsername = useCallback(
-    (e) => dispatch({ type: "set-username", value: e.target.value }),
-    []
-  );
-  const setEmail = useCallback(
-    (e) => dispatch({ type: "set-email", value: e.target.value }),
-    []
-  );
-  const setPassword = useCallback(
-    (e) => dispatch({ type: "set-password", value: e.target.value }),
-    []
-  );
-  const setConfirmPassword = useCallback(
-    (e) => dispatch({ type: "set-confirm-password", value: e.target.value }),
-    []
-  );
-  const setGender = useCallback(
-    (e) => dispatch({ type: "set-gender", value: e.target.value }),
-    []
-  );
+  const setFirstName = useCallback((e) => dispatch({ type: "set-first-name", value: e.target.value }), []);
+  const setLastName = useCallback((e) => dispatch({ type: "set-last-name", value: e.target.value }), []);
+  const setUsername = useCallback((e) => dispatch({ type: "set-username", value: e.target.value }), []);
+  const setEmail = useCallback((e) => dispatch({ type: "set-email", value: e.target.value }), []);
+  const setPassword = useCallback((e) => dispatch({ type: "set-password", value: e.target.value }), []);
+  const setConfirmPassword = useCallback((e) => dispatch({ type: "set-confirm-password", value: e.target.value }), []);
+  const setGender = useCallback((e) => dispatch({ type: "set-gender", value: e.target.value }), []);
 
   const submitUser = useCallback(() => {
     // this prevents auto refresh onsubmit
@@ -221,10 +196,7 @@ const SignUpForm = ({ handleModal }) => {
       });
       return;
     }
-    const confirmPasswordValidation = validateConfirmPassword(
-      password,
-      confirmPassword
-    );
+    const confirmPasswordValidation = validateConfirmPassword(password, confirmPassword);
     if (!confirmPasswordValidation.success) {
       dispatch({
         type: "password-error",
@@ -247,56 +219,39 @@ const SignUpForm = ({ handleModal }) => {
     // Now we should call the api to register user since all userInput has been validated...
     dispatch({ type: "sign-up-start" });
     // make axios post request
-    SignUpApiCall(
-      username,
-      email,
-      firstName,
-      lastName,
-      password,
-      confirmPassword,
-      gender
-    )
+	setLoading(true);
+    SignUpApiCall(username, email, firstName, lastName, password, confirmPassword, gender)
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: "sign-up-success" });
           handleModal();
           console.log("Successful signup!");
-          updateAuthToken(response.data.token)
+		  setLoading(false);
+          updateAuthToken(response.data.token);
         } else {
-
           dispatch({ type: "sign-up-failure", message: response.data.message });
+		  setLoading(false);
         }
       })
       .catch((error) => {
-        const { fname, lname, name, gender, email, username, password, confirmPassword } = error.response.data
+        const { fname, lname, name, gender, email, username, password, confirmPassword } = error.response.data;
         const probableErrors = [fname, lname, name, gender, email, username, password, confirmPassword];
-        const specificErrors = probableErrors.filter((element) => !!element)
+        const specificErrors = probableErrors.filter((element) => !!element);
         dispatch({
           type: "sign-up-failure",
           message: error.response.data.message || specificErrors[0],
         });
+		setLoading(false);
         return;
       });
-  }, [
-    waiting,
-    finished,
-    firstName,
-    lastName,
-    username,
-    email,
-    password,
-    confirmPassword,
-    gender,
-  ]);
+  }, [waiting, finished, firstName, lastName, username, email, password, confirmPassword, gender]);
 
   return (
     <>
       <Header>
         Sign up to <strong>Eirene</strong>
       </Header>
-      <Paragraph>
-        Enter your registration details and start your journey with Eirene.
-      </Paragraph>
+      <Paragraph>Enter your registration details and start your journey with Eirene.</Paragraph>
 
       <FormContainer>
         <Form className="signup-form" onSubmit={submitUser}>
@@ -328,14 +283,7 @@ const SignUpForm = ({ handleModal }) => {
             </GridContainer>
 
             <Label>Email</Label>
-            <Form.Control
-              className="textField"
-              type="email"
-              isInvalid={emailError}
-              placeholder=""
-              name="email"
-              onChange={setEmail}
-            />
+            <Form.Control className="textField" type="email" isInvalid={emailError} placeholder="" name="email" onChange={setEmail} />
 
             <Label>Username</Label>
             <Form.Control
@@ -417,6 +365,7 @@ const SignUpForm = ({ handleModal }) => {
           </Form.Group>
         </Form>
       </FormContainer>
+	  <LoadingSpinner display={isLoading} />
     </>
   );
 };

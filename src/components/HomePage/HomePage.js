@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import "./HomePage.css";
 import { Image, Transformation } from "cloudinary-react";
 import ContactUs from "../ContactUs/ContactUsRoute.js";
+import VerificationPopUp from "../Profile/SignUp/VerificationPopUp/VerificationPopUp";
+import { useAuthenticator } from "../../context/AuthContext";
+import { GetUserInfo } from "../../api/ApiClient";
 
 const HomePage = () => {
+  const [showPopUp, setShowPopUp] = useState(false);
+  const { loggedIn, authToken } = useAuthenticator();
+  if (loggedIn) {
+    GetUserInfo(authToken)
+      .then((response) => {
+        const user = response.data.dbUser;
+        if (response.data.success && !user.verified && (Date.now() - Date.parse(user.createdAt)) < 20000) {
+          setShowPopUp(true);
+        } else {
+          console.log("Bad response");
+          console.log(response.data);
+        }
+      })
+      .catch((error) => console.log(error.response.data.message));
+    // if user unverified and newly created show verification popup
+  }
+
   return (
     <Container>
       <GreenBackground></GreenBackground>
 
+      {showPopUp && <VerificationPopUp />}
       <Main>
         <BannerSection>
           <BnHeader>Project: Eirene</BnHeader>
