@@ -1,56 +1,110 @@
 import React from "react";
 import styled from "styled-components";
-import { useLocation, Link } from "react-router-dom";
-import "./HomePage.css";
-import "./footer.css"
-
+import { Link } from "react-router-dom";
+import "./navbar.css";
 
 const SiteFooter = () => {
-
   return (
+    <FooterContainer>
+      <FooterGrid>
+        <FooterHeader>Project: EIRENE</FooterHeader>
 
-    <footer className="footer">
-      <div className="footer-left col-md-4 col-sm-6">
-        <p className="about">
-          <span> About Eirene</span> The next step to self-care therapy. We at Eirene are driven to help people with their daily life, support their emotional state and always be there for them in their time of need.
-        </p>
-        {/*  <div className="icons">
-          <a href="#"><i className="fa fa-facebook"></i></a>
-          <a href="#"><i className="fa fa-twitter"></i></a>
-          <a href="#"><i className="fa fa-linkedin"></i></a>
-          <a href="#"><i className="fa fa-instagram"></i></a>
-  </div> */}
-      </div>
-      <div className="footer-center col-md-4 col-sm-6">
-        <div>
-          <i className="fa fa-map-marker"></i>
-          <p><span> Tareek AL Jadeeda</span> Beirut, Lebanon</p>
-        </div>
-        <div>
-          <i className="fa fa-phone"></i>
-          <p> (+961) 76 93 92 83</p>
-        </div>
-        <div>
-          <i className="fa fa-envelope"></i>
-          <p><a href="#">office@eirene.com</a></p>
-        </div>
-      </div>
-      <div className="footer-right col-md-4 col-sm-6">
-        <h2> Eirene<div className="eireneImg"> </div></h2>
-        <p className="menu">
-          <Link to={'/'}>Home</Link> |
-          <Link to={'/find-therapists'}> Therapists</Link> |
-          <Link to={'/Journal'}> Journal</Link> |
-          <Link to={'/Meditations'}> Meditation</Link> |
-          <Link to={'/about'}> About Us  </Link> |
-          <Link to={'/contact'}> Contact</Link>
-        </p>
-        <p className="name"> Eirene &copy; 2022</p>
-      </div>
-    </footer>
+        <FooterAddress>
+          Beirut Arab University <br />
+          Beirut, Lebanon <br />
+          loom.senior@gmail.com
+        </FooterAddress>
 
+        <FooterPara>
+          The next step to self-care therapy. Driven to help with daily lives
+          and support emotionally, Eirene will always lend a hand in times of
+          need.
+        </FooterPara>
+
+        <LinksMenu>
+          <StyledLink to={"/"} className="footer-link">
+            Home
+          </StyledLink>{" "}
+          |
+          <StyledLink to={"/find-therapists"} className="footer-link">
+            {" "}
+            Therapists
+          </StyledLink>{" "}
+          |
+          <StyledLink to={"/Journal"} className="footer-link">
+            {" "}
+            Journal
+          </StyledLink>{" "}
+          |
+          <StyledLink to={"/about"} className="footer-link">
+            {" "}
+            About Us
+          </StyledLink>
+        </LinksMenu>
+      </FooterGrid>
+    </FooterContainer>
   );
 };
 
-
 export default SiteFooter;
+
+const FooterContainer = styled.div`
+  font-family: FuturaLight;
+  line-height: 1.5;
+  color: #ffffff;
+  background-color: #414141;
+  padding: 50px;
+`;
+
+const FooterGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  @media (max-width: 991px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const FooterHeader = styled.h1`
+  font-size: 30px;
+  font-weight: bold;
+
+  @media (max-width: 991px) {
+    order: 1;
+    text-align: center;
+  }
+`;
+
+const FooterPara = styled.p`
+  color: #cccccc;
+
+  @media (max-width: 991px) {
+    order: 2;
+    text-align: center;
+  }
+`;
+
+const FooterAddress = styled.p`
+  color: #cccccc;
+  justify-self: end;
+
+  @media (max-width: 991px) {
+    order: 3;
+    justify-self: start;
+    margin-top: 20px;
+  }
+`;
+
+const LinksMenu = styled.div`
+  justify-self: end;
+
+  @media (max-width: 991px) {
+    order: 4;
+    justify-self: center;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #ffffff;
+`;

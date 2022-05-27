@@ -6,7 +6,6 @@ const Pages = (props) => {
 			{props.items && (
 				<Pagination  onChange={(e) => setpageNumberOption(e.target.value)}>
 					{props.items}
-					{console.log("length = ",props.items.length)}
 				</Pagination>
 			)}
 		</>

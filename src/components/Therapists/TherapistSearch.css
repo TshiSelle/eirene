@@ -129,3 +129,11 @@ bold {
 	display: flex;
 	justify-content: center;
 }
+
+/* description */
+@media (max-width: 991px) {
+  .hide-mobile {
+    display: none;
+  }
+}
+

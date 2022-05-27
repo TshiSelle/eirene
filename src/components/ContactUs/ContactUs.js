@@ -7,8 +7,6 @@ import { Alert, Form } from "react-bootstrap";
 import "./contactus.css";
 import { useAuthenticator } from "../../context/AuthContext";
 
-
-
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
   // This is where the values get set.
@@ -23,7 +21,6 @@ const reducer = (state, action) => {
         submissionErrorMessage: action.message,
       };
     case "set-content":
-      console.log("🚀 ~ file: ContactUs.js ~ line 29 ~ reducer ~ action.value", action.value)
       return {
         ...state,
         supportMessage: action.value,
@@ -32,7 +29,12 @@ const reducer = (state, action) => {
     case "support-message-start":
       return { ...state, waiting: true };
     case "support-message-success":
-      return { ...state, waiting: false, finished: true };
+      return {
+        ...state,
+        waiting: false,
+        finished: true,
+        successMessage: action.message,
+      };
     case "support-message-failure":
       return {
         ...state,
@@ -50,10 +52,10 @@ const ContactUs = () => {
     submissionErrorMessage: "",
     messageError: null,
     waiting: false,
+    successMessage: "",
     finished: false,
   });
   const { authToken } = useAuthenticator();
-
 
   const {
     supportMessage,
@@ -61,6 +63,7 @@ const ContactUs = () => {
     messageError,
     waiting,
     finished,
+    successMessage,
   } = state;
 
   const setMessage = useCallback(
@@ -73,9 +76,8 @@ const ContactUs = () => {
       event.preventDefault();
       if (waiting || finished) return;
       const { success, message } = validateMessage(supportMessage);
-      console.log("🚀 ~ file: ContactUs.js ~ line 78 ~ ContactUs ~ supportMessage", supportMessage)
       if (!success) {
-        dispatch({ type: "support-message-failure", message })
+        dispatch({ type: "support-message-failure", message });
         return;
       }
       dispatch({ type: "support-message-start" });
@@ -83,7 +85,10 @@ const ContactUs = () => {
       ContactSupport(authToken, supportMessage)
         .then((response) => {
           if (response.data.success) {
-            dispatch({ type: "support-message-success" });
+            dispatch({
+              type: "support-message-success",
+              message: response.data.message,
+            });
             console.log("Message Sent!");
           } else {
             dispatch({
@@ -102,7 +107,7 @@ const ContactUs = () => {
           return;
         });
     },
-    [waiting, finished]
+    [waiting, finished, supportMessage]
   );
   return (
     <>
@@ -111,12 +116,8 @@ const ContactUs = () => {
 
       <FormContainer>
         <SizeContainer>
-          <Form
-            className="contact-form"
-            onSubmit={sendSupportMessage}
-          >
+          <Form className="contact-form" onSubmit={sendSupportMessage}>
             <Form.Group className="mb-3">
-
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlTextarea1"
@@ -139,6 +140,13 @@ const ContactUs = () => {
                   <Alert variant="danger">{submissionErrorMessage}</Alert>
                 </div>
               )}
+
+              {successMessage && (
+                <div style={{ paddingTop: 20 }}>
+                  <Alert variant="success">{successMessage}</Alert>
+                </div>
+              )}
+
               <Button
                 value="Submit Message"
                 type="submit"
@@ -170,6 +178,10 @@ const FormContainer = styled.div`
 const SizeContainer = styled.div`
   width: 50%;
   margin-top: 50px;
+
+  @media (max-width: 991px) {
+    width: 90%;
+  }
 `;
 
 const Button = styled.button`

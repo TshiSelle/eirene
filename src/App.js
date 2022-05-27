@@ -7,26 +7,25 @@ import ProfilePage from "./components/Profile/UserProfile/ProfilePage";
 import ForgotPasswordForm from "./components/Profile/SignIn/forgot/ForgotPasswordForm";
 import FullPageSpinner from "./components/spinner/FullPageSpinner";
 import Journal from "./components/Journal/Journal";
-import ForgotPasswordResetForm from './components/Profile/SignIn/forgot/ForgotPasswordResetForm';
+import ForgotPasswordResetForm from "./components/Profile/SignIn/forgot/ForgotPasswordResetForm";
 import SearchTherapists from "./components/Therapists/SearchTherapists";
-import TherapistDescription from './components/Therapists/TherapistDescription';
+import TherapistDescription from "./components/Therapists/TherapistDescription";
 import { AuthProvider } from "./context/AuthContext";
 import NavBar from "./components/HomePage/NavBar";
 import SiteFooter from "./components/HomePage/Footer";
 import { JournalProvider } from "./context/JournalContext";
-import MeditationPage from "./components/Meditations/MeditationPage";
 import VerifyAccount from "./components/Profile/SignUp/verify/VerifyAccount";
 import { UserProvider } from "./context/UserContext";
-import { CalendarProvider } from './context/CalendarContext';
+import { CalendarProvider } from "./context/CalendarContext";
 import MediaPlayer from "./components/MediaPlayer/MediaPlayer";
 import { CloudinaryContext } from "cloudinary-react";
 import ContactUsRoute from "./components/ContactUs/ContactUsRoute";
 import NotFoundRoute from "./components/NotFound/NotFoundRoute";
-
+import Footer from "./components/AboutUs/AboutUs";
+import AboutUs from "./components/AboutUs/AboutUs";
 
 const App = () => {
   return (
-
     <CloudinaryContext cloudName="cloudloom">
       <AuthProvider>
         <UserProvider>
@@ -48,10 +47,10 @@ const App = () => {
                         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
                         <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
                         <Route path="/find-therapists" element={<SearchTherapists />} />
-                        <Route path="/Meditations" element={<MeditationPage />} />
                         <Route path="/therapist-description/:id" element={<TherapistDescription />} />
                         <Route path="/verify/:username/:token" element={<VerifyAccount />} />
                         <Route path="/Journal" element={<Journal />} />
+                        <Route path="/about" element={<AboutUs />} />
                         <Route path="/contact" element={<ContactUsRoute />} />
                         <Route path="*" element={<NotFoundRoute />} />
                       </Routes>
@@ -64,8 +63,7 @@ const App = () => {
           </CalendarProvider>
         </UserProvider>
       </AuthProvider>
-    </CloudinaryContext >
-
+    </CloudinaryContext>
   );
 };
 

@@ -5,10 +5,7 @@ const { validateSearchInput } = require('../helperFunctions/inputValidation');
 const searchTherapists = async (req, res) => {
 	let { searchString, pageNum, gender, degree, minYOE, maxYOE, title } = req.query;
 	if (isEmpty(searchString)) {
-		return res.status(400).json({
-			message: 'Search field is empty, please add input',
-			success: false,
-		});
+		searchString = '';
 	}
 
 	const therapistsPerPage = 12;

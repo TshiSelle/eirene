@@ -6,8 +6,9 @@ import { GetUserPicture, ReactivateAccount, UploadProfilePicture } from "../../.
 // import { useUserCalendar } from "../../../context/CalendarContext";
 import { Link } from "react-router-dom";
 import Calendar from "react-awesome-calendar";
-import { Image } from "cloudinary-react";
+import { Image, Transformation } from "cloudinary-react";
 import DeactivationModal from "./DeactivationModal";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const events = [
   {
@@ -38,6 +39,7 @@ const ProfilePage = () => {
   const [imageSrc, setImageSrc] = useState(undefined);
   const [deactivateModalOpen, setDeactivateModalOpen] = useState(false);
   const { loggedIn, authToken } = useAuthenticator();
+  const [isLoading, setLoading] =useState(false);
   const userDeactivationDate = user?.deactivationDate == undefined ? undefined : user.deactivationDate;
   // const { userCalendarAppointments } = useUserCalendar();
   console.log(user);
@@ -64,6 +66,7 @@ const ProfilePage = () => {
     // destructure the files array from the resulting object
     const files = imageFile.files;
     if (!files.length) return;
+	setLoading(true)
     UploadProfilePicture(files[0], authToken)
       .then((response) => {
         if (response.data.success) {
@@ -71,9 +74,11 @@ const ProfilePage = () => {
         } else {
           setImageSrc(undefined);
         }
-      })
-      .catch((error) => {
-        setImageSrc(undefined);
+		setLoading(false)
+	})
+	.catch((error) => {
+		setImageSrc(undefined);
+		setLoading(false)
         return;
       });
   }, [loggedIn, authToken, setImageSrc]);
@@ -112,8 +117,11 @@ const ProfilePage = () => {
                   publicId={imageSrc}
                   alt="user image"
                   style={{ width: 100, height: 100 }}
-                />
+                >
+					<Transformation fetchFormat="auto" />
+				</Image>
               )}
+			  <LoadingSpinner display={isLoading} />
               <button type="button" className="btn" onClick={handleImageUpload}>
                 Submit
               </button>

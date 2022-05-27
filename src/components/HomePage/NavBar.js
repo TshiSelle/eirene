@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useLocation, Link } from "react-router-dom";
-import "./HomePage.css";
+import { useLocation, Link, NavLink } from "react-router-dom";
+import "./navbar.css";
 import { useAuthenticator } from "../../context/AuthContext";
 import { Dropdown } from "react-bootstrap";
 import { useUser } from "../../context/UserContext";
 import { Image, Transformation } from "cloudinary-react";
+import "../Fonts/icomoon/style.css";
 
 const NavBar = () => {
   const location = useLocation();
@@ -14,65 +15,85 @@ const NavBar = () => {
 
   return (
     <Header pathname={location.pathname}>
+      <div className="hamburger-menu"></div>
+
       <Nav>
-        <StyledLink to={"/"} className="navlink">
+        <NavLink
+          className={({ isActive }) => "navlink " + (isActive && "active")}
+          to="/"
+        >
           Home
-        </StyledLink>
-        <StyledLink to={"/find-therapists"} className="navlink">
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => "navlink " + (isActive && "active")}
+          to="/find-therapists"
+        >
           Therapists
-        </StyledLink>
-        <StyledLink to={"/Journal"} className="navlink">
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => "navlink " + (isActive && "active")}
+          to="/Journal"
+        >
           Journal
-        </StyledLink>
-        <StyledLink to={"/Meditations"} className="navlink">
-          Meditations
-        </StyledLink>
-        <StyledLink to={"/about"} className="navlink">
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => "navlink " + (isActive && "active")}
+          to="/about"
+        >
           About Us
-        </StyledLink>
-        <StyledLink to={"/contact"} className="navlink">
-          Contact
-        </StyledLink>
+        </NavLink>
+
         <Dropdown className="btn-primary">
           <Dropdown.Toggle>
-            <StyledImage publicId={userImage ?  userImage : "samples/Profile/navbar-profile"}>
+            <StyledImage
+              publicId={
+                userImage ? userImage : "samples/Profile/navbar-profile"
+              }
+              alt="profile"
+            >
               <Transformation fetchFormat="auto" />
             </StyledImage>
           </Dropdown.Toggle>
           {loggedIn ? (
             <Dropdown.Menu>
-			  <Dropdown.Item as={Link} to="/profile" style={{ textDecorationLine: 'none', color: '#212529' }}>
+              <Dropdown.Item
+                as={Link}
+                to="/profile"
+                style={{ textDecorationLine: "none", color: "#212529" }}
+              >
                 Profile
-			  </Dropdown.Item>
+              </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item
                 onClick={userLogOut}
-                style={{ fontSize: 15, fontWeight: '500' }}
+                style={{ fontSize: 15, fontWeight: "500" }}
               >
                 Log out
               </Dropdown.Item>
             </Dropdown.Menu>
           ) : (
             <Dropdown.Menu>
-              <Dropdown.Item 
-			  as={Link} 
-			  to="/SignIn"
-              style={{
-                textDecoration: "none",
-                color: "#212529",
-			  }}>
-                  Login
-			  </Dropdown.Item>
+              <Dropdown.Item
+                as={Link}
+                to="/SignIn"
+                style={{
+                  textDecoration: "none",
+                  color: "#212529",
+                }}
+              >
+                Login
+              </Dropdown.Item>
               <Dropdown.Divider />
-			  <Dropdown.Item 
-			  as={Link} 
-			  to="/SignUp"
-              style={{
-                textDecoration: "none",
-                color: "#212529",
-			  }}>
-                  Sign Up
-			  </Dropdown.Item>
+              <Dropdown.Item
+                as={Link}
+                to="/SignUp"
+                style={{
+                  textDecoration: "none",
+                  color: "#212529",
+                }}
+              >
+                Sign Up
+              </Dropdown.Item>
             </Dropdown.Menu>
           )}
         </Dropdown>
@@ -80,13 +101,21 @@ const NavBar = () => {
     </Header>
   );
 };
+
 const Header = styled.header`
-  background-color: white;
+  background-color: #ffffff;
   height: 108px;
-  position: ${(props) => (props.pathname === "/" ? "fixed" : "")};
+  // position: ${(props) => (props.pathname === "/" ? "fixed" : "")};
+  position: fixed;
   width: 100%;
   top: 0;
   font-family: FuturaLight;
+  padding-bottom: 15px;
+  z-index: 1;
+
+  @media (max-width: 991px) {
+    height: 73px;
+  }
 `;
 
 const Nav = styled.nav`
@@ -97,14 +126,9 @@ const Nav = styled.nav`
   height: 100%;
 `;
 
-const StyledLink = styled(Link)`
-  font-size: 16px;
-  text-decoration: none;
-  color: #212529;
-`;
-
 const StyledImage = styled(Image)`
   height: 25px;
+  width: 25px;
   border-radius: 50%;
 `;
 

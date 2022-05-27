@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }) => {
 
   const loggedIn = authToken != null;
 
-  console.log('Auth token: ', authToken, ' LoggedIn: ', loggedIn);
+//   console.log('Auth token: ', authToken, ' LoggedIn: ', loggedIn);
   const value = useMemo(() => {
     return {
       loggedIn,

@@ -1,16 +1,6 @@
-import React, {
-  useReducer,
-  useMemo,
-  useCallback,
-  useContext,
-  useEffect,
-} from "react";
+import React, { useReducer, useMemo, useCallback, useContext, useEffect, useState } from "react";
 import { useAuthenticator } from "./AuthContext";
-import {
-  UpdateJournal,
-  GetUserJournals,
-  DeleteJournal,
-} from "../api/ApiClient";
+import { UpdateJournal, GetUserJournals, DeleteJournal } from "../api/ApiClient";
 const JournalContext = React.createContext();
 
 const reducer = (state, action) => {
@@ -29,6 +19,7 @@ export const JournalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, {
     journalEntries: null,
   });
+  const [refresher, setRefresher] = useState(1);
   const { journalEntries } = state;
   const { authToken, loggedIn } = useAuthenticator();
 
@@ -45,10 +36,7 @@ export const JournalProvider = ({ children }) => {
             }
           })
           .catch((error) => {
-            console.log(
-              error.response.data.message,
-              " caught Error while retrieving journal Entries  "
-            );
+            console.log(error.response.data.message, " caught Error while retrieving journal Entries  ");
             return;
           });
       } catch (error) {
@@ -56,7 +44,7 @@ export const JournalProvider = ({ children }) => {
       }
     };
     getJournalEntries();
-  }, [authToken, loggedIn]);
+  }, [authToken, loggedIn, refresher]);
 
   const updateJournalEntries = useCallback(() => {
     if (!loggedIn || !authToken) return;
@@ -65,15 +53,13 @@ export const JournalProvider = ({ children }) => {
         .then((response) => {
           if (response.data.success) {
             dispatch({ type: "set-entries", data: response.data.journals });
+            setRefresher(Math.random());
           } else {
             console.log(" Failed: ", response.data);
           }
         })
         .catch((error) => {
-          console.log(
-            error.response.data.message,
-            " caught Error while retrieving journal Entries  "
-          );
+          console.log(error.response.data.message, " caught Error while retrieving journal Entries  ");
           return;
         });
     } catch (error) {
@@ -88,6 +74,7 @@ export const JournalProvider = ({ children }) => {
         UpdateJournal(authToken, journalID, title, body)
           .then((response) => {
             if (response.data.success) {
+              setRefresher(Math.random());
               // The useEffect used will automatically update the journal entries..
               // so no need to handle it in this promise.
               console.log(response.data, " Successfuly updated");
@@ -115,9 +102,7 @@ export const JournalProvider = ({ children }) => {
         DeleteJournal(journalID, authToken)
           .then((response) => {
             if (response.data.success) {
-              console.log("successfully in delete journal", response.data);
-            } else {
-              console.log(" im here", response.data);
+              setRefresher(Math.random());
             }
           })
           .catch((error) => {
@@ -139,21 +124,13 @@ export const JournalProvider = ({ children }) => {
       updateJournalEntry,
       updateJournalEntries,
     };
-  }, [
-    journalEntries,
-    removeJournalEntries,
-    updateJournalEntry,
-    updateJournalEntries,
-  ]);
+  }, [journalEntries, removeJournalEntries, updateJournalEntry, updateJournalEntries]);
 
-  return (
-    <JournalContext.Provider value={value}>{children}</JournalContext.Provider>
-  );
+  return <JournalContext.Provider value={value}>{children}</JournalContext.Provider>;
 };
 
 export const useJournal = () => {
   const context = useContext(JournalContext);
-  if (!context)
-    throw new Error("useJournal must be used within a JournalProvider");
+  if (!context) throw new Error("useJournal must be used within a JournalProvider");
   return context;
 };

@@ -146,9 +146,6 @@ function validateSearchInput(queries) {
 	gender = !isEmpty(gender) ? gender : '';
 	degree = !isEmpty(degree) ? degree : '';
 
-	if (Validator.isEmpty(searchString)) {
-		errors.searchString = 'Search Input is empty, please add input to search field';
-	}
 	if (!Validator.isEmpty(gender) && !(Validator.equals(gender, 'male') || Validator.equals(gender, 'female'))) {
 		errors.gender = `'${gender}' is not a valid value, choose 'male' or 'female'`;
 	}

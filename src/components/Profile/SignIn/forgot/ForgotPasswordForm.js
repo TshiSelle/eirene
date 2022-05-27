@@ -9,7 +9,7 @@ import background from "./bg_4.jpg";
 const reducer = (state, action) => {
   switch (action.type) {
     case "change-email":
-      return { ...state, email: action.value };
+      return { ...state, email: action.value, errorMessage: '' };
     case "validation-error":
       return {
         ...state,
@@ -20,6 +20,8 @@ const reducer = (state, action) => {
     case "submit-success":
       return { ...state, waiting: false, finished: true };
     case "submit-failure":
+		console.log('submit-failure')
+		console.log(action.message)
       return {
         ...state,
         waiting: false,
@@ -46,12 +48,11 @@ const ForgotPasswordForm = () => {
     // check base cases then call api, we generally dont need to verify if the user email input
     // is actually a true email, since if its not it just wont send an email...
     if (waiting || finished) return;
-    console.log("25");
     const emailValidation = validateEmail(email);
     if (!emailValidation.success) {
       dispatch({
         type: "validation-error",
-        errorMessage: emailValidation.message,
+        message: emailValidation.message,
       });
       return;
     }
@@ -65,23 +66,20 @@ const ForgotPasswordForm = () => {
         } else {
           dispatch({
             type: "submit-failure",
-            errorMessage: response.data.email,
+            message: response.data.message,
           });
         }
       })
       .catch((error) => {
         dispatch({
           type: "submit-failure",
-          errorMessage: error.response.data.email,
+          message: error.response.data.message,
         });
         return;
       });
   }, [waiting, finished, email]);
 
-  const setEmail = useCallback(
-    (e) => dispatch({ type: "change-email", value: e.target.value }),
-    []
-  );
+  const setEmail = useCallback((e) => dispatch({ type: "change-email", value: e.target.value }), []);
 
   return (
     <MainContainer>
@@ -90,14 +88,10 @@ const ForgotPasswordForm = () => {
           <ResponsiveContainer>
             <Header>Forgot Password</Header>
             {finished ? (
-              <p style={{ textAlign: "center" }}>
-                We sent an email to {email}, please check your inbox.
-              </p>
+              <p style={{ textAlign: "center" }}>We sent an email to {email}, please check your inbox.</p>
             ) : (
               <>
-                <Subheader>
-                  Enter your email address to receive a verification code.
-                </Subheader>
+                <Subheader>Enter your email address to receive a verification code.</Subheader>
 
                 <Form onSubmit={submitRequest}>
                   <Form.Group className="mb-3">
@@ -140,11 +134,7 @@ const ForgotPasswordForm = () => {
 };
 
 const MainContainer = styled.div`
-  background: linear-gradient(
-      0deg,
-      rgba(33, 37, 41, 0.3),
-      rgba(33, 37, 41, 0.3)
-    ),
+  background: linear-gradient(0deg, rgba(33, 37, 41, 0.3), rgba(33, 37, 41, 0.3)),
     url("https://res.cloudinary.com/cloudloom/image/upload/f_auto/v1650233581/samples/Profile/login-image.jpg");
   background-size: cover;
   height: 100vh;
