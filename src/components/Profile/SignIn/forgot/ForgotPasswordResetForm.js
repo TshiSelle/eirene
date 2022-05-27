@@ -1,15 +1,9 @@
 import React, { useReducer, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { Form, Alert, Button } from "react-bootstrap";
-import {
-  validatePassword,
-  validateConfirmPassword,
-} from "../../../../validators/validators";
+import { validatePassword, validateConfirmPassword } from "../../../../validators/validators";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  PasswordResetWithToken,
-  IsEmailTokenValid,
-} from "../../../../api/ApiClient";
+import { PasswordResetWithToken, IsEmailTokenValid } from "../../../../api/ApiClient";
 import "./forgotPassStyle.css";
 import background from "./bg_4.jpg";
 
@@ -67,15 +61,7 @@ const ForgotPasswordResetForm = () => {
     finished: false,
   });
 
-  const {
-    password,
-    confirmPassword,
-    passwordError,
-    submissionErrorMessage,
-    finished,
-    waiting,
-    emailValid,
-  } = state;
+  const { password, confirmPassword, passwordError, submissionErrorMessage, finished, waiting, emailValid } = state;
 
   useEffect(() => {
     IsEmailTokenValid(username, token)
@@ -93,14 +79,8 @@ const ForgotPasswordResetForm = () => {
       });
   }, [username, token]);
 
-  const setPassword = useCallback(
-    (e) => dispatch({ type: "set-password", value: e.target.value }),
-    []
-  );
-  const setConfirmPassword = useCallback(
-    (e) => dispatch({ type: "set-confirm-password", value: e.target.value }),
-    []
-  );
+  const setPassword = useCallback((e) => dispatch({ type: "set-password", value: e.target.value }), []);
+  const setConfirmPassword = useCallback((e) => dispatch({ type: "set-confirm-password", value: e.target.value }), []);
   const resetUserPassword = useCallback(() => {
     // this prevents auto refresh onsubmit
     event.preventDefault();
@@ -114,10 +94,7 @@ const ForgotPasswordResetForm = () => {
       });
       return;
     }
-    const confirmPasswordValidation = validateConfirmPassword(
-      password,
-      confirmPassword
-    );
+    const confirmPasswordValidation = validateConfirmPassword(password, confirmPassword);
     if (!confirmPasswordValidation.success) {
       dispatch({
         type: "password-error",
@@ -131,18 +108,18 @@ const ForgotPasswordResetForm = () => {
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: "forgot-password-success" });
-		  setTimeout(() => navigate("/"),2000)
+          setTimeout(() => navigate("/"), 2000);
         } else {
           dispatch({
             type: "forgot-password-failure",
-            errorMessage: response.data.message,
+            message: response.data.message,
           });
         }
       })
       .catch((error) => {
         dispatch({
           type: "forgot-password-failure",
-          errorMessage: error.response.data.message,
+          message: error.response.data.message,
         });
         return;
       });
@@ -156,9 +133,7 @@ const ForgotPasswordResetForm = () => {
             <FormContainer>
               <ResponsiveContainer>
                 <Header>Reset Password</Header>
-                <Subheader>
-                  Choose your new password and traverse Eirene again.
-                </Subheader>
+                <Subheader>Choose your new password and traverse Eirene again.</Subheader>
 
                 <Form className="signup-form" onSubmit={resetUserPassword}>
                   <Label>Password</Label>
@@ -182,15 +157,17 @@ const ForgotPasswordResetForm = () => {
                     value={confirmPassword}
                     onChange={setConfirmPassword}
                   />
-                  <Button
-                    className="input submit-button"
-                    value="Submit"
-                    type="submit"
-                    disabled={submissionErrorMessage}
-                  >
+
+                  {submissionErrorMessage && (
+                    <div style={{ paddingTop: 20 }}>
+                      <Alert variant="danger">{submissionErrorMessage}</Alert>
+                    </div>
+                  )}
+
+                  <Button className="input submit-button" value="Submit" type="submit" disabled={submissionErrorMessage}>
                     Reset Password
                   </Button>
-				  {finished && <Alert variant="success">Password reset successfully!</Alert> }
+                  {finished && <Alert variant="success">Password reset successfully!</Alert>}
                 </Form>
               </ResponsiveContainer>
             </FormContainer>
@@ -204,11 +181,7 @@ const ForgotPasswordResetForm = () => {
 };
 
 const MainContainer = styled.div`
-  background: linear-gradient(
-      0deg,
-      rgba(33, 37, 41, 0.3),
-      rgba(33, 37, 41, 0.3)
-    ),
+  background: linear-gradient(0deg, rgba(33, 37, 41, 0.3), rgba(33, 37, 41, 0.3)),
     url("https://res.cloudinary.com/cloudloom/image/upload/f_auto/v1650233581/samples/Profile/login-image.jpg");
   background-size: cover;
   height: 100vh;
