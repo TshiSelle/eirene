@@ -39,8 +39,8 @@ const VerifyAccount = () => {
 
   const { emailValid, submissionErrorMessage, loading } = state;
 
-  useEffect(() => {
-    event.preventDefault();
+  useEffect((event) => {
+    if (event && event.preventDefault) event.preventDefault();
     IsVerificationTokenValid(username, token)
       .then((response) => {
         if (response.data.success) {
