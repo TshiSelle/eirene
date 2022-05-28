@@ -56,13 +56,27 @@ const SignInForm = () => {
     waiting: false,
     finished: false,
   });
-  const { username, password, submissionErrorMessage, passwordError, usernameError, finished, waiting } = state;
+  const {
+    username,
+    password,
+    submissionErrorMessage,
+    passwordError,
+    usernameError,
+    finished,
+    waiting,
+  } = state;
 
   const [isLoading, setLoading] = useState(false);
   const { updateAuthToken } = useAuthenticator();
   // The useCallbacks basically take the values set in the input forms and sends them to their desired destination
-  const setUsername = useCallback((e) => dispatch({ type: "set-username", value: e.target.value }), []);
-  const setPassword = useCallback((e) => dispatch({ type: "set-password", value: e.target.value }), []);
+  const setUsername = useCallback(
+    (e) => dispatch({ type: "set-username", value: e.target.value }),
+    []
+  );
+  const setPassword = useCallback(
+    (e) => dispatch({ type: "set-password", value: e.target.value }),
+    []
+  );
 
   const loginUser = useCallback(() => {
     // this prevents auto refresh onsubmit
@@ -119,7 +133,9 @@ const SignInForm = () => {
       <Header>
         Login to <strong>Eirene</strong>
       </Header>
-      <Paragraph>To keep connected with Eirene, please login with your personal info.</Paragraph>
+      <Paragraph>
+        To keep connected with Eirene, please login with your personal info.
+      </Paragraph>
 
       <FormContainer>
         <Form className="login-form" onSubmit={loginUser}>
@@ -194,8 +210,7 @@ const Button = styled.button`
   height: 54px;
   border: none;
   border-radius: 0.25rem;
-  font-size: 1rem;s
-  
+  font-size: 1rem;
 `;
 
 const Header = styled.h3`

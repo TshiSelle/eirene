@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
-import { GetUserInfo, GetUserPicture, ReactivateAccount, UploadProfilePicture } from "../../../api/ApiClient";
+import {
+  GetUserInfo,
+  GetUserPicture,
+  ReactivateAccount,
+  UploadProfilePicture,
+} from "../../../api/ApiClient";
 import { Link } from "react-router-dom";
 import { Image, Transformation } from "cloudinary-react";
 import { Alert, Button } from "react-bootstrap";
 import DeactivationModal from "./DeactivationModal";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import styled from "styled-components";
+import "./ProfilePage.css";
 // import { GetUserAppointments } from "../../../api/ApiClient";
 // import { useUserCalendar } from "../../../context/CalendarContext";
 // import Calendar from "react-awesome-calendar";
@@ -48,7 +55,9 @@ const ProfilePage = () => {
   if (loggedIn) {
     GetUserInfo(authToken)
       .then((response) => {
-        setDeactivationDate(typeof response.data.dbUser.deactivationDate == "string");
+        setDeactivationDate(
+          typeof response.data.dbUser.deactivationDate == "string"
+        );
       })
       .catch((error) => console.log(error.response.data.message));
   }
@@ -116,41 +125,72 @@ const ProfilePage = () => {
   return (
     <>
       {loggedIn ? (
-        <div>
-          <h2>
-            {user?.fname} {user?.lname}
-          </h2>
-          <h2>{user?.email}</h2>
-          <section className="left-side">
-            <form>
+        <PageContainer>
+          <PageBanner>
+            <BannerHeader>Profile</BannerHeader>
+            <BannerPara>
+              View your account details including profile picture, username,
+              name, gender, email, and whether your account has been verified or
+              not.
+            </BannerPara>
+          </PageBanner>
+
+          <UserCard>
+            <form className="profile-pic-form">
               <div className="form-group">
-                <input type="file" accepts="image/*" />
+                <label for="upload-photo" class="label-upload">
+                  Choose File
+                </label>
+                <input type="file" accepts="image/*" id="upload-photo" />
               </div>
               {imageSrc && (
-                <Image publicId={imageSrc} alt="user image" style={{ width: 100, height: 100 }}>
+                <Image
+                  publicId={imageSrc}
+                  alt="user image"
+                  style={{
+                    width: "200px",
+                    height: "200px",
+                    objectFit: "cover",
+                  }}
+                >
                   <Transformation fetchFormat="auto" />
                 </Image>
               )}
-              <button type="button" className="btn" onClick={handleImageUpload}>
+              <button
+                type="button"
+                className="btn submit-pic-button"
+                onClick={handleImageUpload}
+              >
                 Submit
               </button>
             </form>
-          </section>
-          <Button variant={userDeactivationDate ? "success" : "danger"} onClick={handleAccountStatus}>
+
+            <UserUsername>{user?.username}</UserUsername>
+            <UserPara>
+              {user?.fname} {user?.lname}
+            </UserPara>
+            <UserPara>{user?.gender}</UserPara>
+            <UserPara>{user?.email}</UserPara>
+            <UserPara>
+              {user?.verified ? "Verified Account" : "Unverified Account"}
+            </UserPara>
+          </UserCard>
+
+          <Button
+            variant={userDeactivationDate ? "success" : "danger"}
+            onClick={handleAccountStatus}
+            className="deactivate-acc-button"
+          >
             {userDeactivationDate ? "Activate Account" : "Deactivate Account"}
           </Button>
           {message && (
             <div style={{ paddingTop: 20 }}>
-              <Alert variant={userDeactivationDate ? "danger" : "success"}>{message}</Alert>
+              <Alert variant={userDeactivationDate ? "danger" : "success"}>
+                {message}
+              </Alert>
             </div>
           )}
-          {/* <div>
-            <Calendar
-			events={events}
-			onClickTimeLine={() => console.log(" clicked timeLine")}
-            />
-		</div> */}
-        </div>
+        </PageContainer>
       ) : (
         <div>
           <h3>You are not logged in!</h3>
@@ -173,3 +213,62 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
+const PageContainer = styled.div`
+  font-family: FuturaLight;
+  line-height: 1.5;
+  color: #212529;
+  display: grid;
+`;
+
+const PageBanner = styled.div`
+  height: 255px;
+  text-align: center;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  margin-top: 108px;
+
+  @media (max-width: 991px) {
+    margin-top: 73px;
+    height: unset;
+    padding: 20px;
+  }
+`;
+
+const BannerHeader = styled.h1`
+  font-size: 30px;
+  font-weight: bold;
+
+  @media (max-width: 991px) {
+    font-size: 20px;
+  }
+`;
+
+const BannerPara = styled.p`
+  max-width: 600px;
+  margin-top: 10px;
+`;
+
+const UserCard = styled.div`
+  background-color: #efd8db;
+  padding: 45px;
+  width: 404px;
+  justify-self: center;
+  display: grid;
+  justify-items: center;
+
+  @media (max-width: 991px) {
+    width: 100%;
+  }
+`;
+
+const UserUsername = styled.h1`
+  font-size: 30px;
+  font-weight: bold;
+  margin: 20px 0 0;
+`;
+
+const UserPara = styled.p`
+  margin: 5px 0 0;
+`;

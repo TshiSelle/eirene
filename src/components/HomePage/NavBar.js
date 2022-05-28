@@ -14,8 +14,8 @@ const NavBar = () => {
   const { userLogOut, userImage } = useUser();
   const navigate = useNavigate();
   const logOut = useCallback(() => {
-	userLogOut();
-	navigate("/SignIn");
+    userLogOut();
+    navigate("/SignIn");
   });
 
   return (
@@ -110,8 +110,7 @@ const NavBar = () => {
 const Header = styled.header`
   background-color: #ffffff;
   height: 108px;
-  position: ${(props) => (props.pathname === "/" || props.pathname === "/about" ? "fixed" : "")};
-  // position: fixed;
+  position: fixed;
   width: 100%;
   top: 0;
   font-family: FuturaLight;

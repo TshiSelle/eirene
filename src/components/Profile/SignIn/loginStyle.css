@@ -73,9 +73,11 @@
 .link:hover {
   color: #f5a490;
 }
+
 .loginButton:hover {
   background-color: #edafb6 !important;
 }
+
 .signUp:hover {
   background-color: #ded9d9 !important;
 }
