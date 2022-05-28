@@ -47,12 +47,11 @@ const PageBanner = styled.div`
   font-family: FuturaLight;
   line-height: 1.5;
   color: #212529;
-  height: 255px;
+  height: 200px;
   text-align: center;
   display: grid;
   align-content: center;
   justify-content: center;
-  // margin-top: 108px;
 `;
 
 const BannerHeader = styled.h1`

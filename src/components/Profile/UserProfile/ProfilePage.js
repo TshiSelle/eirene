@@ -219,18 +219,16 @@ const PageContainer = styled.div`
   line-height: 1.5;
   color: #212529;
   display: grid;
-  `;
-  
-  const PageBanner = styled.div`
-  height: 255px;
+`;
+
+const PageBanner = styled.div`
+  height: 200px;
   text-align: center;
   display: grid;
   align-content: center;
   justify-content: center;
-  margin-top: 108px;
 
   @media (max-width: 991px) {
-    margin-top: 73px;
     height: unset;
     padding: 20px;
   }

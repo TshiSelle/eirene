@@ -14,7 +14,11 @@ const HomePage = () => {
     GetUserInfo(authToken)
       .then((response) => {
         const user = response.data.dbUser;
-        if (response.data.success && !user.verified && (Date.now() - Date.parse(user.createdAt)) < 20000) {
+        if (
+          response.data.success &&
+          !user.verified &&
+          Date.now() - Date.parse(user.createdAt) < 20000
+        ) {
           setShowPopUp(true);
         }
       })
@@ -226,11 +230,11 @@ const GreenBackground = styled.div`
 
 const Main = styled.main`
   width: 90%;
-  margin: 108px auto 0;
+  margin: 0 auto;
   display: grid;
 
   @media (max-width: 991px) {
-    margin: 73px auto 0;
+    margin: 0 auto;
     width: 100%;
   }
 `;

@@ -130,12 +130,10 @@ const MainGrid = styled.div`
   display: flex;
   justify-content: center;
   gap: 35px;
-  margin-top: 108px;
   padding-bottom: 40px;
 
   @media (max-width: 991px) {
     display: block;
-    margin-top: 73px;
     padding-bottom: unset;
   }
 `;
@@ -153,6 +151,7 @@ const LeftThProfile = styled.div`
     width: 100%;
     height: 108px;
     background-color: #5e6e4b;
+    margin-top: 0;
   }
 `;
 
