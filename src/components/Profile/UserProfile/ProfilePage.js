@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
-// import { GetUserAppointments } from "../../../api/ApiClient";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
-import { GetUserPicture, ReactivateAccount, UploadProfilePicture } from "../../../api/ApiClient";
-// import { useUserCalendar } from "../../../context/CalendarContext";
+import { GetUserInfo, GetUserPicture, ReactivateAccount, UploadProfilePicture } from "../../../api/ApiClient";
 import { Link } from "react-router-dom";
-import Calendar from "react-awesome-calendar";
 import { Image, Transformation } from "cloudinary-react";
+import { Alert, Button } from "react-bootstrap";
 import DeactivationModal from "./DeactivationModal";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+// import { GetUserAppointments } from "../../../api/ApiClient";
+// import { useUserCalendar } from "../../../context/CalendarContext";
+// import Calendar from "react-awesome-calendar";
 
 const events = [
   {
@@ -36,29 +37,42 @@ const events = [
 
 const ProfilePage = () => {
   const { user, userLogOut } = useUser();
+  const { loggedIn, authToken } = useAuthenticator();
   const [imageSrc, setImageSrc] = useState(undefined);
   const [deactivateModalOpen, setDeactivateModalOpen] = useState(false);
-  const { loggedIn, authToken } = useAuthenticator();
-  const [isLoading, setLoading] =useState(false);
-  const userDeactivationDate = user?.deactivationDate == undefined ? undefined : user.deactivationDate;
+  const [isLoading, setLoading] = useState(false);
+  const [userDeactivationDate, setDeactivationDate] = useState(false);
+  const [message, setMessage] = useState("");
   // const { userCalendarAppointments } = useUserCalendar();
-  console.log(user);
+
+  if (loggedIn) {
+    GetUserInfo(authToken)
+      .then((response) => {
+        setDeactivationDate(typeof response.data.dbUser.deactivationDate == "string");
+      })
+      .catch((error) => console.log(error.response.data.message));
+  }
+
   const handleAccountStatus = useCallback(() => {
-    if (userDeactivationDate != undefined) {
+    if (userDeactivationDate) {
+      setLoading(true);
       ReactivateAccount(authToken).then((response) => {
         if (response.data.success) {
           console.log(response.data);
+          setDeactivationDate(false);
+          setLoading(false);
+          setMessage("Account Reactivation Successful");
           return response.data.message;
         } else {
           console.log(response.data);
+          setLoading(false);
           return response.data.message;
         }
       });
-    }else {
-      setDeactivateModalOpen(true)
+    } else {
+      setDeactivateModalOpen(true);
     }
-    
-  }, []);
+  }, [userDeactivationDate]);
 
   const handleImageUpload = useCallback(() => {
     if (!loggedIn) return;
@@ -66,7 +80,7 @@ const ProfilePage = () => {
     // destructure the files array from the resulting object
     const files = imageFile.files;
     if (!files.length) return;
-	setLoading(true)
+    setLoading(true);
     UploadProfilePicture(files[0], authToken)
       .then((response) => {
         if (response.data.success) {
@@ -74,11 +88,11 @@ const ProfilePage = () => {
         } else {
           setImageSrc(undefined);
         }
-		setLoading(false)
-	})
-	.catch((error) => {
-		setImageSrc(undefined);
-		setLoading(false)
+        setLoading(false);
+      })
+      .catch((error) => {
+        setImageSrc(undefined);
+        setLoading(false);
         return;
       });
   }, [loggedIn, authToken, setImageSrc]);
@@ -113,29 +127,29 @@ const ProfilePage = () => {
                 <input type="file" accepts="image/*" />
               </div>
               {imageSrc && (
-                <Image
-                  publicId={imageSrc}
-                  alt="user image"
-                  style={{ width: 100, height: 100 }}
-                >
-					<Transformation fetchFormat="auto" />
-				</Image>
+                <Image publicId={imageSrc} alt="user image" style={{ width: 100, height: 100 }}>
+                  <Transformation fetchFormat="auto" />
+                </Image>
               )}
-			  <LoadingSpinner display={isLoading} />
               <button type="button" className="btn" onClick={handleImageUpload}>
                 Submit
               </button>
             </form>
           </section>
-          <button onClick={handleAccountStatus}>
-            {userDeactivationDate && userDeactivationDate != undefined ? 'Activate Account': 'Deactivate Account'}
-          </button>
+          <Button variant={userDeactivationDate ? "success" : "danger"} onClick={handleAccountStatus}>
+            {userDeactivationDate ? "Activate Account" : "Deactivate Account"}
+          </Button>
+          {message && (
+            <div style={{ paddingTop: 20 }}>
+              <Alert variant={userDeactivationDate ? "danger" : "success"}>{message}</Alert>
+            </div>
+          )}
           {/* <div>
             <Calendar
-              events={events}
-              onClickTimeLine={() => console.log(" clicked timeLine")}
+			events={events}
+			onClickTimeLine={() => console.log(" clicked timeLine")}
             />
-          </div> */}
+		</div> */}
         </div>
       ) : (
         <div>
@@ -146,7 +160,10 @@ const ProfilePage = () => {
           <Link to="/SignIn">Go to Login</Link>
         </div>
       )}
+      <LoadingSpinner display={isLoading} />
       <DeactivationModal
+        setDate={setDeactivationDate}
+        setMessage={setMessage}
         showModal={deactivateModalOpen}
         closeModal={() => setDeactivateModalOpen(false)}
         authToken={authToken}
