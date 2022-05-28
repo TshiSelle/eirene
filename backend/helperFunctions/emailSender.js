@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer');
 
 //*************** Email transfer functions ******************
+const CLIENT_URL = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.CLIENT_PORT}` : 'https://eirene1.herokuapp.com';
+
 
 var Transport = nodemailer.createTransport({
 	service: 'Gmail',
@@ -58,7 +60,7 @@ function sendEmailResetPass(email, username, passResetToken) {
 		from: sender,
 		to: email,
 		subject: 'Eirene account reset password',
-		html: `Hello! press <a href=http://localhost:${process.env.CLIENT_PORT}/forgot-password/${username}/${passResetToken}>here</a> to reset your password.`,
+		html: `Hello! press <a href=${CLIENT_URL}/forgot-password/${username}/${passResetToken}>here</a> to reset your password.`,
 	};
 
 	Transport.sendMail(mailOptions, (error, response) => {
