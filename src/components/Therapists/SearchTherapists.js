@@ -178,19 +178,25 @@ const searchTherapists = () => {
           </Form.Group>
         </Collapse>
       </Form>
-      <div className="therapist-parent-container">
-        {data.map((therapist, key) => {
-          return (
-            <div key={key} className="therapist-container">
-              <TherapistCard therapist={therapist} />
-            </div>
-          );
-        })}
-      </div>
-      <div className="pagesContainer">
-        <Pages items={items} numOfPages={numOfPages} currpage={pageNumberoption} onChange={(e) => setpageNumberOption(e)} />
-      </div>
-      <LoadingSpinner display={isLoading} />
+      {isLoading ? (
+        <LoadingSpinner display={isLoading} />
+      ) : (
+        <>
+          <div className="therapist-parent-container">
+            {data.map((therapist, key) => {
+              return (
+                <div key={key} className="therapist-container">
+                  <TherapistCard therapist={therapist} />
+                </div>
+              );
+            })}
+          </div>
+          <div className="pagesContainer">
+            <Pages items={items} numOfPages={numOfPages} currpage={pageNumberoption} onChange={(e) => setpageNumberOption(e)} />
+          </div>
+        </>
+      )}
+
       {error && (
         <div style={{ paddingTop: 20, flex: 1 }}>
           <Alert variant="danger">{error}</Alert>
