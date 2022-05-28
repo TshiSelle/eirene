@@ -47,7 +47,7 @@ const searchTherapists = async (req, res) => {
 
 			if (numOfResults > 0 && pageNum > Math.ceil(numOfResults / therapistsPerPage)) {
 				return res.status(400).json({
-					message: 'Page number too large',
+					message: 'Page number too large.',
 					success: false,
 					numOfResults,
 				});
