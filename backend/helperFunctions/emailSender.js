@@ -26,7 +26,7 @@ function sendEmailVerification(username, email, emailVerificationToken) {
       To start exploring your perks, <br />
       please confirm your email address.
     </p>
-		<a href=http://localhost:${process.env.CLIENT_PORT}/forgot-password/${username}/${emailVerificationToken}>
+		<a href=http://localhost:${process.env.CLIENT_PORT}/verify/${username}/${emailVerificationToken}>
     <button 
       type="button"
       onmouseover="this.style.background='#F3A38F'"
@@ -37,7 +37,7 @@ function sendEmailVerification(username, email, emailVerificationToken) {
       If you encounter any problem with the verification button,<br />
       please paste the below link in your URL.
     </p>
-    <a href=http://localhost:${process.env.CLIENT_PORT}/forgot-password/${username}/${emailVerificationToken}>http://localhost:${process.env.CLIENT_PORT}/forgot-password/${username}/${emailVerificationToken}</a> <br />
+    <a href=http://localhost:${process.env.CLIENT_PORT}/verify/${username}/${emailVerificationToken}>http://localhost:${process.env.CLIENT_PORT}/verify/${username}/${emailVerificationToken}</a> <br />
     <p style="margin-top: 20px">Welcome to Eirene !</p>
     <p>The Eirene Team</p>
   `,
