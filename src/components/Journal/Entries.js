@@ -207,7 +207,7 @@ const JournalEntries = ({ setError, setMessage }) => {
             type="submit"
             onClick={handleOnSubmit}
           >
-            Submit
+            Save Journal
           </button>
         </form>
       )}

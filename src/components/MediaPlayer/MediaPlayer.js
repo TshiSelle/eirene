@@ -82,9 +82,7 @@ const MediaPlayer = ({ children }) => {
           <div>
             <ReactJkMusicPlayer
               theme="dark"
-              defaultVolume={70}
               spaceBar={true}
-              responsive={true}
               glassBg={true}
               showMediaSession
               showDownload={false}

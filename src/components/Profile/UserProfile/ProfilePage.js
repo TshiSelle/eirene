@@ -161,7 +161,7 @@ const ProfilePage = () => {
                 className="btn submit-pic-button"
                 onClick={handleImageUpload}
               >
-                Submit
+                Upload Picture
               </button>
             </form>
 
@@ -219,9 +219,9 @@ const PageContainer = styled.div`
   line-height: 1.5;
   color: #212529;
   display: grid;
-`;
-
-const PageBanner = styled.div`
+  `;
+  
+  const PageBanner = styled.div`
   height: 255px;
   text-align: center;
   display: grid;
