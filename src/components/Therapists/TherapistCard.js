@@ -14,20 +14,26 @@ const TherapistCard = ({ therapist }) => {
       </CardImage>
 
       <CardDetails>
-        <CardTitle>
-          {therapist.fname} {therapist.lname}
-        </CardTitle>
+        <Link to={`/therapist-description/${therapist._id}`}>
+          <CardTitle>
+            {therapist.fname} {therapist.lname}
+          </CardTitle>
+        </Link>
+
         <CardProfession>{therapist.title}</CardProfession>
         {/* <CardText>{therapist.description}</CardText> */}
         <CardText>
-          E: {therapist.email}
+          <strong>E:</strong> {therapist.email}
         </CardText>
         <CardText>
-          P: {therapist.phone}
+          <strong>P:</strong> {therapist.phone}
         </CardText>
 
-        <Link to={`/therapist-description/${therapist._id}`}>
-          <GotoProfileButton>Go to profile</GotoProfileButton>
+        <Link
+          to={`/therapist-description/${therapist._id}`}
+          class="link-button"
+        >
+          <GotoProfileButton>Profile</GotoProfileButton>
         </Link>
       </CardDetails>
     </Card>
@@ -37,73 +43,32 @@ const TherapistCard = ({ therapist }) => {
 export default TherapistCard;
 
 const GotoProfileButton = styled.button`
-margin-top:5%;
-background-color: #FFFAFA;
-  border: 0;
-  border-radius: .5rem;
-  box-sizing: border-box;
-  color: #111827;
-  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-  font-size: .875rem;
-  font-weight: 600;
-  line-height: 1.25rem;
-  padding: .75rem 1rem;
-  text-align: center;
-  text-decoration: none #D1D5DB solid;
-  text-decoration-thickness: auto;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
+  border: none;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  width: 75px;
 
-&:hover {
-  background-color: rgb(249,250,251);
-}
-
-&:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-&:focus-visible {
-  box-shadow: none;
-}
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
 `;
 
-const Card = styled.div`
+const Card = styled.div``;
 
-  display: flex;
-  gap: 20px;
-  max-height: 250px;
-  font-family: ProximaNova;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+const CardImage = styled(Image)``;
+
+const CardDetails = styled.div`
+  padding: 10px;
 `;
-
-const CardImage = styled(Image)`
- 
-  height: 100%;
-  width: 50%;
-  position: center;
-`;
-
-const CardDetails = styled.div``;
 
 const CardTitle = styled.h1`
-  font-size: 20px;
+  font-size: 26px;
   font-weight: bold;
 `;
 
 const CardProfession = styled.h1`
-  border-bottom: 1px solid rgb(0 0 0 / 10%);
-  padding-bottom: 10px;
+  font-size: 20px;
 `;
 
-const CardBody = styled.div``;
-
 const CardText = styled.div``;
-
-const ListGroup = styled.div``;
-
-const ListGroupItem = styled.div``;

@@ -10,42 +10,6 @@
   src: url(./font/Proxima-Nova-Regular.woff);
 }
 
-h1,
-h3 {
-  font-size: 16px;
-}
-
-bold {
-  font-weight: bold;
-}
-
-.therapist-parent-container {
-  flex-direction: row;
-  justify-content: space-between;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.therapist-container {
-  max-width: 477.26px;
-  padding: 20px;
-  flex-basis: 33.3333333%;
-}
-
-@media (max-width: 800px) {
-  .therapist-parent-container {
-    flex: 100%;
-  }
-}
-
-.therapistSearch {
-  background-color: #e1ebd5;
-  padding: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .searchBar {
   display: flex;
   justify-content: center;
@@ -102,11 +66,12 @@ bold {
   border-radius: 6px;
 }
 
-
-
-.form-select {
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-  border: 1px solid #e1ebd5;
+.therapistSearch {
+  background-color: #e1ebd5;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .optionBtn {
@@ -124,16 +89,54 @@ bold {
   color: green;
 }
 
+/* card */
+.therapist-container {
+  width: 350px;
+  position: relative;
+  box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 15%);
 
-.pagesContainer {
-	display: flex;
-	justify-content: center;
+  flex: 1 26%;
 }
 
-/* description */
+.therapist-container img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.link-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.therapist-parent-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #212529;
+}
+
+a:hover {
+  color: #212529;
+}
+
 @media (max-width: 991px) {
-  .hide-mobile {
-    display: none;
+  .therapist-container {
+    flex: 1 33%;
+  }
+
+  .therapist-container img {
+    height: 250px;
   }
 }
 
+@media (max-width: 550px) {
+  .therapist-container {
+    flex: 1 50%;
+  }
+}
