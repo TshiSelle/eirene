@@ -60,7 +60,7 @@
   gap: 20px;
 }
 
-.dropdown {
+.dropdown-option {
   width: fit-content;
   height: fit-content;
   border-radius: 5px;
@@ -68,7 +68,7 @@
   border: none;
 }
 
-.dropdown:focus {
+.dropdown-option:focus {
   box-shadow: unset;
 }
 
@@ -191,7 +191,7 @@ a:hover {
     flex-wrap: wrap;
   }
 
-  .dropdown {
+  .dropdown-option {
     flex: 1 27%;
   }
 }

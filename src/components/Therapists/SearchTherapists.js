@@ -131,7 +131,7 @@ const searchTherapists = () => {
           <Form.Group>
             <Form.Select
               as="select"
-              className="dropdown"
+              className="dropdown dropdown-option"
               value={therapistTitleoption}
               onChange={(e) => setTherapistTitleOption(e.target.value)}
             >
@@ -146,7 +146,7 @@ const searchTherapists = () => {
             </Form.Select>
             <Form.Select
               as="select"
-              className="dropdown"
+              className="dropdown dropdown-option"
               value={genderoption}
               onChange={(e) => setGenderOption(e.target.value)}
             >
@@ -162,7 +162,7 @@ const searchTherapists = () => {
             </Form.Select>
             <Form.Select
               as="select"
-              className="dropdown"
+              className="dropdown dropdown-option"
               value={degreeoption}
               onChange={(e) => setDegreeOption(e.target.value)}
             >
@@ -174,7 +174,7 @@ const searchTherapists = () => {
             </Form.Select>
             <Form.Select
               as="select"
-              className="dropdown dropdownYears"
+              className="dropdown dropdownYears dropdown-option"
               value={yoeoption}
               onChange={(e) => setYoeOption(e.target.value)}
               //   onChange={(e) => console.log(e.target.value)}
