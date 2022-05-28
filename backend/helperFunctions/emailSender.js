@@ -15,7 +15,31 @@ function sendEmailVerification(username, email, emailVerificationToken) {
 		from: sender,
 		to: email,
 		subject: 'Eirene account verification',
-		html: `Hello! press <a href=http://localhost:${process.env.CLIENT_PORT}/verify/${username}/${emailVerificationToken}>here</a> to verify your account!`,
+		html: `
+   
+    <h3>Hello ${username},</h3>
+
+    <p>
+      We're happy you signed up for Eirene.<br />
+      To start exploring your perks, <br />
+      please confirm your email address.
+    </p>
+		<a href=http://localhost:${process.env.CLIENT_PORT}/forgot-password/${username}/${emailVerificationToken}>
+    <button 
+      type="button"
+      onmouseover="this.style.background='#F3A38F'"
+      onmouseleave="this.style.background='#eebec3'"
+    > Verify Now</button></a>
+
+    <p>
+      If you encounter any problem with the verification button,<br />
+      please paste the below link in your URL.
+    </p>
+    <a href=http://localhost:${process.env.CLIENT_PORT}/forgot-password/${username}/${emailVerificationToken}>http://localhost:${process.env.CLIENT_PORT}/forgot-password/${username}/${emailVerificationToken}</a> <br />
+    <p style="margin-top: 20px">Welcome to Eirene !</p>
+    <p>The Eirene Team</p>
+  `,
+		//	html: `Hello! press <a href=http://localhost:${process.env.CLIENT_PORT}/verify/${username}/${emailVerificationToken}>here</a> to verify your account!`,
 	};
 
 	Transport.sendMail(mailOptions, (error, res) => {
