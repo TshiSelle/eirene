@@ -1,10 +1,7 @@
 import React, { useReducer, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Form, Alert } from "react-bootstrap";
-import {
-  validatePassword,
-  validateName,
-} from "../../../validators/validators";
+import { validatePassword, validateName } from "../../../validators/validators";
 import "./loginStyle.css";
 import { LoginApiCall } from "../../../api/ApiClient";
 import { useAuthenticator } from "../../../context/AuthContext";
@@ -59,27 +56,13 @@ const SignInForm = () => {
     waiting: false,
     finished: false,
   });
-  const {
-    username,
-    password,
-    submissionErrorMessage,
-    passwordError,
-    usernameError,
-    finished,
-    waiting,
-  } = state;
+  const { username, password, submissionErrorMessage, passwordError, usernameError, finished, waiting } = state;
 
   const [isLoading, setLoading] = useState(false);
   const { updateAuthToken } = useAuthenticator();
   // The useCallbacks basically take the values set in the input forms and sends them to their desired destination
-  const setUsername = useCallback(
-    (e) => dispatch({ type: "set-username", value: e.target.value }),
-    []
-  );
-  const setPassword = useCallback(
-    (e) => dispatch({ type: "set-password", value: e.target.value }),
-    []
-  );
+  const setUsername = useCallback((e) => dispatch({ type: "set-username", value: e.target.value }), []);
+  const setPassword = useCallback((e) => dispatch({ type: "set-password", value: e.target.value }), []);
 
   const loginUser = useCallback(() => {
     // this prevents auto refresh onsubmit
@@ -110,23 +93,23 @@ const SignInForm = () => {
     dispatch({ type: "sign-in-start" });
     setLoading(true);
     LoginApiCall(username, password)
-      .then((response, error) => {
+      .then((response) => {
         if (response.data.success) {
+          setLoading(false);
           updateAuthToken(response.data.token);
-          dispatch({ type: "sign-in-success" });
-          console.log('Successful signin!');
+          console.log("Successful signin!");
         } else {
+          setLoading(false);
           dispatch({ type: "sign-in-failure", message: response.data.message });
         }
-        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         dispatch({
           type: "sign-in-failure",
           message: error.response.data.message,
         });
-        setLoading(false)
-        console.log('stopped loading')
+        console.log("stopped loading");
         return;
       });
   }, [username, password, waiting, finished]);
@@ -136,9 +119,7 @@ const SignInForm = () => {
       <Header>
         Login to <strong>Eirene</strong>
       </Header>
-      <Paragraph>
-        To keep connected with Eirene, please login with your personal info.
-      </Paragraph>
+      <Paragraph>To keep connected with Eirene, please login with your personal info.</Paragraph>
 
       <FormContainer>
         <Form className="login-form" onSubmit={loginUser}>
@@ -171,7 +152,9 @@ const SignInForm = () => {
                 <div></div>
               </label>
 
-              <ForgotPassword href="/forgot-password" className="link">Forgot Password</ForgotPassword>
+              <ForgotPassword href="/forgot-password" className="link">
+                Forgot Password
+              </ForgotPassword>
             </RememberMeTab>
 
             {submissionErrorMessage && (
@@ -190,8 +173,6 @@ const SignInForm = () => {
                 margin: "3rem 0 0",
                 backgroundColor: "#edbec4",
                 color: "#ffffff",
-
-
               }}
             >
               Login

@@ -58,7 +58,7 @@ const MediaPlayer = ({ children }) => {
 
   const [playerMode, setPlayerMode] = useState("mini");
   const chatbot = useRef(null);
-  if (chatbot.current) {
+  if (loggedIn && chatbot.current) {
     if (playerMode == "full") {
       chatbot.current.shadowRoot.querySelector(".df-messenger-wrapper").querySelector("#widgetIcon").style.bottom = "10vh";
     } else {
