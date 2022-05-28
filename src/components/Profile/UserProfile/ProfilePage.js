@@ -192,13 +192,20 @@ const ProfilePage = () => {
           )}
         </PageContainer>
       ) : (
-        <div>
-          <h3>You are not logged in!</h3>
-          <p> Please login to access profile.</p>
-          <Link to="/SignUp">Go to Signup</Link>
-          <h2>OR</h2>
-          <Link to="/SignIn">Go to Login</Link>
-        </div>
+        <LoggedOutPage>
+          <PageBanner>
+            <BannerHeader>You Are Not Logged In</BannerHeader>
+            <BannerPara>Please login to access your profile page.</BannerPara>
+          </PageBanner>
+          <ButtonHolder>
+            <Link to="/SignIn">
+              <SignInButton>Sign In</SignInButton>
+            </Link>
+            <Link to="/SignUp">
+              <SignUpButton>Sign Up</SignUpButton>
+            </Link>
+          </ButtonHolder>
+        </LoggedOutPage>
       )}
       <LoadingSpinner display={isLoading} />
       <DeactivationModal
@@ -269,4 +276,57 @@ const UserUsername = styled.h1`
 
 const UserPara = styled.p`
   margin: 5px 0 0;
+`;
+
+const LoggedOutPage = styled.div`
+  font-family: FuturaLight;
+  line-height: 1.5;
+  color: #212529;
+  height: 65vh;
+`;
+
+const SignUpButton = styled.button`
+  width: 404px;
+  justify-self: center;
+  border: 1px solid #edbec4;
+  background-color: transparent;
+  height: 54px;
+  color: #212529;
+  border-radius: 0.25rem;
+
+  &:hover {
+    background-color: #fbfbfb;
+  }
+
+  @media (max-width: 991px) {
+    width: 350px;
+  }
+`;
+
+const SignInButton = styled.button`
+  width: 404px;
+  justify-self: center;
+  background-color: #edbec4;
+  border: none;
+  height: 54px;
+  color: #ffffff;
+  border-radius: 0.25rem;
+
+  &:hover {
+    background-color: #edafb6;
+  }
+
+  @media (max-width: 991px) {
+    width: 350px;
+  }
+`;
+
+const ButtonHolder = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  @media (max-width: 991px) {
+    display: grid;
+  }
 `;
