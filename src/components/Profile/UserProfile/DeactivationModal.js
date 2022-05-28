@@ -61,7 +61,7 @@ const Assurance = styled.h1`
 `;
 
 const Button = styled.button`
-  background-color: #008e26;
+  background-color: #cc0000;
   color: #fff;
   margin-bottom: 8px;
   padding: 8px;

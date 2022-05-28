@@ -174,8 +174,6 @@ const getAppointmentsTherapist = (req, res) => {
 
 const createAppointmentTherapist = (req, res) => {
 	const { errors, isValid } = validateAppInput(req.body);
-	// console.log("🚀 ~ file: calendarController.js ~ line 176 ~ createAppointmentTherapist ~ req", req)
-	
 
 	if (!isValid) {
 		res.status(400).json({ ...errors, success: false });
