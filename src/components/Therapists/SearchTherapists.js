@@ -212,7 +212,12 @@ const searchTherapists = () => {
             })}
           </div>
           <div className="pagesContainer">
-            <Pages items={items} numOfPages={numOfPages} currpage={pageNumberoption} onChange={(e) => setpageNumberOption(e)} />
+            <Pages
+              items={items}
+              numOfPages={numOfPages}
+              currpage={pageNumberoption}
+              onChange={(e) => setpageNumberOption(e)}
+            />
           </div>
         </>
       )}
@@ -240,6 +245,11 @@ const PageBanner = styled.div`
   display: grid;
   align-content: center;
   justify-content: center;
+
+  @media (max-width: 991px) {
+    height: unset;
+    padding: 20px;
+  }
 `;
 
 const BannerHeader = styled.h1`

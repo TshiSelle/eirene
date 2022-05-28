@@ -63,7 +63,13 @@
 .dropdown {
   width: fit-content;
   height: fit-content;
-  border-radius: 6px;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+  border: none;
+}
+
+.dropdown:focus {
+  box-shadow: unset;
 }
 
 .therapistSearch {
@@ -75,18 +81,40 @@
 }
 
 .optionBtn {
-  color: green;
+  color: #5e6e4b;
   margin-bottom: 20px;
 }
 
 .optionBtn:focus {
   box-shadow: 0 0;
-  color: green;
+  color: #5e6e4b;
 }
 
 .optionBtn:active {
   box-shadow: 0 0;
-  color: green;
+  color: #5e6e4b;
+}
+
+.optionBtn:hover {
+  color: #212529;
+}
+
+.pagination {
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.page-link {
+  color: #5e6e4b;
+}
+
+.page-link:hover {
+  color: #5e6e4b;
+}
+
+.page-item.active .page-link {
+  background-color: #e1ebd5;
+  border-color: #e1ebd5;
 }
 
 /* card */
@@ -125,7 +153,8 @@ a:hover {
   color: #212529;
 }
 
-@media (max-width: 991px) {
+/* responsivity */
+@media (max-width: 1350px) {
   .therapist-container {
     flex: 1 26%;
   }
@@ -138,6 +167,32 @@ a:hover {
 
   .therapist-container img {
     height: 250px;
+  }
+
+  .therapistSearch {
+    padding: 30px;
+  }
+
+  .searchBar {
+    display: grid;
+    grid-template-areas: "search icon" "options options";
+    grid-template-columns: 1fr  auto;
+  }
+
+  .searchField {
+    width: unset;
+  }
+
+  .optionBtn {
+    grid-area: options;
+  }
+
+  .collapsible {
+    flex-wrap: wrap;
+  }
+
+  .dropdown {
+    flex: 1 27%;
   }
 }
 
