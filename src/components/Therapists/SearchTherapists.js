@@ -60,7 +60,9 @@ const searchTherapists = () => {
             const { searchResults, numOfPages } = response.data;
             setData(searchResults);
             setnumOfPages(numOfPages);
-            setItems(calcPages(pageNumberoption, numOfPages, setpageNumberOption));
+            setItems(
+              calcPages(pageNumberoption, numOfPages, setpageNumberOption)
+            );
             setError("");
           } else {
             setError("No such therapists.");
@@ -85,7 +87,14 @@ const searchTherapists = () => {
           return;
         });
     },
-    [query, therapistTitleoption, genderoption, degreeoption, yoeoption, pageNumberoption]
+    [
+      query,
+      therapistTitleoption,
+      genderoption,
+      degreeoption,
+      yoeoption,
+      pageNumberoption,
+    ]
   );
 
   const setQueryValue = useCallback((e) => setQuery(e.target.value));
@@ -95,8 +104,9 @@ const searchTherapists = () => {
       <PageBanner>
         <BannerHeader>Search Therapists</BannerHeader>
         <BannerPara>
-          Search for a specific therapist by their name or use filter options according to preferred profession, gender, degree attained, or
-          years of experience.
+          Search for a specific therapist by their name or use filter options
+          according to preferred profession, gender, degree attained, or years
+          of experience.
         </BannerPara>
       </PageBanner>
 
@@ -134,7 +144,12 @@ const searchTherapists = () => {
                 </option>
               ))}
             </Form.Select>
-            <Form.Select as="select" className="dropdown" value={genderoption} onChange={(e) => setGenderOption(e.target.value)}>
+            <Form.Select
+              as="select"
+              className="dropdown"
+              value={genderoption}
+              onChange={(e) => setGenderOption(e.target.value)}
+            >
               <option key="" value="">
                 Gender (Any)
               </option>
@@ -145,7 +160,12 @@ const searchTherapists = () => {
                 Female
               </option>
             </Form.Select>
-            <Form.Select as="select" className="dropdown" value={degreeoption} onChange={(e) => setDegreeOption(e.target.value)}>
+            <Form.Select
+              as="select"
+              className="dropdown"
+              value={degreeoption}
+              onChange={(e) => setDegreeOption(e.target.value)}
+            >
               <option key="" value="">
                 Degree (Any)
               </option>
@@ -188,7 +208,12 @@ const searchTherapists = () => {
         })}
       </div>
       <div className="pagesContainer">
-        <Pages items={items} numOfPages={numOfPages} currpage={pageNumberoption} onChange={(e) => setpageNumberOption(e)} />
+        <Pages
+          items={items}
+          numOfPages={numOfPages}
+          currpage={pageNumberoption}
+          onChange={(e) => setpageNumberOption(e)}
+        />
       </div>
       <LoadingSpinner display={isLoading} />
       {error && (
@@ -214,7 +239,6 @@ const PageBanner = styled.div`
   display: grid;
   align-content: center;
   justify-content: center;
-  margin-top: -40px;
 `;
 
 const BannerHeader = styled.h1`
@@ -229,12 +253,22 @@ const BannerPara = styled.p`
 
 function calcPages(pageNumberoption, numOfPages, setpageNumberOption) {
   const showNumbers = 7;
-  const start = pageNumberoption <= Math.floor(showNumbers / 2) ? 1 : pageNumberoption - Math.floor(showNumbers / 2);
-  const end = pageNumberoption + Math.floor(showNumbers / 2) > numOfPages ? numOfPages : pageNumberoption + Math.floor(showNumbers / 2);
+  const start =
+    pageNumberoption <= Math.floor(showNumbers / 2)
+      ? 1
+      : pageNumberoption - Math.floor(showNumbers / 2);
+  const end =
+    pageNumberoption + Math.floor(showNumbers / 2) > numOfPages
+      ? numOfPages
+      : pageNumberoption + Math.floor(showNumbers / 2);
   let pages = [];
   for (let number = start; number <= end; number++) {
     pages.push(
-      <Pagination.Item key={number} active={number === pageNumberoption} onClick={(e) => setpageNumberOption(+e.target.text)}>
+      <Pagination.Item
+        key={number}
+        active={number === pageNumberoption}
+        onClick={(e) => setpageNumberOption(+e.target.text)}
+      >
         {number}
       </Pagination.Item>
     );

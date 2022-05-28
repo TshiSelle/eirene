@@ -86,7 +86,6 @@ const BgContainer = styled.section`
   background-size: cover;
   background-position: center;
   height: 100vh;
-  margin-top: 108px;
   display: grid;
   align-items: center;
   justify-items: center;
@@ -94,7 +93,6 @@ const BgContainer = styled.section`
   @media (max-width: 991px) {
     background-position: bottom;
     height: unset;
-    margin-top: 75px;
   }
 
   @media (max-width: 780px) {

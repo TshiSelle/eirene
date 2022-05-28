@@ -110,7 +110,7 @@ const NavBar = () => {
 const Header = styled.header`
   background-color: #ffffff;
   height: 108px;
-  position: fixed;
+  position: sticky;
   width: 100%;
   top: 0;
   font-family: FuturaLight;
