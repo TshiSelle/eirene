@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
-import TherapistCard from "./TherapistCard";
 import { FilterTherapists } from "../../api/ApiClient";
 import { Alert, Button, Collapse, Form, Pagination } from "react-bootstrap";
-import "./TherapistSearch.css";
+import TherapistCard from "./TherapistCard";
 import Pages from "./Pages";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import styled from "styled-components";
+import "./TherapistSearch.css";
 
 const searchTherapists = () => {
   const [query, setQuery] = useState("");
@@ -57,39 +57,31 @@ const searchTherapists = () => {
       )
         .then((response) => {
           if (response.data.success && response.data.numOfResults > 0) {
-            setData(response.data.searchResults);
-            const numOfPages = response.data.numOfPages;
-            setnumOfPages(response.data.numOfPages);
+            const { searchResults, numOfPages } = response.data;
+            setData(searchResults);
+            setnumOfPages(numOfPages);
+            setItems(calcPages(pageNumberoption, numOfPages, setpageNumberOption));
             setError("");
-            const showNumbers = 7;
-            const start = pageNumberoption <= Math.floor(showNumbers / 2) ? 1 : pageNumberoption - Math.floor(showNumbers / 2);
-            const end =
-              pageNumberoption + Math.floor(showNumbers / 2) > numOfPages ? numOfPages : pageNumberoption + Math.floor(showNumbers / 2);
-            let pages = [];
-            for (let number = start; number <= end; number++) {
-              pages.push(
-                <Pagination.Item key={number} active={number === pageNumberoption} onClick={(e) => setpageNumberOption(+e.target.text)}>
-                  {number}
-                </Pagination.Item>
-              );
-            }
-            setItems(pages);
           } else {
             setError("No such therapists.");
+            setpageNumberOption(1);
             setData([]);
           }
           setLoading(false);
         })
         .catch((error) => {
-          if (error.response.data.message.includes("large")) {
-            setError(error.response.data.message + " Redirecting to first page...");
-            setTimeout(() => setpageNumberOption(1), 2000);
+          const { message } = error.response.data;
+          if (message.includes("large")) {
+            setError(message + " Redirecting to first page...");
+            setTimeout(() => {
+              setpageNumberOption(1);
+              setLoading(false);
+            }, 2000);
           } else {
-            setError(error.response.data.message);
+            setError(message);
+            setLoading(false);
           }
-
           setData([]);
-          setLoading(false);
           return;
         });
     },
@@ -234,3 +226,18 @@ const BannerPara = styled.p`
   max-width: 600px;
   margin-top: 10px;
 `;
+
+function calcPages(pageNumberoption, numOfPages, setpageNumberOption) {
+  const showNumbers = 7;
+  const start = pageNumberoption <= Math.floor(showNumbers / 2) ? 1 : pageNumberoption - Math.floor(showNumbers / 2);
+  const end = pageNumberoption + Math.floor(showNumbers / 2) > numOfPages ? numOfPages : pageNumberoption + Math.floor(showNumbers / 2);
+  let pages = [];
+  for (let number = start; number <= end; number++) {
+    pages.push(
+      <Pagination.Item key={number} active={number === pageNumberoption} onClick={(e) => setpageNumberOption(+e.target.text)}>
+        {number}
+      </Pagination.Item>
+    );
+  }
+  return pages;
+}
