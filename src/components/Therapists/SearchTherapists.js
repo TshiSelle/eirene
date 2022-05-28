@@ -234,7 +234,7 @@ const PageContainer = styled.div`
 `;
 
 const PageBanner = styled.div`
-  height: 255px;
+  height: 200px;
   text-align: center;
   display: grid;
   align-content: center;

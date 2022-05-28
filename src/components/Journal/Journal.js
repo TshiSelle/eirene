@@ -47,7 +47,7 @@ const PageBanner = styled.div`
   font-family: FuturaLight;
   line-height: 1.5;
   color: #212529;
-  height: 255px;
+  height: 200px;
   text-align: center;
   display: grid;
   align-content: center;
