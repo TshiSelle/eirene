@@ -2,7 +2,11 @@ import React, { useCallback, useReducer } from "react";
 import styled from "styled-components";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ContactSupportExternal } from "../../api/ApiClient";
-import { validateName, validateEmail, validateMessage } from "../../validators/validators";
+import {
+  validateName,
+  validateEmail,
+  validateMessage,
+} from "../../validators/validators";
 import { Alert, Form } from "react-bootstrap";
 import "./contactus.css";
 
@@ -66,7 +70,12 @@ const reducer = (state, action) => {
     case "support-message-start":
       return { ...state, waiting: true };
     case "support-message-success":
-      return { ...state, waiting: false, finished: true, successMessage: action.message };
+      return {
+        ...state,
+        waiting: false,
+        finished: true,
+        successMessage: action.message,
+      };
     case "support-message-failure":
       return {
         ...state,
@@ -109,10 +118,22 @@ const ContactUsExt = () => {
     successMessage,
   } = state;
 
-  const setFirstName = useCallback((e) => dispatch({ type: "set-first-name", value: e.target.value }), []);
-  const setLastName = useCallback((e) => dispatch({ type: "set-last-name", value: e.target.value }), []);
-  const setEmail = useCallback((e) => dispatch({ type: "set-email", value: e.target.value }), []);
-  const setMessage = useCallback((e) => dispatch({ type: "set-content", value: e.target.value }), []);
+  const setFirstName = useCallback(
+    (e) => dispatch({ type: "set-first-name", value: e.target.value }),
+    []
+  );
+  const setLastName = useCallback(
+    (e) => dispatch({ type: "set-last-name", value: e.target.value }),
+    []
+  );
+  const setEmail = useCallback(
+    (e) => dispatch({ type: "set-email", value: e.target.value }),
+    []
+  );
+  const setMessage = useCallback(
+    (e) => dispatch({ type: "set-content", value: e.target.value }),
+    []
+  );
 
   const sendSupportMessage = useCallback(
     (event) => {
@@ -151,7 +172,10 @@ const ContactUsExt = () => {
       ContactSupportExternal(firstName, lastName, email, supportMessage)
         .then((response) => {
           if (response.data.success) {
-            dispatch({ type: "support-message-success", message: response.data.message });
+            dispatch({
+              type: "support-message-success",
+              message: response.data.message,
+            });
             console.log("Message Sent!");
           } else {
             dispatch({
@@ -217,7 +241,10 @@ const ContactUsExt = () => {
                   }}
                 />
 
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlTextarea1"
+                >
                   <Form.Control
                     className="textarea"
                     as="textarea"
@@ -292,6 +319,7 @@ const Button = styled.button`
   font-size: 1rem;
   color: #212529;
   font-weight: 100;
+  background-color: #f5f5f5;
 `;
 
 const Header = styled.h3`

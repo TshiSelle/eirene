@@ -193,6 +193,7 @@ const Button = styled.button`
   font-size: 1rem;
   color: #212529;
   font-weight: 100;
+  background-color: #f5f5f5;
 `;
 
 const Header = styled.h3`
