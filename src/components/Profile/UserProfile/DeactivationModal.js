@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import styled from "styled-components";
-import { DeactivateAccount, ReactivateAccount } from '../../../api/ApiClient';
+import { DeactivateAccount } from '../../../api/ApiClient';
 
-const DeactivationModal = ({ showModal, closeModal, authToken }) => {
+const DeactivationModal = ({ showModal, closeModal, authToken, setActivationMessage }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const handleDeactivation = () => {
     DeactivateAccount(authToken).then((response) => {
       if (response.data.success) {
+        setActivationMessage(response.data.message);
         closeModal();
       } else {
         setErrorMessage(response.data.message);
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => setErrorMessage(err.response.data.message));
   };
   return (
     <Modal

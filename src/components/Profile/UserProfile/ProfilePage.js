@@ -2,7 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 // import { GetUserAppointments } from "../../../api/ApiClient";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
-import { GetUserPicture, ReactivateAccount, UploadProfilePicture } from "../../../api/ApiClient";
+import {
+  GetUserPicture,
+  ReactivateAccount,
+  UploadProfilePicture,
+} from "../../../api/ApiClient";
 // import { useUserCalendar } from "../../../context/CalendarContext";
 import { Link } from "react-router-dom";
 import Calendar from "react-awesome-calendar";
@@ -37,28 +41,33 @@ const events = [
 const ProfilePage = () => {
   const { user, userLogOut } = useUser();
   const [imageSrc, setImageSrc] = useState(undefined);
+  const [userDeactivationDate, setUserDeactivationDate] = useState(undefined);
+  const [activationMessage, setActivationMessage] = useState(null);
   const [deactivateModalOpen, setDeactivateModalOpen] = useState(false);
   const { loggedIn, authToken } = useAuthenticator();
   const [isLoading, setLoading] =useState(false);
-  const userDeactivationDate = user?.deactivationDate == undefined ? undefined : user.deactivationDate;
+  useEffect(() => {
+    setUserDeactivationDate(user?.deactivationDate);
+  }, [setUserDeactivationDate, user]);
+
   // const { userCalendarAppointments } = useUserCalendar();
-  console.log(user);
-  const handleAccountStatus = useCallback(() => {
-    if (userDeactivationDate != undefined) {
-      ReactivateAccount(authToken).then((response) => {
-        if (response.data.success) {
-          console.log(response.data);
-          return response.data.message;
-        } else {
-          console.log(response.data);
-          return response.data.message;
-        }
-      });
-    }else {
-      setDeactivateModalOpen(true)
-    }
-    
-  }, []);
+  const handleDeactivation = useCallback(() => {
+    setDeactivateModalOpen(true);
+  }, [setDeactivateModalOpen]);
+
+  const handleReactivation = useCallback(() => {
+    ReactivateAccount(authToken).then((response) => {
+      if (response.data.success) {
+        setActivationMessage(response.data.message);
+        console.log(response.data);
+        return response.data.message;
+      } else {
+        console.log(response.data, 'resp');
+        setActivationMessage(response.data.message);
+        return response.data.message;
+      }
+    }).catch(() => setActivationMessage('You have already reactivated your account!'))
+  }, [authToken]);
 
   const handleImageUpload = useCallback(() => {
     if (!loggedIn) return;
@@ -66,7 +75,7 @@ const ProfilePage = () => {
     // destructure the files array from the resulting object
     const files = imageFile.files;
     if (!files.length) return;
-	setLoading(true)
+    setLoading(true)
     UploadProfilePicture(files[0], authToken)
       .then((response) => {
         if (response.data.success) {
@@ -74,11 +83,11 @@ const ProfilePage = () => {
         } else {
           setImageSrc(undefined);
         }
-		setLoading(false)
-	})
-	.catch((error) => {
-		setImageSrc(undefined);
-		setLoading(false)
+        setLoading(false)
+      })
+      .catch((error) => {
+        setImageSrc(undefined);
+        setLoading(false)
         return;
       });
   }, [loggedIn, authToken, setImageSrc]);
@@ -118,18 +127,25 @@ const ProfilePage = () => {
                   alt="user image"
                   style={{ width: 100, height: 100 }}
                 >
-					<Transformation fetchFormat="auto" />
-				</Image>
+                  <Transformation fetchFormat="auto" />
+				        </Image>
               )}
-			  <LoadingSpinner display={isLoading} />
+              <LoadingSpinner display={isLoading} />
               <button type="button" className="btn" onClick={handleImageUpload}>
                 Submit
               </button>
             </form>
           </section>
-          <button onClick={handleAccountStatus}>
-            {userDeactivationDate && userDeactivationDate != undefined ? 'Activate Account': 'Deactivate Account'}
+          <button
+            onClick={
+              userDeactivationDate ? handleReactivation : handleDeactivation
+            }
+          >
+            {userDeactivationDate && userDeactivationDate
+              ? "Activate Account"
+              : "Deactivate Account"}
           </button>
+          {activationMessage && <p>{activationMessage}</p>}
           <div>
             <Calendar
               events={events}
@@ -151,6 +167,7 @@ const ProfilePage = () => {
         showModal={deactivateModalOpen}
         closeModal={() => setDeactivateModalOpen(false)}
         authToken={authToken}
+        setActivationMessage={setActivationMessage}
       />
     </>
   );
