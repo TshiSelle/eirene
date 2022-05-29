@@ -82,7 +82,7 @@ const AboutUsImage = styled(Image)`
   }
 `;
 const BgContainer = styled.section`
-  background-image: url("https://res.cloudinary.com/cloudloom/image/upload/v1653829090/samples/Profile/about%20us%20compressed.jpg");
+  background-image: url("https://res.cloudinary.com/cloudloom/image/upload/f_auto/v1653829090/samples/Profile/about%20us%20compressed.jpg");
   background-size: cover;
   background-position: center;
   height: 100vh;
