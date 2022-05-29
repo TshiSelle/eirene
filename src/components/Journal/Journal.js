@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { useAuthenticator } from "../../context/AuthContext";
 import JournalEntries from "./Entries";
@@ -11,6 +11,11 @@ const Journal = () => {
   const { journalEntries } = useJournal();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+	window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div>
       {loggedIn ? (

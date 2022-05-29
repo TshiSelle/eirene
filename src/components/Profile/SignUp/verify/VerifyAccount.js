@@ -72,6 +72,10 @@ const [result, setResult] = useState(<></>);
   );
 
 
+  useEffect(() => {
+	window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div>
       {result}

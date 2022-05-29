@@ -1,43 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, Transformation } from "cloudinary-react";
 import styled from "styled-components";
 import ContactUs from "../ContactUs/ContactUsRoute.js";
 
 const AboutUs = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Main>
       <BgContainer>
         <AboutUsContainer>
-          <AboutUsImage
-            publicId={"logo/eirene_face_00001_y23lbc.svg"}
-            alt="eirene_logo"
-          >
+          <AboutUsImage publicId={"logo/eirene_face_00001_y23lbc.svg"} alt="eirene_logo">
             <Transformation fetchFormat="auto" />
           </AboutUsImage>
 
           <AboutUsHeader>About Us</AboutUsHeader>
 
           <AboutUsText>
-            Eirene is a self-care therapy application designed to create a
-            connection to mental health professionals as well as encourage
+            Eirene is a self-care therapy application designed to create a connection to mental health professionals as well as encourage
             positive lifestyle practices. <br />
             <br />
-            Included in Eirene are a chat room to send messages to therapists,
-            journal feature to help you track your mood, a wide range of
-            meditations, and a soothing radio for enhanced sleep quality. Our
-            most prominent feature will be Eirene herself, a machine learning
-            chatbot that understands the user's emotions and suggests coping
-            mechanisms.
+            Included in Eirene are a chat room to send messages to therapists, journal feature to help you track your mood, a wide range of
+            meditations, and a soothing radio for enhanced sleep quality. Our most prominent feature will be Eirene herself, a machine
+            learning chatbot that understands the user's emotions and suggests coping mechanisms.
             <br />
             <br />
-            Eirene aims to lend a helping hand to anyone who requires
-            therapeutic insight, by aiding in different areas such as coping
-            with stress, fueling career success, achieving mindfulness through
-            meditation, conquering negative thoughts, and building
-            self-confidence. Furthermore, the tools in Eirene are also useful
-            for people who do not require formal mental health therapy but would
-            like to practice self-care. This aid will be provided mainly through
-            the convenience of a website with its responsive mobile application.
+            Eirene aims to lend a helping hand to anyone who requires therapeutic insight, by aiding in different areas such as coping with
+            stress, fueling career success, achieving mindfulness through meditation, conquering negative thoughts, and building
+            self-confidence. Furthermore, the tools in Eirene are also useful for people who do not require formal mental health therapy but
+            would like to practice self-care. This aid will be provided mainly through the convenience of a website with its responsive
+            mobile application.
           </AboutUsText>
         </AboutUsContainer>
       </BgContainer>

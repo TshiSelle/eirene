@@ -32,6 +32,11 @@ const TherapistDescription = () => {
         return;
       });
   }, [id]);
+
+  useEffect(() => {
+	window.scrollTo(0, 0)
+  }, [])
+
   return (
     <>
       <MainGrid>

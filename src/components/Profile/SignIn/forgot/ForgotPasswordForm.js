@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer } from "react";
+import React, { useCallback, useEffect, useReducer } from "react";
 import styled from "styled-components";
 import { validateEmail } from "../../../../validators/validators";
 import { Form, Button, Alert } from "react-bootstrap";
@@ -80,6 +80,10 @@ const ForgotPasswordForm = () => {
   }, [waiting, finished, email]);
 
   const setEmail = useCallback((e) => dispatch({ type: "change-email", value: e.target.value }), []);
+
+  useEffect(() => {
+	window.scrollTo(0, 0)
+  }, [])
 
   return (
     <MainContainer>

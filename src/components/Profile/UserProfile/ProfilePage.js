@@ -122,6 +122,11 @@ const ProfilePage = () => {
       });
   }, [loggedIn, authToken, imageSrc]);
 
+
+  useEffect(() => {
+	window.scrollTo(0, 0)
+  }, [])
+
   return (
     <>
       {loggedIn ? (

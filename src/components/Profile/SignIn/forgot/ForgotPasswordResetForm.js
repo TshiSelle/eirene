@@ -125,6 +125,10 @@ const ForgotPasswordResetForm = () => {
       });
   }, [waiting, finished, password, confirmPassword]);
 
+  useEffect(() => {
+	window.scrollTo(0, 0)
+  }, [])
+  
   return (
     <>
       {emailValid ? (
