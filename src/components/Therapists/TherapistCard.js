@@ -31,7 +31,7 @@ const TherapistCard = ({ therapist }) => {
 
         <Link
           to={`/therapist-description/${therapist._id}`}
-          class="link-button"
+          className="link-button"
         >
           <GotoProfileButton>Profile</GotoProfileButton>
         </Link>

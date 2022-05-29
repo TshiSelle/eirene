@@ -4,13 +4,13 @@ const { validateSearchInput } = require('../helperFunctions/inputValidation');
 
 const searchTherapists = async (req, res) => {
 	let { searchString, pageNum, gender, degree, minYOE, maxYOE, title } = req.query;
-	if (isEmpty(searchString)) {
-		searchString = '';
-	}
-
 	const therapistsPerPage = 12;
 	pageNum = isEmpty(pageNum) || pageNum < 1 ? 1 : pageNum;
 	const { errors, isValid } = validateSearchInput(req.query);
+
+	if (isEmpty(searchString)) {
+		searchString = '';
+	}
 
 	if (!isValid) {
 		return res.status(400).json({ ...errors, success: false });
@@ -41,7 +41,7 @@ const searchTherapists = async (req, res) => {
 			})
 				.limit(therapistsPerPage)
 				.skip((pageNum - 1) * therapistsPerPage)
-				.sort({ score: { $meta: 'textScore' } });
+				.sort({ score: { $meta: 'textScore' }, ...(isEmpty(searchString) && { _id:-1 }) });
 
 			const numOfResults = await Therapist.countDocuments(query);
 
