@@ -1,16 +1,16 @@
-import React, { useEffect, useReducer } from "react";
-import { useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { IsVerificationTokenValid } from "../../../../api/ApiClient";
 import { Alert } from "react-bootstrap";
-import { Spinner } from "react-bootstrap";
 import "./verifyacc.css";
+import LoadingSpinner from "../../../LoadingSpinner/LoadingSpinner";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "token-success":
-      return { ...state, emailValid: true };
+      return { ...state, emailValid: true,loading: false };
     case "token-failure":
-      return { ...state, emailValid: false, errorMessage: action.value };
+      return { ...state, emailValid: false, errorMessage: action.message, loading: false };
     case "verify-email-start":
       return { ...state, loading: true };
     case "verify-email-success":
@@ -19,7 +19,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         loading: false,
-        submissionErrorMessage: action.message,
+        errorMessage: action.message,
       };
     default:
       throw new Error("Unhandled action: " + action.type);
@@ -28,60 +28,61 @@ const reducer = (state, action) => {
 
 const VerifyAccount = () => {
   const { username, token } = useParams();
-
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, {
     emailValid: false,
-    submissionErrorMessage: null,
     loading: false,
     errorMessage: null,
     waiting: null,
-  });
+});
 
-  const { emailValid, submissionErrorMessage, loading } = state;
+const { emailValid, loading, errorMessage, waiting } = state;
+
+const [result, setResult] = useState(<></>);
+
+  useEffect(
+    (event) => {
+      if (event && event.preventDefault) event.preventDefault();
+      dispatch({ type: "verify-email-start" });
+      IsVerificationTokenValid(username, token)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: "token-success" });
+            console.log("Email verified!");
+            setResult(
+              <div>
+                <h1>Email Verified!</h1>
+                <h2>Redirecting to homepage...</h2>
+              </div>
+            );
+			setTimeout(() => {
+				navigate("/");
+			  }, 3000);
+          } else {
+            dispatch({ type: "token-failure" });
+			navigate("/404")
+          }
+        })
+        .catch((error) => {
+          dispatch({ type: "token-failure", message: error.response.data.message });
+          return;
+        });
+    },
+    [username, token]
+  );
+
 
   useEffect(() => {
-    event.preventDefault();
-    IsVerificationTokenValid(username, token)
-      .then((response) => {
-        if (response.data.success) {
-          dispatch({ type: "token-success" });
-          console.log("Email verified!");
-        } else {
-          dispatch({ type: "token-failure" });
-        }
-      })
-      .catch((error) => {
-        dispatch({ type: "token-failure", errorMessage: error.response.data });
-        return;
-      });
-  }, [username, token]);
-
-  useEffect(() => {
-    if (loading) {
-      return (
-        <Spinner className="center" animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      );
-    }
-  }, [loading]);
+	window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div>
-      {emailValid ? (
-        <div>
-          <h1>Email Valid!</h1>
-          <a href="/">Please Click here to enjoy Eirene!</a>
-        </div>
-      ) : (
-        <div>
-          <h2>Email is Invalid</h2>
-        </div>
-      )}
-
-      {submissionErrorMessage && (
+      {result}
+      <LoadingSpinner display={loading} />
+      {errorMessage && (
         <div style={{ paddingTop: 20, flex: 1 }}>
-          <Alert variant="danger">{error}</Alert>
+          <Alert variant="danger">{errorMessage}</Alert>
         </div>
       )}
     </div>

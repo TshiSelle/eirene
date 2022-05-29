@@ -14,20 +14,26 @@ const TherapistCard = ({ therapist }) => {
       </CardImage>
 
       <CardDetails>
-        <CardTitle>
-          {therapist.fname} {therapist.lname}
-        </CardTitle>
+        <Link to={`/therapist-description/${therapist._id}`}>
+          <CardTitle>
+            {therapist.fname} {therapist.lname}
+          </CardTitle>
+        </Link>
+
         <CardProfession>{therapist.title}</CardProfession>
         {/* <CardText>{therapist.description}</CardText> */}
         <CardText>
-          E: {therapist.email}
+          <strong>E:</strong> {therapist.email}
         </CardText>
         <CardText>
-          P: {therapist.phone}
+          <strong>P:</strong> {therapist.phone}
         </CardText>
 
-        <Link to={`/therapist-description/${therapist._id}`}>
-          Go To Profile
+        <Link
+          to={`/therapist-description/${therapist._id}`}
+          className="link-button"
+        >
+          <GotoProfileButton>Profile</GotoProfileButton>
         </Link>
       </CardDetails>
     </Card>
@@ -36,35 +42,33 @@ const TherapistCard = ({ therapist }) => {
 
 export default TherapistCard;
 
-const Card = styled.div`
-  display: flex;
-  gap: 20px;
-  height: 200px;
-  font-family: ProximaNova;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+const GotoProfileButton = styled.button`
+  border: none;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  width: 75px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
 `;
 
-const CardImage = styled(Image)`
-  height: 100%;
-  width: 200px;
-`;
+const Card = styled.div``;
 
-const CardDetails = styled.div``;
+const CardImage = styled(Image)``;
+
+const CardDetails = styled.div`
+  padding: 10px;
+`;
 
 const CardTitle = styled.h1`
-  font-size: 20px;
+  font-size: 26px;
   font-weight: bold;
 `;
 
 const CardProfession = styled.h1`
-  border-bottom: 1px solid rgb(0 0 0 / 10%);
-  padding-bottom: 10px;
+  font-size: 20px;
 `;
 
-const CardBody = styled.div``;
-
 const CardText = styled.div``;
-
-const ListGroup = styled.div``;
-
-const ListGroupItem = styled.div``;

@@ -1,0 +1,48 @@
+.deactivate-acc-button {
+	width: 404px;
+	justify-self: center;
+	margin: 10px 0 100px;
+	background-color: #edbec4;
+    border: none;
+    height: 54px;
+    color: #212529;
+    border-radius: 0.25rem;
+}
+
+.deactivate-acc-button:hover {
+	background-color: #edafb6;
+}
+
+.profile-pic-form {
+	display: grid;
+	justify-items: center;
+	gap: 10px;
+}
+
+.submit-pic-button {
+	border-bottom: 1px solid #212529;
+    border-radius: 0;
+    padding: 0;
+}
+
+.submit-pic-button:focus {
+	box-shadow: unset;
+}
+
+#upload-photo {
+	display: none;
+}
+
+.label-upload {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+@media (max-width: 991px) {
+    .deactivate-acc-button {
+		width: 90%;
+    	margin: 5px;
+	}
+  }
+
+  /* logged out */

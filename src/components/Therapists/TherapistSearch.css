@@ -1,51 +1,3 @@
-@font-face {
-  font-display: swap;
-  font-family: FuturaLight;
-  src: url(./font/Futura-Light.woff);
-}
-
-@font-face {
-  font-display: swap;
-  font-family: ProximaNova;
-  src: url(./font/Proxima-Nova-Regular.woff);
-}
-
-h1,
-h3 {
-  font-size: 16px;
-}
-
-bold {
-  font-weight: bold;
-}
-
-.therapist-parent-container {
-  flex-direction: row;
-  justify-content: space-between;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.therapist-container {
-  max-width: 477.26px;
-  padding: 20px;
-  flex-basis: 33.3333333%;
-}
-
-@media (max-width: 800px) {
-  .therapist-parent-container {
-    flex: 100%;
-  }
-}
-
-.therapistSearch {
-  background-color: #e1ebd5;
-  padding: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .searchBar {
   display: flex;
   justify-content: center;
@@ -96,44 +48,144 @@ bold {
   gap: 20px;
 }
 
-.dropdown {
+.dropdown-option {
   width: fit-content;
   height: fit-content;
-  border-radius: 6px;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+  border: none;
 }
 
+.dropdown-option:focus {
+  box-shadow: unset;
+}
 
-
-.form-select {
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-  border: 1px solid #e1ebd5;
+.therapistSearch {
+  background-color: #e1ebd5;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .optionBtn {
-  color: green;
+  color: #5e6e4b;
   margin-bottom: 20px;
 }
 
 .optionBtn:focus {
   box-shadow: 0 0;
-  color: green;
+  color: #5e6e4b;
 }
 
 .optionBtn:active {
   box-shadow: 0 0;
-  color: green;
+  color: #5e6e4b;
 }
 
-
-.pagesContainer {
-	display: flex;
-	justify-content: center;
+.optionBtn:hover {
+  color: #212529;
 }
 
-/* description */
-@media (max-width: 991px) {
-  .hide-mobile {
-    display: none;
+.pagination {
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.page-link {
+  color: #5e6e4b;
+}
+
+.page-link:hover {
+  color: #5e6e4b;
+}
+
+.page-item.active .page-link {
+  background-color: #e1ebd5;
+  border-color: #e1ebd5;
+}
+
+/* card */
+.therapist-container {
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 15%);
+
+  flex: 1 24%;
+}
+
+.therapist-container img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.link-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.therapist-parent-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #212529;
+}
+
+a:hover {
+  color: #212529;
+}
+
+/* responsivity */
+@media (max-width: 1350px) {
+  .therapist-container {
+    flex: 1 26%;
   }
 }
 
+@media (max-width: 991px) {
+  .therapist-container {
+    flex: 1 33%;
+  }
+
+  .therapist-container img {
+    height: 250px;
+  }
+
+  .therapistSearch {
+    padding: 30px;
+  }
+
+  .searchBar {
+    display: grid;
+    grid-template-areas: "search icon" "options options";
+    grid-template-columns: 1fr  auto;
+  }
+
+  .searchField {
+    width: unset;
+  }
+
+  .optionBtn {
+    grid-area: options;
+  }
+
+  .collapsible {
+    flex-wrap: wrap;
+  }
+
+  .dropdown-option {
+    flex: 1 27%;
+  }
+}
+
+@media (max-width: 550px) {
+  .therapist-container {
+    flex: 1 50%;
+  }
+}

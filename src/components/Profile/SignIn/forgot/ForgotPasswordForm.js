@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer } from "react";
+import React, { useCallback, useEffect, useReducer } from "react";
 import styled from "styled-components";
 import { validateEmail } from "../../../../validators/validators";
 import { Form, Button, Alert } from "react-bootstrap";
@@ -41,9 +41,9 @@ const ForgotPasswordForm = () => {
   });
   const { email, finished, errorMessage, waiting } = state;
 
-  const submitRequest = useCallback(() => {
+  const submitRequest = useCallback((event) => {
     // this prevents auto refresh onsubmit
-    event.preventDefault();
+    if (event && event.preventDefault) event.preventDefault();
     console.log(email, " email");
     // check base cases then call api, we generally dont need to verify if the user email input
     // is actually a true email, since if its not it just wont send an email...
@@ -80,6 +80,10 @@ const ForgotPasswordForm = () => {
   }, [waiting, finished, email]);
 
   const setEmail = useCallback((e) => dispatch({ type: "change-email", value: e.target.value }), []);
+
+  useEffect(() => {
+	window.scrollTo(0, 0)
+  }, [])
 
   return (
     <MainContainer>

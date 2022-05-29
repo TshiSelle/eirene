@@ -138,7 +138,7 @@ const verifyEmail = async (req, res) => {
 				res.status(400).json({ error: err.name + ': ' + err.message, success: false });
 			});
 	} else {
-		res.status(401).json({ message: 'User not found', success: false });
+		res.status(401).json({ message: 'Invalid Link!', success: false });
 	}
 };
 
@@ -266,24 +266,28 @@ const resetPass = async (req, res) => {
 			passResetTokenExpirationDate: { $gt: Date.now() },
 		});
 		if (dbUser) {
-			bcrypt
-				.hash(resetInfo.newPassword, 10)
-				.then((hashedPassword) => {
-					dbUser.password = hashedPassword;
-					dbUser.passResetToken = undefined;
-					dbUser.passResetTokenExpirationDate = undefined;
-					dbUser
-						.save()
-						.then(() => {
-							res.status(201).json({ message: 'Password reset successful.', success: true });
-						})
-						.catch((err) => {
-							console.log(`Error occurred during updating user's password in DB : ${err}`);
-						});
-				})
-				.catch((err) => {
-					console.log(`Error occurred while hashing user's new password : ${err}`);
-				});
+			if (!bcrypt.compareSync(resetInfo.newPassword, dbUser.password)){
+				bcrypt
+					.hash(resetInfo.newPassword, 10)
+					.then((hashedPassword) => {
+						dbUser.password = hashedPassword;
+						dbUser.passResetToken = undefined;
+						dbUser.passResetTokenExpirationDate = undefined;
+						dbUser
+							.save()
+							.then(() => {
+								res.status(201).json({ message: 'Password reset successful.', success: true });
+							})
+							.catch((err) => {
+								console.log(`Error occurred during updating user's password in DB : ${err}`);
+							});
+					})
+					.catch((err) => {
+						console.log(`Error occurred while hashing user's new password : ${err}`);
+					});
+			} else {
+				res.status(400).json({ message: "New password can't be same as old password." })
+			}
 		} else {
 			return res.status(401).json({ message: 'User not found or token expired', success: false });
 		}

@@ -38,14 +38,13 @@ const changeName = (req, res) => {
 };
 
 const setProfilePicture = async (req, res) => {
-	// console.log(req.files.File);
+	// console.log(req.files);
 	if (!req.files || req.files.File.size <= 0)
 		res.status(400).send({ message: 'No files uploaded, please provide an image', success: false });
 	else {
 		const dbUser = await User.findById(req.user.id);
 		const hasProfilePic = !!dbUser.profilePic;
 		let file = req.files.File;
-		// console.log(req.files);
 		file.name = hasProfilePic ? dbUser.profilePic.substring(10) : `${dbUser.username}_${crypto.randomBytes(20).toString('hex')}`;
 		// File.name = `${dbUser.username}_${crypto.randomBytes(20).toString('hex')}`;
 		fs.outputFileSync(`./tmp/${file.name}`, file.data);
@@ -81,7 +80,6 @@ const setProfilePicture = async (req, res) => {
 			}
 		);
 	}
-	// cloudinary.uploader.upload();
 	console.log('uploaded');
 };
 

@@ -156,6 +156,7 @@ const ContactUs = () => {
                   width: "50px",
                   justifySelf: "center",
                   marginTop: "10px",
+                  backgroundColor: "#f5f5f5",
                 }}
               >
                 Send

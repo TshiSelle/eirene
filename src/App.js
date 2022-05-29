@@ -52,7 +52,7 @@ const App = () => {
                         <Route path="/Journal" element={<Journal />} />
                         <Route path="/about" element={<AboutUs />} />
                         <Route path="/contact" element={<ContactUsRoute />} />
-                        <Route path="*" element={<NotFoundRoute />} />
+                        <Route path={"/*" || "/404"} element={<NotFoundRoute />} />
                       </Routes>
                     </MediaPlayer>
                     <SiteFooter />

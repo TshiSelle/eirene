@@ -3,8 +3,10 @@ import ReactJkMusicPlayer from "react-jinke-music-player";
 import "react-jinke-music-player/assets/index.css";
 import "./styling.css";
 import globalVars from "../../clientEnvVars";
+import { useAuthenticator } from "../../context/AuthContext";
 
 const MediaPlayer = ({ children }) => {
+  const { loggedIn } = useAuthenticator();
   const Music =
     globalVars.NODE_ENV == "production"
       ? [
@@ -56,7 +58,7 @@ const MediaPlayer = ({ children }) => {
 
   const [playerMode, setPlayerMode] = useState("mini");
   const chatbot = useRef(null);
-  if (chatbot.current) {
+  if (loggedIn && chatbot.current) {
     if (playerMode == "full") {
       chatbot.current.shadowRoot.querySelector(".df-messenger-wrapper").querySelector("#widgetIcon").style.bottom = "10vh";
     } else {
@@ -66,32 +68,34 @@ const MediaPlayer = ({ children }) => {
 
   return (
     <>
-      <div>
-        <ReactJkMusicPlayer
-          theme="auto"
-          defaultVolume={70}
-          spaceBar={true}
-          responsive={true}
-          glassBg={true}
-          showMediaSession
-          showDownload={false}
-          showThemeSwitch={false}
-          showMiniModeCover={true}
-          autoPlay={false}
-          onModeChange={(mode) => setPlayerMode(mode)}
-          autoHiddenCover={true}
-          remove={false}
-          audioLists={Music}
-        />
-        {children}
-      </div>
-      <df-messenger
-        ref={chatbot}
-        chat-title="Eirene"
-        agent-id="0ffba258-1ae3-4dcd-9497-7476a1c9819c"
-        language-code="en"
-        chat-icon="https://res.cloudinary.com/cloudloom/image/upload/v1653046865/logo/eirene_face_tzjqqu.webp"
-      ></df-messenger>
+      {loggedIn && (
+        <>
+          <df-messenger
+            ref={chatbot}
+            chat-title="Eirene"
+            agent-id="0ffba258-1ae3-4dcd-9497-7476a1c9819c"
+            language-code="en"
+            chat-icon="https://res.cloudinary.com/cloudloom/image/upload/v1653046865/logo/eirene_face_tzjqqu.webp"
+          ></df-messenger>
+        </>
+      )}
+          <div>
+            <ReactJkMusicPlayer
+              theme="dark"
+              spaceBar={true}
+              glassBg={true}
+              showMediaSession
+              showDownload={false}
+              showThemeSwitch={false}
+              showMiniModeCover={true}
+              autoPlay={false}
+              onModeChange={(mode) => setPlayerMode(mode)}
+              autoHiddenCover={true}
+              remove={false}
+              audioLists={Music}
+            />
+          </div>
+      {children}
     </>
   );
 };

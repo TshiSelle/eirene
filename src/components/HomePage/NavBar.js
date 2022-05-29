@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
-import { useLocation, Link, NavLink } from "react-router-dom";
+import { useLocation, Link, NavLink, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import { useAuthenticator } from "../../context/AuthContext";
 import { Dropdown } from "react-bootstrap";
@@ -12,6 +12,11 @@ const NavBar = () => {
   const location = useLocation();
   const { loggedIn } = useAuthenticator();
   const { userLogOut, userImage } = useUser();
+  const navigate = useNavigate();
+  const logOut = useCallback(() => {
+    userLogOut();
+    navigate("/SignIn");
+  });
 
   return (
     <Header pathname={location.pathname}>
@@ -65,7 +70,7 @@ const NavBar = () => {
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item
-                onClick={userLogOut}
+                onClick={logOut}
                 style={{ fontSize: 15, fontWeight: "500" }}
               >
                 Log out
@@ -105,8 +110,7 @@ const NavBar = () => {
 const Header = styled.header`
   background-color: #ffffff;
   height: 108px;
-  // position: ${(props) => (props.pathname === "/" ? "fixed" : "")};
-  position: fixed;
+  position: sticky;
   width: 100%;
   top: 0;
   font-family: FuturaLight;

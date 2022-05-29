@@ -5,7 +5,7 @@ import { useAuthenticator } from "../../context/AuthContext";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import "./Tabs.css";
-import "./font/icomoon/style.css";
+import "../Fonts/icomoon/style.css";
 
 const JournalEntries = ({ setError, setMessage }) => {
   const {
@@ -207,7 +207,7 @@ const JournalEntries = ({ setError, setMessage }) => {
             type="submit"
             onClick={handleOnSubmit}
           >
-            Submit
+            Save Journal
           </button>
         </form>
       )}

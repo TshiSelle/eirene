@@ -15,6 +15,10 @@ const LoginPage = () => {
     if (loggedIn) return navigate("/");
   }, [loggedIn]);
 
+  useEffect(() => {
+	window.scrollTo(0, 0)
+  }, [])
+
   return (
     <MainContainer>
       <MainSection>
@@ -32,7 +36,7 @@ const LoginPage = () => {
             </StyledLink>
 
             <StyledLink
-              className="tab"
+              className="tab signUp"
               style={{
                 borderRadius: "0.25rem 0 0 0.25rem",
                 backgroundColor: "#EFEFEF",

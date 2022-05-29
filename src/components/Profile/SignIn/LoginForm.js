@@ -1,10 +1,7 @@
 import React, { useReducer, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Form, Alert } from "react-bootstrap";
-import {
-  validatePassword,
-  validateName,
-} from "../../../validators/validators";
+import { validatePassword, validateName } from "../../../validators/validators";
 import "./loginStyle.css";
 import { LoginApiCall } from "../../../api/ApiClient";
 import { useAuthenticator } from "../../../context/AuthContext";
@@ -108,25 +105,25 @@ const SignInForm = () => {
     // TODO
     // Now we should call the api to register user since all userInput has been validated...
     dispatch({ type: "sign-in-start" });
-	setLoading(true);
+    setLoading(true);
     LoginApiCall(username, password)
-      .then((response,error) => {
+      .then((response) => {
         if (response.data.success) {
+          setLoading(false);
           updateAuthToken(response.data.token);
-          dispatch({ type: "sign-in-success" });
-          console.log('Successful signin!');
+          console.log("Successful signin!");
         } else {
+          setLoading(false);
           dispatch({ type: "sign-in-failure", message: response.data.message });
         }
-		setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         dispatch({
           type: "sign-in-failure",
           message: error.response.data.message,
         });
-		setLoading(false)
-		console.log('stopped loading')
+        console.log("stopped loading");
         return;
       });
   }, [username, password, waiting, finished]);
@@ -171,7 +168,9 @@ const SignInForm = () => {
                 <div></div>
               </label>
 
-              <ForgotPassword href="/forgot-password" className="link">Forgot Password</ForgotPassword>
+              <ForgotPassword href="/forgot-password" className="link">
+                Forgot Password
+              </ForgotPassword>
             </RememberMeTab>
 
             {submissionErrorMessage && (
@@ -181,6 +180,7 @@ const SignInForm = () => {
             )}
 
             <Button
+              className="loginButton"
               disabled={submissionErrorMessage}
               value="Sign Up"
               type="submit"
@@ -196,7 +196,9 @@ const SignInForm = () => {
           </Form.Group>
         </Form>
       </FormContainer>
-		<LoadingSpinner display={isLoading}/>
+      <LoadingSpinner display={isLoading} />
+      {/* <LoadingSpinner display={true} /> */}
+      {/* for styling loading icon */}
     </>
   );
 };
@@ -208,7 +210,7 @@ const Button = styled.button`
   height: 54px;
   border: none;
   border-radius: 0.25rem;
-  font-size: 1rem;s
+  font-size: 1rem;
 `;
 
 const Header = styled.h3`
