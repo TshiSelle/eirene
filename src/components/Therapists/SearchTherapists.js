@@ -99,6 +99,10 @@ const searchTherapists = () => {
 
   const setQueryValue = useCallback((e) => setQuery(e.target.value));
 
+  useEffect(() => {
+	window.scrollTo(0, 0)
+  }, [])
+
   return (
     <PageContainer>
       <PageBanner>

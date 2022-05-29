@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import "./HomePage.css";
 import { Image, Transformation } from "cloudinary-react";
@@ -25,6 +25,9 @@ const HomePage = () => {
       .catch((error) => console.log(error.response.data.message));
     // if user unverified and newly created show verification popup
   }
+  useEffect(() => {
+	window.scrollTo(0, 0)
+  }, [])
 
   return (
     <Container>
