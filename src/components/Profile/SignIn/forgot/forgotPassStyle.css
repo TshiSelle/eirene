@@ -1,5 +1,6 @@
 .mb-3 {
   display: grid;
+  font-family: FuturaLight;
 }
 
 .input {
@@ -20,7 +21,7 @@
   outline: none;
 }
 
-.submit-button {
+.mb-3 .submit-button, .signup-form .submit-button {
   cursor: pointer;
   height: 54px;
   border: none;
@@ -31,7 +32,8 @@
   width: 100%;
 }
 
-.submit-button:hover,
-.submit-button:focus {
-  background-color: #eeb6bd;
+.mb-3 .submit-button:hover,
+.mb-3 .submit-button:focus, .signup-form .submit-button:hover, .signup-form .submit-button:focus {
+  background-color: #eeb6bd !important;
+  color: #ffffff !important;
 }

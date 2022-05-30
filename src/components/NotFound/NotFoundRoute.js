@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const NotFoundRoute = () => {
-
   return (
     <>
       <PageContainer>
@@ -10,7 +9,11 @@ const NotFoundRoute = () => {
           <BannerHeader>Page Not Found</BannerHeader>
           <BannerPara>
             Oops! It looks like you're lost. Try heading back to the
-            <Link to="/"> homepage</Link>.
+            <Link to="/" style={{ color: "#6eb950" }}>
+              {" "}
+              homepage
+            </Link>
+            .
           </BannerPara>
         </PageBanner>
       </PageContainer>
