@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useReducer } from "react";
+import { Alert, Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { validateEmail } from "../../../../validators/validators";
-import { Form, Button, Alert } from "react-bootstrap";
 import { SendEmail } from "../../../../api/ApiClient";
+import { useAuthenticator } from "../../../../context/AuthContext";
+import { validateEmail } from "../../../../validators/validators";
 import "./forgotPassStyle.css";
-import background from "./bg_4.jpg";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -40,6 +41,13 @@ const ForgotPasswordForm = () => {
     waiting: false,
   });
   const { email, finished, errorMessage, waiting } = state;
+
+  const navigate = useNavigate();
+  const { loggedIn } = useAuthenticator();
+
+  useEffect(() => {
+    if (loggedIn) return navigate("/");
+  }, [loggedIn]);
 
   const submitRequest = useCallback((event) => {
     // this prevents auto refresh onsubmit
