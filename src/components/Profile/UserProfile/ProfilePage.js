@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
-import {
-  GetUserInfo,
-  GetUserPicture,
-  ReactivateAccount,
-  UploadProfilePicture,
-} from "../../../api/ApiClient";
+import { GetUserInfo, GetUserPicture, ReactivateAccount, UploadProfilePicture } from "../../../api/ApiClient";
 import { Link } from "react-router-dom";
 import { Image, Transformation } from "cloudinary-react";
 import { Alert, Button } from "react-bootstrap";
@@ -56,9 +51,7 @@ const ProfilePage = () => {
   if (loggedIn) {
     GetUserInfo(authToken)
       .then((response) => {
-        setDeactivationDate(
-          typeof response.data.dbUser.deactivationDate == "string"
-        );
+        setDeactivationDate(typeof response.data.dbUser.deactivationDate == "string");
       })
       .catch((error) => console.log(error.response.data.message));
   }
@@ -95,17 +88,17 @@ const ProfilePage = () => {
       .then((response) => {
         if (response.data.success) {
           setImageSrc(response.data.result.public_id);
-          setFileSelected('');
+          setFileSelected("");
         } else {
           setImageSrc(undefined);
-          setFileSelected('');
+          setFileSelected("");
         }
         setLoading(false);
       })
       .catch((error) => {
         setImageSrc(undefined);
         setLoading(false);
-        setFileSelected('');
+        setFileSelected("");
         return;
       });
   }, [loggedIn, authToken, setImageSrc]);
@@ -126,7 +119,6 @@ const ProfilePage = () => {
       });
   }, [loggedIn, authToken, imageSrc]);
 
-
   return (
     <>
       {loggedIn ? (
@@ -134,9 +126,8 @@ const ProfilePage = () => {
           <PageBanner>
             <BannerHeader>Profile</BannerHeader>
             <BannerPara>
-              View your account details including profile picture, username,
-              name, gender, email, and whether your account has been verified or
-              not.
+              View your account details including profile picture, username, name, gender, email, and whether your account has been verified
+              or not.
             </BannerPara>
           </PageBanner>
 
@@ -161,14 +152,11 @@ const ProfilePage = () => {
                   <Transformation fetchFormat="auto" />
                 </Image>
               )}
-              {fileSelected && (<button
-                type="button"
-                className="btn submit-pic-button"
-                onClick={handleImageUpload}
-              >
-                Upload Picture
-              </button>)}
-
+              {fileSelected && (
+                <button type="button" className="btn submit-pic-button" onClick={handleImageUpload}>
+                  Upload Picture
+                </button>
+              )}
             </form>
 
             <UserUsername>{user?.username}</UserUsername>
@@ -177,23 +165,15 @@ const ProfilePage = () => {
             </UserPara>
             <UserPara>{user?.gender}</UserPara>
             <UserPara>{user?.email}</UserPara>
-            <UserPara>
-              {user?.verified ? "Verified Account" : "Unverified Account"}
-            </UserPara>
+            <UserPara>{user?.verified ? "Verified Account" : "Unverified Account"}</UserPara>
           </UserCard>
 
-          <Button
-            variant={userDeactivationDate ? "success" : "danger"}
-            onClick={handleAccountStatus}
-            className="deactivate-acc-button"
-          >
+          <Button variant={userDeactivationDate ? "success" : "danger"} onClick={handleAccountStatus} className="deactivate-acc-button">
             {userDeactivationDate ? "Activate Account" : "Deactivate Account"}
           </Button>
           {message && (
             <div style={{ paddingTop: 20 }}>
-              <Alert variant={userDeactivationDate ? "danger" : "success"}>
-                {message}
-              </Alert>
+              <Alert variant={userDeactivationDate ? "danger" : "success"}>{message}</Alert>
             </div>
           )}
         </PageContainer>

@@ -44,8 +44,13 @@ const setProfilePicture = async (req, res) => {
 	else {
 		const dbUser = await User.findById(req.user.id);
 		const hasProfilePic = !!dbUser.profilePic;
+		if (hasProfilePic) {
+			cloudinary.uploader.destroy(dbUser.profilePic, {
+				resource_type: 'image',
+			})
+		}
 		let file = req.files.File;
-		file.name = hasProfilePic ? dbUser.profilePic.substring(10) : `${dbUser.username}_${crypto.randomBytes(20).toString('hex')}`;
+		file.name = `${dbUser.username}_${crypto.randomBytes(20).toString('hex')}`;
 		// File.name = `${dbUser.username}_${crypto.randomBytes(20).toString('hex')}`;
 		fs.outputFileSync(`./tmp/${file.name}`, file.data);
 		cloudinary.uploader.upload(
@@ -59,10 +64,8 @@ const setProfilePicture = async (req, res) => {
 			async (err, result) => {
 				if (!err) {
 					try {
-						if (!hasProfilePic) {
-							dbUser.profilePic = `user_pics/${file.name}`;
-							await dbUser.save();
-						}
+						dbUser.profilePic = `user_pics/${file.name}`;
+						await dbUser.save();
 						res.status(201).json({ message: 'Image upload complete', success: true, result });
 					} catch (error) {
 						res.status(400).json({ message: 'Error occurred while modifying user db info', err, success: false });
