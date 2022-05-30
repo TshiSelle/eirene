@@ -50,6 +50,7 @@ const ProfilePage = () => {
   const [isLoading, setLoading] = useState(false);
   const [userDeactivationDate, setDeactivationDate] = useState(false);
   const [message, setMessage] = useState("");
+  const [fileSelected, setFileSelected] = useState("");
   // const { userCalendarAppointments } = useUserCalendar();
 
   if (loggedIn) {
@@ -94,14 +95,17 @@ const ProfilePage = () => {
       .then((response) => {
         if (response.data.success) {
           setImageSrc(response.data.result.public_id);
+          setFileSelected('');
         } else {
           setImageSrc(undefined);
+          setFileSelected('');
         }
         setLoading(false);
       })
       .catch((error) => {
         setImageSrc(undefined);
         setLoading(false);
+        setFileSelected('');
         return;
       });
   }, [loggedIn, authToken, setImageSrc]);
@@ -142,7 +146,7 @@ const ProfilePage = () => {
                 <label htmlFor="upload-photo" className="label-upload">
                   Choose File
                 </label>
-                <input type="file" accepts="image/*" id="upload-photo" />
+                <input type="file" accepts="image/*" id="upload-photo" onChange={(e) => setFileSelected(e.target.value)} />
               </div>
               {imageSrc && (
                 <Image
@@ -157,13 +161,14 @@ const ProfilePage = () => {
                   <Transformation fetchFormat="auto" />
                 </Image>
               )}
-              <button
+              {fileSelected && (<button
                 type="button"
                 className="btn submit-pic-button"
                 onClick={handleImageUpload}
               >
                 Upload Picture
-              </button>
+              </button>)}
+
             </form>
 
             <UserUsername>{user?.username}</UserUsername>
