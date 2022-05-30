@@ -4,7 +4,7 @@ import styled from "styled-components";
 import "./loginStyle.css";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
-import "./icomoon/style.css";
+import "../../Fonts/icomoon/style.css";
 import { Image, Transformation } from "cloudinary-react";
 
 const LoginPage = () => {

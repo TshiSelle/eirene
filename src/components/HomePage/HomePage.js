@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import "./HomePage.css";
 import { Image, Transformation } from "cloudinary-react";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { GetUserInfo } from "../../api/ApiClient";
+import { useAuthenticator } from "../../context/AuthContext";
 import ContactUs from "../ContactUs/ContactUsRoute.js";
 import VerificationPopUp from "../Profile/SignUp/VerificationPopUp/VerificationPopUp";
-import { useAuthenticator } from "../../context/AuthContext";
-import { GetUserInfo } from "../../api/ApiClient";
+import "./HomePage.css";
 
 const HomePage = () => {
   const [showPopUp, setShowPopUp] = useState(false);

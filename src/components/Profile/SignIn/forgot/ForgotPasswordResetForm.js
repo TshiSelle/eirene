@@ -5,7 +5,6 @@ import { validatePassword, validateConfirmPassword } from "../../../../validator
 import { useParams, useNavigate } from "react-router-dom";
 import { PasswordResetWithToken, IsEmailTokenValid } from "../../../../api/ApiClient";
 import "./forgotPassStyle.css";
-import background from "./bg_4.jpg";
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
