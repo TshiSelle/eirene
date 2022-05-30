@@ -69,6 +69,33 @@
 	cursor: pointer;
 }
 
+.close-menu:after {
+	color: #212529;
+    font-family: 'icomoon';
+    content: '\e5cd';
+    position: absolute;
+	font-size: 30px;
+	right: 30px;
+    top: 10px;
+	cursor: pointer;
+}
+
+.hamburger-menu {
+	display: none;
+}
+
+@media (max-width: 991px) {
+    .hamburger-menu {
+		display: block;
+	}
+
+	.dropdown {
+		position: absolute;
+		top: 13px;
+		right: 95px;
+	}
+}
+
 /* footer */
 .footer-link:hover {
 	color: #8da86d;

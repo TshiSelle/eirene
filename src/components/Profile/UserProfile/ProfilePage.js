@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
-import { GetUserInfo, GetUserPicture, ReactivateAccount, UploadProfilePicture } from "../../../api/ApiClient";
+import {
+  GetUserInfo,
+  GetUserPicture,
+  ReactivateAccount,
+  UploadProfilePicture,
+  ChangeName,
+} from "../../../api/ApiClient";
 import { Link } from "react-router-dom";
 import { Image, Transformation } from "cloudinary-react";
 import { Alert, Button } from "react-bootstrap";
@@ -9,9 +15,6 @@ import DeactivationModal from "./DeactivationModal";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 import styled from "styled-components";
 import "./ProfilePage.css";
-// import { GetUserAppointments } from "../../../api/ApiClient";
-// import { useUserCalendar } from "../../../context/CalendarContext";
-// import Calendar from "react-awesome-calendar";
 
 const events = [
   {
@@ -42,16 +45,20 @@ const ProfilePage = () => {
   const { loggedIn, authToken } = useAuthenticator();
   const [imageSrc, setImageSrc] = useState(undefined);
   const [deactivateModalOpen, setDeactivateModalOpen] = useState(false);
+  const [firstName, setFirstName] = useState(user?.fname);
+  const [lastName, setLastName] = useState(user?.lname);
+  const [isEdit, setIsEdit] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [userDeactivationDate, setDeactivationDate] = useState(false);
   const [message, setMessage] = useState("");
   const [fileSelected, setFileSelected] = useState("");
-  // const { userCalendarAppointments } = useUserCalendar();
 
   if (loggedIn) {
     GetUserInfo(authToken)
       .then((response) => {
-        setDeactivationDate(typeof response.data.dbUser.deactivationDate == "string");
+        setDeactivationDate(
+          typeof response.data.dbUser.deactivationDate == "string"
+        );
       })
       .catch((error) => console.log(error.response.data.message));
   }
@@ -126,8 +133,9 @@ const ProfilePage = () => {
           <PageBanner>
             <BannerHeader>Profile</BannerHeader>
             <BannerPara>
-              View your account details including profile picture, username, name, gender, email, and whether your account has been verified
-              or not.
+              View your account details including profile picture, username,
+              name, gender, email, and whether your account has been verified or
+              not.
             </BannerPara>
           </PageBanner>
 
@@ -137,7 +145,12 @@ const ProfilePage = () => {
                 <label htmlFor="upload-photo" className="label-upload">
                   Choose File
                 </label>
-                <input type="file" accepts="image/*" id="upload-photo" onChange={(e) => setFileSelected(e.target.value)} />
+                <input
+                  type="file"
+                  accepts="image/*"
+                  id="upload-photo"
+                  onChange={(e) => setFileSelected(e.target.value)}
+                />
               </div>
               {imageSrc && (
                 <Image
@@ -153,27 +166,54 @@ const ProfilePage = () => {
                 </Image>
               )}
               {fileSelected && (
-                <button type="button" className="btn submit-pic-button" onClick={handleImageUpload}>
+                <button
+                  type="button"
+                  className="btn submit-pic-button"
+                  onClick={handleImageUpload}
+                >
                   Upload Picture
                 </button>
               )}
             </form>
 
             <UserUsername>{user?.username}</UserUsername>
-            <UserPara>
-              {user?.fname} {user?.lname}
-            </UserPara>
+            {isEdit ? (
+              <div>
+                <textarea
+                  onChange={(e) => setFirstName(e.target.value)}
+                ></textarea>
+
+                <Button onClick={() => setIsEdit(false)}>Edit Name</Button>
+              </div>
+            ) : (
+              <div>
+                <UserPara>
+                  {user?.fname} {user?.lname}
+                </UserPara>
+
+                <Button onClick={() => setIsEdit(true)}>Edit Name</Button>
+              </div>
+            )}
+
             <UserPara>{user?.gender}</UserPara>
             <UserPara>{user?.email}</UserPara>
-            <UserPara>{user?.verified ? "Verified Account" : "Unverified Account"}</UserPara>
+            <UserPara>
+              {user?.verified ? "Verified Account" : "Unverified Account"}
+            </UserPara>
           </UserCard>
 
-          <Button variant={userDeactivationDate ? "success" : "danger"} onClick={handleAccountStatus} className="deactivate-acc-button">
+          <Button
+            variant={userDeactivationDate ? "success" : "danger"}
+            onClick={handleAccountStatus}
+            className="deactivate-acc-button"
+          >
             {userDeactivationDate ? "Activate Account" : "Deactivate Account"}
           </Button>
           {message && (
             <div style={{ paddingTop: 20 }}>
-              <Alert variant={userDeactivationDate ? "danger" : "success"}>{message}</Alert>
+              <Alert variant={userDeactivationDate ? "danger" : "success"}>
+                {message}
+              </Alert>
             </div>
           )}
         </PageContainer>

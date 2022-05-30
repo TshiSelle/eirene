@@ -20,9 +20,11 @@ const NavBar = () => {
 
   return (
     <Header pathname={location.pathname}>
-      <div className="hamburger-menu"></div>
+      <div className="hamburger-menu" onClick={showNavItems}></div>
 
-      <Nav>
+      <Nav className="menu_items" id="menu_items">
+        <div className="close-menu" onClick={showNavItems}></div>
+
         <NavLink
           className={({ isActive }) => "navlink " + (isActive && "active")}
           to="/"
@@ -128,6 +130,25 @@ const Nav = styled.nav`
   justify-content: center;
   align-items: center;
   height: 100%;
+
+  @media (max-width: 991px) {
+    display: unset;
+
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+
+    display: grid;
+    grid-template-rows: auto auto auto auto 1fr;
+    align-items: start;
+  }
 `;
 
 const StyledImage = styled(Image)`
@@ -137,3 +158,12 @@ const StyledImage = styled(Image)`
 `;
 
 export default NavBar;
+
+function showNavItems() {
+  var menuItemsId = document.getElementById("menu_items");
+  if (menuItemsId.style.width == "0px") {
+    menuItemsId.style.width = "270px";
+  } else {
+    menuItemsId.style.width = "0px";
+  }
+}
