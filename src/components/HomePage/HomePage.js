@@ -477,7 +477,7 @@ const MediPara = styled.p`
 
 const MediFlex = styled.div`
   display: flex;
-  margin: 75px 0 100px;
+  margin: 75px 0 70px;
   gap: 30px;
 
   @media (max-width: 991px) {
