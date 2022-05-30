@@ -23,6 +23,7 @@ import ContactUsRoute from "./components/ContactUs/ContactUsRoute";
 import NotFoundRoute from "./components/NotFound/NotFoundRoute";
 import Footer from "./components/AboutUs/AboutUs";
 import AboutUs from "./components/AboutUs/AboutUs";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 const App = () => {
   return (
@@ -35,25 +36,26 @@ const App = () => {
                 <Suspense fallback={<FullPageSpinner />}>
                   <Router>
                     <NavBar />
-
                     <MediaPlayer>
-                      <Routes>
-                        {/* Every page we create needs to have a route so we can navigate to it,
+                      <ScrollToTop>
+                        <Routes>
+                          {/* Every page we create needs to have a route so we can navigate to it,
                             Imitate the routes below with a proper path when adding a new page */}
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/Profile" element={<ProfilePage />} />
-                        <Route path="/SignUp" element={<SignUpPage />} />
-                        <Route path="/SignIn" element={<LoginPage />} />
-                        <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-                        <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
-                        <Route path="/find-therapists" element={<SearchTherapists />} />
-                        <Route path="/therapist-description/:id" element={<TherapistDescription />} />
-                        <Route path="/verify/:username/:token" element={<VerifyAccount />} />
-                        <Route path="/Journal" element={<Journal />} />
-                        <Route path="/about" element={<AboutUs />} />
-                        <Route path="/contact" element={<ContactUsRoute />} />
-                        <Route path={"/*" || "/404"} element={<NotFoundRoute />} />
-                      </Routes>
+                          <Route path="/" element={<HomePage />} />
+                          <Route path="/Profile" element={<ProfilePage />} />
+                          <Route path="/SignUp" element={<SignUpPage />} />
+                          <Route path="/SignIn" element={<LoginPage />} />
+                          <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+                          <Route path="/forgot-password/:username/:token" element={<ForgotPasswordResetForm />} />
+                          <Route path="/find-therapists" element={<SearchTherapists />} />
+                          <Route path="/therapist-description/:id" element={<TherapistDescription />} />
+                          <Route path="/verify/:username/:token" element={<VerifyAccount />} />
+                          <Route path="/Journal" element={<Journal />} />
+                          <Route path="/about" element={<AboutUs />} />
+                          <Route path="/contact" element={<ContactUsRoute />} />
+                          <Route path={"/*" || "/404"} element={<NotFoundRoute />} />
+                        </Routes>
+                      </ScrollToTop>
                     </MediaPlayer>
                     <SiteFooter />
                   </Router>

@@ -15,9 +15,6 @@ const LoginPage = () => {
     if (loggedIn) return navigate("/");
   }, [loggedIn]);
 
-  useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
 
   return (
     <MainContainer>

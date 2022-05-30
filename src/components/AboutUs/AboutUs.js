@@ -4,9 +4,6 @@ import styled from "styled-components";
 import ContactUs from "../ContactUs/ContactUsRoute.js";
 
 const AboutUs = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   return (
     <Main>
       <BgContainer>

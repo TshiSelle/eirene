@@ -12,9 +12,6 @@ const Journal = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
 
   return (
     <div>

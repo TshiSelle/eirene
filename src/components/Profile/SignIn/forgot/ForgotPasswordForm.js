@@ -81,9 +81,6 @@ const ForgotPasswordForm = () => {
 
   const setEmail = useCallback((e) => dispatch({ type: "change-email", value: e.target.value }), []);
 
-  useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
 
   return (
     <MainContainer>

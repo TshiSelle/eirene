@@ -25,9 +25,6 @@ const HomePage = () => {
       .catch((error) => console.log(error.response.data.message));
     // if user unverified and newly created show verification popup
   }
-  useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
 
   return (
     <Container>

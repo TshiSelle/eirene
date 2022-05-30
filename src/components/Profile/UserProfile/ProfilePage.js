@@ -123,10 +123,6 @@ const ProfilePage = () => {
   }, [loggedIn, authToken, imageSrc]);
 
 
-  useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
-
   return (
     <>
       {loggedIn ? (
@@ -143,7 +139,7 @@ const ProfilePage = () => {
           <UserCard>
             <form className="profile-pic-form">
               <div className="form-group">
-                <label for="upload-photo" class="label-upload">
+                <label htmlFor="upload-photo" className="label-upload">
                   Choose File
                 </label>
                 <input type="file" accepts="image/*" id="upload-photo" />
