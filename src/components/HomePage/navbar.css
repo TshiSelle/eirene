@@ -84,8 +84,16 @@
 	display: none;
 }
 
+.close-menu {
+	display: none;
+}
+
 @media (max-width: 991px) {
     .hamburger-menu {
+		display: block;
+	}
+	
+	.close-menu {
 		display: block;
 	}
 

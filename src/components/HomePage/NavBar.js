@@ -133,7 +133,6 @@ const Nav = styled.nav`
 
   @media (max-width: 991px) {
     display: unset;
-
     height: 100%;
     width: 0;
     position: fixed;
@@ -144,7 +143,6 @@ const Nav = styled.nav`
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-
     display: grid;
     grid-template-rows: auto auto auto auto 1fr;
     align-items: start;
