@@ -196,6 +196,7 @@ const HomePage = () => {
             <MediName>10 minute meditation for stress</MediName>
           </MediItem>
         </MediFlex>
+        <MediPara>Meditations can be found in the media player</MediPara>
       </MeditationSection>
 
       <div className="home-contact">
