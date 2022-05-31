@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true })); //can now access url encoded fo
 app.use(helmet()); //secure app by setting http headers
 app.use(hpp()); //prevent http parameter pollution
 app.use(cors({
-	origin: process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.CLIENT_PORT}` : 'https://eirene1.herokuapp.com',
+	origin: process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.CLIENT_PORT}` :  /https?:\/\/eirene1\.herokuapp\.com.*/,
 })); //enable cross-origin resource sharing
 
 //port to be used for requests
