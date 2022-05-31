@@ -11,38 +11,41 @@ import styled from "styled-components";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
-  const { user, userLogOut } = useUser();
+  const [user, setUser] = useState({});
   const { loggedIn, authToken } = useAuthenticator();
   const [imageSrc, setImageSrc] = useState(undefined);
   const [deactivateModalOpen, setDeactivateModalOpen] = useState(false);
-  const [firstName, setFirstName] = useState(user?.fname);
-  const [lastName, setLastName] = useState(user?.lname);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [userDeactivationDate, setDeactivationDate] = useState(false);
   const [message, setMessage] = useState("");
   const [fileSelected, setFileSelected] = useState("");
 
-  if (loggedIn) {
-    GetUserInfo(authToken)
-      .then((response) => {
-        setDeactivationDate(typeof response.data.dbUser.deactivationDate == "string");
-      })
-      .catch((error) => console.log(error.response.data.message));
-  }
+  useEffect(() => {
+    if (loggedIn) {
+      GetUserInfo(authToken)
+        .then((response) => {
+          setUser(response.data.dbUser);
+          setFirstName(response.data.dbUser.fname);
+          setLastName(response.data.dbUser.lname);
+          setDeactivationDate(typeof response.data.dbUser.deactivationDate == "string");
+        })
+        .catch((error) => console.log(error.response.data.message));
+    }
+  }, [loggedIn, authToken]);
 
   const handleAccountStatus = useCallback(() => {
     if (userDeactivationDate) {
       setLoading(true);
       ReactivateAccount(authToken).then((response) => {
         if (response.data.success) {
-          console.log(response.data);
           setDeactivationDate(false);
           setLoading(false);
           setMessage("Account Reactivation Successful");
           return response.data.message;
         } else {
-          console.log(response.data);
           setLoading(false);
           return response.data.message;
         }
@@ -77,9 +80,11 @@ const ProfilePage = () => {
         return;
       });
   }, [loggedIn, authToken, setImageSrc]);
+
   const handleNameChange = () => {
     ChangeName(firstName, lastName, authToken).then((response) => {
       if (response.data.success) {
+		  setUser({...user, fname: firstName, lname: lastName})
         setIsEdit(false);
       }
     });
@@ -100,6 +105,12 @@ const ProfilePage = () => {
       });
   }, [loggedIn, authToken, imageSrc]);
 
+  function cancelEdit() {
+    setFirstName(user?.fname);
+    setLastName(user?.lname);
+    setIsEdit(false);
+  }
+
   return (
     <>
       {loggedIn ? (
@@ -118,7 +129,12 @@ const ProfilePage = () => {
                 <label htmlFor="upload-photo" className="label-upload">
                   Choose File
                 </label>
-                <input type="file" accepts="image/*" id="upload-photo" onChange={(e) => setFileSelected(e.target.value)} />
+                <input
+                  type="file"
+                  accepts="image/*"
+                  id="upload-photo"
+                  onChange={(e) => setFileSelected(e.target.value.split("\\")[e.target.value.split("\\").length - 1])}
+                />
               </div>
               {imageSrc && (
                 <Image
@@ -135,7 +151,7 @@ const ProfilePage = () => {
               )}
               {fileSelected && (
                 <button type="button" className="btn submit-pic-button" onClick={handleImageUpload}>
-                  Upload Picture
+                  Upload Picture ({fileSelected})
                 </button>
               )}
             </form>
@@ -148,18 +164,18 @@ const ProfilePage = () => {
                   className="name-change-textarea"
                   rows={1}
                   placeholder="First Name"
-                  defaultValue={user?.fname}
+                  defaultValue={firstName}
                 ></textarea>
                 <textarea
                   onChange={(e) => setLastName(e.target.value)}
                   className="name-change-textarea"
                   rows={1}
                   placeholder="Last Name"
-                  defaultValue={user?.lname}
+                  defaultValue={lastName}
                 ></textarea>
 
                 <Button
-                  onClick={() => setIsEdit(false)}
+                  onClick={() => cancelEdit()}
                   style={{
                     color: "#212529",
                     fontWeight: "bold",
