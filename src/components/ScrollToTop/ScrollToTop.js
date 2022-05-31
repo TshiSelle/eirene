@@ -6,7 +6,9 @@ const ScrollToTop = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     {
-      document.getElementById("menu_items").style.width = "0";
+      if (window.innerWidth < 992) {
+        document.getElementById("menu_items").style.width = "0";
+      }
     }
   }, [location]);
 
