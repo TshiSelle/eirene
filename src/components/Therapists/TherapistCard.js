@@ -45,7 +45,7 @@ export default TherapistCard;
 const GotoProfileButton = styled.button`
   border: none;
   font-weight: bold;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
   width: 75px;
 

@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useReducer, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { IsVerificationTokenValid } from "../../../../api/ApiClient";
+import React, { useEffect, useReducer, useState } from "react";
 import { Alert } from "react-bootstrap";
-import "./verifyacc.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { IsVerificationTokenValid } from "../../../../api/ApiClient";
 import LoadingSpinner from "../../../LoadingSpinner/LoadingSpinner";
+import "./verifyacc.css";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -71,10 +71,6 @@ const [result, setResult] = useState(<></>);
     [username, token]
   );
 
-
-  useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
 
   return (
     <div>

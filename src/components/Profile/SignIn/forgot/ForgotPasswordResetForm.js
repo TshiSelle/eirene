@@ -1,11 +1,16 @@
 import React, { useReducer, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { Form, Alert, Button } from "react-bootstrap";
-import { validatePassword, validateConfirmPassword } from "../../../../validators/validators";
-import { useParams, useNavigate } from "react-router-dom";
-import { PasswordResetWithToken, IsEmailTokenValid } from "../../../../api/ApiClient";
+import {
+  validatePassword,
+  validateConfirmPassword,
+} from "../../../../validators/validators";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import {
+  PasswordResetWithToken,
+  IsEmailTokenValid,
+} from "../../../../api/ApiClient";
 import "./forgotPassStyle.css";
-import background from "./bg_4.jpg";
 
 const reducer = (state, action) => {
   // These cases are taken into consideration by the dispatches used in the useCallbacks down below,
@@ -61,7 +66,15 @@ const ForgotPasswordResetForm = () => {
     finished: false,
   });
 
-  const { password, confirmPassword, passwordError, submissionErrorMessage, finished, waiting, emailValid } = state;
+  const {
+    password,
+    confirmPassword,
+    passwordError,
+    submissionErrorMessage,
+    finished,
+    waiting,
+    emailValid,
+  } = state;
 
   useEffect(() => {
     IsEmailTokenValid(username, token)
@@ -79,8 +92,14 @@ const ForgotPasswordResetForm = () => {
       });
   }, [username, token]);
 
-  const setPassword = useCallback((e) => dispatch({ type: "set-password", value: e.target.value }), []);
-  const setConfirmPassword = useCallback((e) => dispatch({ type: "set-confirm-password", value: e.target.value }), []);
+  const setPassword = useCallback(
+    (e) => dispatch({ type: "set-password", value: e.target.value }),
+    []
+  );
+  const setConfirmPassword = useCallback(
+    (e) => dispatch({ type: "set-confirm-password", value: e.target.value }),
+    []
+  );
   const resetUserPassword = useCallback(() => {
     // this prevents auto refresh onsubmit
     event.preventDefault();
@@ -94,7 +113,10 @@ const ForgotPasswordResetForm = () => {
       });
       return;
     }
-    const confirmPasswordValidation = validateConfirmPassword(password, confirmPassword);
+    const confirmPasswordValidation = validateConfirmPassword(
+      password,
+      confirmPassword
+    );
     if (!confirmPasswordValidation.success) {
       dispatch({
         type: "password-error",
@@ -125,10 +147,6 @@ const ForgotPasswordResetForm = () => {
       });
   }, [waiting, finished, password, confirmPassword]);
 
-  useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
-  
   return (
     <>
       {emailValid ? (
@@ -137,7 +155,9 @@ const ForgotPasswordResetForm = () => {
             <FormContainer>
               <ResponsiveContainer>
                 <Header>Reset Password</Header>
-                <Subheader>Choose your new password and traverse Eirene again.</Subheader>
+                <Subheader>
+                  Choose your new password and traverse Eirene again.
+                </Subheader>
 
                 <Form className="signup-form" onSubmit={resetUserPassword}>
                   <Label>Password</Label>
@@ -168,24 +188,49 @@ const ForgotPasswordResetForm = () => {
                     </div>
                   )}
 
-                  <Button className="input submit-button" value="Submit" type="submit" disabled={submissionErrorMessage}>
+                  <Button
+                    className="input submit-button"
+                    value="Submit"
+                    type="submit"
+                    disabled={submissionErrorMessage}
+                  >
                     Reset Password
                   </Button>
-                  {finished && <Alert variant="success">Password reset successfully!</Alert>}
+                  {finished && (
+                    <Alert variant="success">
+                      Password reset successfully!
+                    </Alert>
+                  )}
                 </Form>
               </ResponsiveContainer>
             </FormContainer>
           </MainSection>
         </MainContainer>
       ) : (
-        <h2>Invalid token!</h2>
+        <PageContainer>
+          <PageBanner>
+            <BannerHeader>Invalid Token</BannerHeader>
+            <BannerPara>
+              Oops! It looks like you're lost. Try heading back to the
+              <Link to="/" style={{ color: "#6eb950" }}>
+                {" "}
+                homepage
+              </Link>
+              .
+            </BannerPara>
+          </PageBanner>
+        </PageContainer>
       )}
     </>
   );
 };
 
 const MainContainer = styled.div`
-  background: linear-gradient(0deg, rgba(33, 37, 41, 0.3), rgba(33, 37, 41, 0.3)),
+  background: linear-gradient(
+      0deg,
+      rgba(33, 37, 41, 0.3),
+      rgba(33, 37, 41, 0.3)
+    ),
     url("https://res.cloudinary.com/cloudloom/image/upload/f_auto/v1650233581/samples/Profile/login-image.jpg");
   background-size: cover;
   height: 100vh;
@@ -242,6 +287,40 @@ const Subheader = styled.p`
 
 const Label = styled.label`
   margin-bottom: 0.5rem;
+`;
+
+const PageBanner = styled.div`
+  height: 200px;
+  text-align: center;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+
+  @media (max-width: 991px) {
+    height: unset;
+    padding: 20px;
+  }
+`;
+
+const BannerHeader = styled.h1`
+  font-size: 30px;
+  font-weight: bold;
+
+  @media (max-width: 991px) {
+    font-size: 20px;
+  }
+`;
+
+const BannerPara = styled.p`
+  max-width: 600px;
+  margin-top: 10px;
+`;
+
+const PageContainer = styled.div`
+  font-family: FuturaLight;
+  line-height: 1.5;
+  color: #212529;
+  height: 65vh;
 `;
 
 export default ForgotPasswordResetForm;

@@ -1,44 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Eirene</title>
-        <style type="text/css">
-            html {
-                height: 100%;
-            }
-            body {
-                height: 100%;
-                margin: 0;
-                background: #333;
-                display: flex;
-                align-items: center;
-                text-align: center;
-                justify-content: center;
-            }
-        
-            .base {
-                align-items: center;
-                width: 80%;
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
-                padding: 40px 8%;
-                border-radius: 20px;
-                background: #fff;
-            }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      @font-face {
+        font-display: swap;
+        font-family: FuturaLight;
+        src: url(../src/components/Fonts/Futura-Light.woff);
+      }
+      body {
+        font-family: FuturaLight;
+        width: 100%;
+        min-height: 100vh;
+        display: relative;
+        margin: 0;
+        padding: 0;
+        background-color: #d5fefd;
+        background-image: linear-gradient(315deg, #d5fefd 0%, #fffcff 74%);
+      }
 
-            .base-text {
-                font-size: 2em;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="base">
-            <h2 class="base-text">
-                <span>Please go online to access Eirene.</span>
-            </h2>
-        </div>
-    </body>
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        text-align: center;
+        justify-items: center;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      h1 {
+        color: black;
+        font-family: arial;
+        font-weight: bold;
+        font-size: 50px;
+        letter-spacing: 5px;
+        text-shadow: 0 0 3px white;
+      }
+      h4 {
+        color: #000000;
+        font-family: arial;
+        font-weight: 300;
+        font-size: 16px;
+      }
+      .button {
+        align-items: center;
+
+        background-clip: padding-box;
+        background-color: #fbb4a2;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 16px;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 1.25;
+        margin: 0;
+        min-height: 3rem;
+        padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
+        position: relative;
+        text-decoration: none;
+        transition: all 250ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: baseline;
+        width: 300px;
+      }
+      .button:hover,
+      .button:focus {
+        background-color: #e3a291;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+      }
+      .button:hover {
+        transform: translateY(-1px);
+      }
+      .button:active {
+        background-color: #c85000;
+        box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1 style="margin-bottom: 10px">Oops! looks like you're</h1>
+      <h1>OFFLINE</h1>
+      <h4>Please check your internet connection</h4>
+      <a href="/"><button class="button" value="Refresh">RETRY</button></a> 
+    </div>
+  </body>
 </html>

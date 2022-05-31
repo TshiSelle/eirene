@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import "./HomePage.css";
 import { Image, Transformation } from "cloudinary-react";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { GetUserInfo } from "../../api/ApiClient";
+import { useAuthenticator } from "../../context/AuthContext";
 import ContactUs from "../ContactUs/ContactUsRoute.js";
 import VerificationPopUp from "../Profile/SignUp/VerificationPopUp/VerificationPopUp";
-import { useAuthenticator } from "../../context/AuthContext";
-import { GetUserInfo } from "../../api/ApiClient";
+import "./HomePage.css";
 
 const HomePage = () => {
   const [showPopUp, setShowPopUp] = useState(false);
@@ -25,9 +25,6 @@ const HomePage = () => {
       .catch((error) => console.log(error.response.data.message));
     // if user unverified and newly created show verification popup
   }
-  useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
 
   return (
     <Container>
@@ -199,6 +196,7 @@ const HomePage = () => {
             <MediName>10 minute meditation for stress</MediName>
           </MediItem>
         </MediFlex>
+        <MediPara>Meditations can be found in the media player</MediPara>
       </MeditationSection>
 
       <div className="home-contact">
@@ -479,7 +477,7 @@ const MediPara = styled.p`
 
 const MediFlex = styled.div`
   display: flex;
-  margin: 75px 0 100px;
+  margin: 75px 0 70px;
   gap: 30px;
 
   @media (max-width: 991px) {

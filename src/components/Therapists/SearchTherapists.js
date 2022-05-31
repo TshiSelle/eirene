@@ -97,11 +97,13 @@ const searchTherapists = () => {
     ]
   );
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pageNumberoption]);
+  
   const setQueryValue = useCallback((e) => setQuery(e.target.value));
 
-  useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
+
 
   return (
     <PageContainer>

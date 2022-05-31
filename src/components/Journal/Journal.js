@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Alert } from "react-bootstrap";
-import { useAuthenticator } from "../../context/AuthContext";
-import JournalEntries from "./Entries";
-import { useJournal } from "../../context/JournalContext";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useAuthenticator } from "../../context/AuthContext";
+import { useJournal } from "../../context/JournalContext";
+import JournalEntries from "./Entries";
 
 const Journal = () => {
   const { loggedIn } = useAuthenticator();
@@ -12,9 +12,6 @@ const Journal = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
 
   return (
     <div>

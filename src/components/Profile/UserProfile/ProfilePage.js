@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
-import { GetUserInfo, GetUserPicture, ReactivateAccount, UploadProfilePicture } from "../../../api/ApiClient";
+import {
+  GetUserInfo,
+  GetUserPicture,
+  ReactivateAccount,
+  UploadProfilePicture,
+  ChangeName,
+} from "../../../api/ApiClient";
 import { Link } from "react-router-dom";
 import { Image, Transformation } from "cloudinary-react";
 import { Alert, Button } from "react-bootstrap";
@@ -9,9 +15,6 @@ import DeactivationModal from "./DeactivationModal";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 import styled from "styled-components";
 import "./ProfilePage.css";
-// import { GetUserAppointments } from "../../../api/ApiClient";
-// import { useUserCalendar } from "../../../context/CalendarContext";
-// import Calendar from "react-awesome-calendar";
 
 const events = [
   {
@@ -43,10 +46,13 @@ const ProfilePage = () => {
   const [imageSrc, setImageSrc] = useState(undefined);
   const [activationMessage, setActivationMessage] = useState(null);
   const [deactivateModalOpen, setDeactivateModalOpen] = useState(false);
+  const [firstName, setFirstName] = useState(user?.fname);
+  const [lastName, setLastName] = useState(user?.lname);
+  const [isEdit, setIsEdit] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [userDeactivationDate, setDeactivationDate] = useState(false);
   const [message, setMessage] = useState("");
-  // const { userCalendarAppointments } = useUserCalendar();
+  const [fileSelected, setFileSelected] = useState("");
 
   if (loggedIn) {
     GetUserInfo(authToken)
@@ -88,14 +94,17 @@ const ProfilePage = () => {
       .then((response) => {
         if (response.data.success) {
           setImageSrc(response.data.result.public_id);
+          setFileSelected("");
         } else {
           setImageSrc(undefined);
+          setFileSelected("");
         }
         setLoading(false);
       })
       .catch((error) => {
         setImageSrc(undefined);
         setLoading(false);
+        setFileSelected("");
         return;
       });
   }, [loggedIn, authToken, setImageSrc]);
@@ -116,10 +125,6 @@ const ProfilePage = () => {
       });
   }, [loggedIn, authToken, imageSrc]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <>
       {loggedIn ? (
@@ -135,10 +140,15 @@ const ProfilePage = () => {
           <UserCard>
             <form className="profile-pic-form">
               <div className="form-group">
-                <label for="upload-photo" class="label-upload">
+                <label htmlFor="upload-photo" className="label-upload">
                   Choose File
                 </label>
-                <input type="file" accepts="image/*" id="upload-photo" />
+                <input
+                  type="file"
+                  accepts="image/*"
+                  id="upload-photo"
+                  onChange={(e) => setFileSelected(e.target.value)}
+                />
               </div>
               {imageSrc && (
                 <Image
@@ -153,15 +163,36 @@ const ProfilePage = () => {
                   <Transformation fetchFormat="auto" />
                 </Image>
               )}
-              <button type="button" className="btn submit-pic-button" onClick={handleImageUpload}>
-                Upload Picture
-              </button>
+              {fileSelected && (
+                <button
+                  type="button"
+                  className="btn submit-pic-button"
+                  onClick={handleImageUpload}
+                >
+                  Upload Picture
+                </button>
+              )}
             </form>
 
             <UserUsername>{user?.username}</UserUsername>
-            <UserPara>
-              {user?.fname} {user?.lname}
-            </UserPara>
+            {isEdit ? (
+              <div>
+                <textarea
+                  onChange={(e) => setFirstName(e.target.value)}
+                ></textarea>
+
+                <Button onClick={() => setIsEdit(false)}>Edit Name</Button>
+              </div>
+            ) : (
+              <div>
+                <UserPara>
+                  {user?.fname} {user?.lname}
+                </UserPara>
+
+                <Button onClick={() => setIsEdit(true)}>Edit Name</Button>
+              </div>
+            )}
+
             <UserPara>{user?.gender}</UserPara>
             <UserPara>{user?.email}</UserPara>
             <UserPara>{user?.verified ? "Verified Account" : "Unverified Account"}</UserPara>

@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useReducer } from "react";
+import { Alert, Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { validateEmail } from "../../../../validators/validators";
-import { Form, Button, Alert } from "react-bootstrap";
 import { SendEmail } from "../../../../api/ApiClient";
+import { useAuthenticator } from "../../../../context/AuthContext";
+import { validateEmail } from "../../../../validators/validators";
 import "./forgotPassStyle.css";
-import background from "./bg_4.jpg";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "change-email":
-      return { ...state, email: action.value, errorMessage: '' };
+      return { ...state, email: action.value, errorMessage: "" };
     case "validation-error":
       return {
         ...state,
@@ -20,8 +21,8 @@ const reducer = (state, action) => {
     case "submit-success":
       return { ...state, waiting: false, finished: true };
     case "submit-failure":
-		console.log('submit-failure')
-		console.log(action.message)
+      console.log("submit-failure");
+      console.log(action.message);
       return {
         ...state,
         waiting: false,
@@ -41,49 +42,58 @@ const ForgotPasswordForm = () => {
   });
   const { email, finished, errorMessage, waiting } = state;
 
-  const submitRequest = useCallback((event) => {
-    // this prevents auto refresh onsubmit
-    if (event && event.preventDefault) event.preventDefault();
-    console.log(email, " email");
-    // check base cases then call api, we generally dont need to verify if the user email input
-    // is actually a true email, since if its not it just wont send an email...
-    if (waiting || finished) return;
-    const emailValidation = validateEmail(email);
-    if (!emailValidation.success) {
-      dispatch({
-        type: "validation-error",
-        message: emailValidation.message,
-      });
-      return;
-    }
-    // now we call the api.
-    dispatch({ type: "start-submit" });
-    SendEmail(email)
-      .then((response) => {
-        if (response.data.success) {
-          dispatch({ type: "submit-success" });
-          console.log("Successful forgotpass!");
-        } else {
-          dispatch({
-            type: "submit-failure",
-            message: response.data.message,
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({
-          type: "submit-failure",
-          message: error.response.data.message,
-        });
-        return;
-      });
-  }, [waiting, finished, email]);
-
-  const setEmail = useCallback((e) => dispatch({ type: "change-email", value: e.target.value }), []);
+  const navigate = useNavigate();
+  const { loggedIn } = useAuthenticator();
 
   useEffect(() => {
-	window.scrollTo(0, 0)
-  }, [])
+    if (loggedIn) return navigate("/");
+  }, [loggedIn]);
+
+  const submitRequest = useCallback(
+    (event) => {
+      // this prevents auto refresh onsubmit
+      if (event && event.preventDefault) event.preventDefault();
+      console.log(email, " email");
+      // check base cases then call api, we generally dont need to verify if the user email input
+      // is actually a true email, since if its not it just wont send an email...
+      if (waiting || finished) return;
+      const emailValidation = validateEmail(email);
+      if (!emailValidation.success) {
+        dispatch({
+          type: "validation-error",
+          message: emailValidation.message,
+        });
+        return;
+      }
+      // now we call the api.
+      dispatch({ type: "start-submit" });
+      SendEmail(email)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: "submit-success" });
+            console.log("Successful forgotpass!");
+          } else {
+            dispatch({
+              type: "submit-failure",
+              message: response.data.message,
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({
+            type: "submit-failure",
+            message: error.response.data.message,
+          });
+          return;
+        });
+    },
+    [waiting, finished, email]
+  );
+
+  const setEmail = useCallback(
+    (e) => dispatch({ type: "change-email", value: e.target.value }),
+    []
+  );
 
   return (
     <MainContainer>
@@ -92,10 +102,14 @@ const ForgotPasswordForm = () => {
           <ResponsiveContainer>
             <Header>Forgot Password</Header>
             {finished ? (
-              <p style={{ textAlign: "center" }}>We sent an email to {email}, please check your inbox.</p>
+              <p style={{ textAlign: "center", fontFamily: "FuturaLight" }}>
+                We sent an email to {email}, please check your inbox.
+              </p>
             ) : (
               <>
-                <Subheader>Enter your email address to receive a verification code.</Subheader>
+                <Subheader>
+                  Enter your email address to receive a verification code.
+                </Subheader>
 
                 <Form onSubmit={submitRequest}>
                   <Form.Group className="mb-3">
@@ -138,7 +152,11 @@ const ForgotPasswordForm = () => {
 };
 
 const MainContainer = styled.div`
-  background: linear-gradient(0deg, rgba(33, 37, 41, 0.3), rgba(33, 37, 41, 0.3)),
+  background: linear-gradient(
+      0deg,
+      rgba(33, 37, 41, 0.3),
+      rgba(33, 37, 41, 0.3)
+    ),
     url("https://res.cloudinary.com/cloudloom/image/upload/f_auto/v1650233581/samples/Profile/login-image.jpg");
   background-size: cover;
   height: 100vh;
