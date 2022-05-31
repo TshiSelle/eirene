@@ -88,17 +88,19 @@ const JournalEntries = ({ setError, setMessage }) => {
   journalEntries &&
     journalEntries.forEach(({ _id, title, body, createdAt, modifiedAt }) => {
       if (!_id) return;
-
       tabs.push(
         <Tab key={_id} disabled={isEditEnabled}>
-          <p>{title}</p>
+          <p style={{ margin: "0" }}>{title}</p>
+          <p style={{ fontSize: "12px", margin: "0" }}>
+            {createdAt.substring(0, 10)}
+          </p>
         </Tab>
       );
       tabPanels.push(
         <TabPanel key={_id}>
           {isEditEnabled ? (
-            <div>
-              <h1>Edit Title:</h1>
+            <div style={{ padding: "25px" }}>
+              <h1 class="edit-header">Edit Title:</h1>
               <textarea
                 className="form-control text-area"
                 defaultValue={title}
@@ -109,7 +111,7 @@ const JournalEntries = ({ setError, setMessage }) => {
                 maxLength={30}
                 ref={fieldRef}
               />
-              <h1>Edit body:</h1>
+              <h1 class="edit-header">Edit body:</h1>
               <textarea
                 className="form-control text-area"
                 defaultValue={body}
@@ -122,13 +124,13 @@ const JournalEntries = ({ setError, setMessage }) => {
               <form>
                 <div>
                   <button
-                    className="btn btn-sm btn-success"
+                    className="btn btn-sm cancel-button"
                     onClick={() => setIsEditEnabled(false)}
                   >
                     Cancel
                   </button>
                   <button
-                    className="btn btn-sm btn-success"
+                    className="btn btn-sm confirm-button"
                     type="submit"
                     onClick={() =>
                       handleUpdateEntry(_id, newTitle || title, newBody || body)
@@ -143,6 +145,9 @@ const JournalEntries = ({ setError, setMessage }) => {
             <div className="bodyAndButtonsContainer">
               <div>
                 <h1 className="entry-title">{title}</h1>
+                <p style={{ marginBottom: "25px" }}>
+                  Date: {createdAt.substring(0, 10)}
+                </p>
                 <h5 className="entry-body">{body}</h5>
               </div>
               <div className="button-holder">
@@ -176,7 +181,7 @@ const JournalEntries = ({ setError, setMessage }) => {
 
   reversedTabs.push(<Tab disabled={isEditEnabled} key={1}></Tab>);
   reversedTabPanels.push(
-    <TabPanel key={1}>
+    <TabPanel key={1} style={{ padding: "25px" }}>
       <textarea
         className="form-control text-area"
         value={newTitle}
@@ -195,15 +200,16 @@ const JournalEntries = ({ setError, setMessage }) => {
         type="text"
         id="body"
         rows={11}
+        placeholder="Body"
         ref={fieldRef}
       />
       {newEntry && (
-        <form>
+        <form style={{ display: "flex" }}>
           <button
             disabled={
               typeof newBody === "string" && newBody.trim().length === 0
             }
-            className="btn btn-success form-control submit-entry-button"
+            className="btn form-control submit-entry-button"
             type="submit"
             onClick={handleOnSubmit}
           >
