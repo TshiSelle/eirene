@@ -108,3 +108,9 @@
 .footer-link:hover {
 	color: #8da86d;
 }
+
+#menu_items {
+	@media (min-width: 992px) {
+		width: auto;
+	}
+}
