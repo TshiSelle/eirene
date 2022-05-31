@@ -1,5 +1,5 @@
 const globalVars = {
-	NODE_ENV:  'development'
+	NODE_ENV:  'production'
 };
 
 
