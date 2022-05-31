@@ -100,10 +100,8 @@ const searchTherapists = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pageNumberoption]);
-  
+
   const setQueryValue = useCallback((e) => setQuery(e.target.value));
-
-
 
   return (
     <PageContainer>
@@ -137,7 +135,7 @@ const searchTherapists = () => {
           <Form.Group>
             <Form.Select
               as="select"
-              className="dropdown dropdown-option"
+              className="dropdown dropdown-option dropdown-therapist"
               value={therapistTitleoption}
               onChange={(e) => setTherapistTitleOption(e.target.value)}
             >
@@ -152,7 +150,7 @@ const searchTherapists = () => {
             </Form.Select>
             <Form.Select
               as="select"
-              className="dropdown dropdown-option"
+              className="dropdown dropdown-option dropdown-therapist"
               value={genderoption}
               onChange={(e) => setGenderOption(e.target.value)}
             >
@@ -168,7 +166,7 @@ const searchTherapists = () => {
             </Form.Select>
             <Form.Select
               as="select"
-              className="dropdown dropdown-option"
+              className="dropdown dropdown-option dropdown-therapist"
               value={degreeoption}
               onChange={(e) => setDegreeOption(e.target.value)}
             >
@@ -180,7 +178,7 @@ const searchTherapists = () => {
             </Form.Select>
             <Form.Select
               as="select"
-              className="dropdown dropdownYears dropdown-option"
+              className="dropdown dropdownYears dropdown-option dropdown-therapist"
               value={yoeoption}
               onChange={(e) => setYoeOption(e.target.value)}
               //   onChange={(e) => console.log(e.target.value)}
