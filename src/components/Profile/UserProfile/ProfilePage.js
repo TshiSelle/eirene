@@ -223,7 +223,7 @@ const ProfilePage = () => {
             ) : (
               <div style={{ display: "flex" }}>
                 <UserPara>
-                  {user?.fname} {user?.lname}
+                  {firstName} {lastName}
                 </UserPara>
 
                 <Button
