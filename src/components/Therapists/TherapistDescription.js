@@ -33,7 +33,6 @@ const TherapistDescription = () => {
       });
   }, [id]);
 
-
   return (
     <>
       <MainGrid>

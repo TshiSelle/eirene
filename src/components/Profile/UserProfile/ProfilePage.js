@@ -1,13 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
-import {
-  GetUserInfo,
-  GetUserPicture,
-  ReactivateAccount,
-  UploadProfilePicture,
-  ChangeName,
-} from "../../../api/ApiClient";
+import { GetUserInfo, GetUserPicture, ReactivateAccount, UploadProfilePicture, ChangeName } from "../../../api/ApiClient";
 import { Link } from "react-router-dom";
 import { Image, Transformation } from "cloudinary-react";
 import { Alert, Button } from "react-bootstrap";
@@ -16,64 +10,43 @@ import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 import styled from "styled-components";
 import "./ProfilePage.css";
 
-const events = [
-  {
-    id: 1,
-    color: "#fd3153",
-    from: "2019-05-02T18:00:00+00:00",
-    to: "2019-05-05T19:00:00+00:00",
-    title: "This is an event",
-  },
-  {
-    id: 2,
-    color: "#1ccb9e",
-    from: "2022-05-05T13:00:00+00:00",
-    to: "2022-05-05T14:00:00+00:00",
-    title: "This is another event",
-  },
-  {
-    id: 3,
-    color: "#3694DF",
-    from: "2019-05-05T13:00:00+00:00",
-    to: "2019-05-05T20:00:00+00:00",
-    title: "This is also another event",
-  },
-];
-
 const ProfilePage = () => {
-  const { user, userLogOut } = useUser();
+  const [user, setUser] = useState({});
   const { loggedIn, authToken } = useAuthenticator();
   const [imageSrc, setImageSrc] = useState(undefined);
   const [activationMessage, setActivationMessage] = useState(null);
   const [deactivateModalOpen, setDeactivateModalOpen] = useState(false);
-  const [firstName, setFirstName] = useState(user?.fname);
-  const [lastName, setLastName] = useState(user?.lname);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [userDeactivationDate, setDeactivationDate] = useState(false);
   const [message, setMessage] = useState("");
   const [fileSelected, setFileSelected] = useState("");
 
-  if (loggedIn) {
-    GetUserInfo(authToken)
-      .then((response) => {
-        setDeactivationDate(typeof response.data.dbUser.deactivationDate == "string");
-      })
-      .catch((error) => console.log(error.response.data.message));
-  }
+  useEffect(() => {
+    if (loggedIn) {
+      GetUserInfo(authToken)
+        .then((response) => {
+          setUser(response.data.dbUser);
+          setFirstName(response.data.dbUser.fname);
+          setLastName(response.data.dbUser.lname);
+          setDeactivationDate(typeof response.data.dbUser.deactivationDate == "string");
+        })
+        .catch((error) => console.log(error.response.data.message));
+    }
+  }, [loggedIn, authToken]);
 
   const handleAccountStatus = useCallback(() => {
     if (userDeactivationDate) {
       setLoading(true);
       ReactivateAccount(authToken).then((response) => {
         if (response.data.success) {
-          console.log(response.data);
           setDeactivationDate(false);
           setLoading(false);
           setMessage("Account Reactivation Successful");
           return response.data.message;
         } else {
-          console.log(response.data);
           setLoading(false);
           return response.data.message;
         }
@@ -109,6 +82,14 @@ const ProfilePage = () => {
       });
   }, [loggedIn, authToken, setImageSrc]);
 
+  const handleNameChange = () => {
+    ChangeName(firstName, lastName, authToken).then((response) => {
+      if (response.data.success) {
+		  setUser({...user, fname: firstName, lname: lastName})
+        setIsEdit(false);
+      }
+    });
+  };
   useEffect(() => {
     if (!loggedIn) return;
     GetUserPicture(authToken)
@@ -124,6 +105,12 @@ const ProfilePage = () => {
         return;
       });
   }, [loggedIn, authToken, imageSrc]);
+
+  function cancelEdit() {
+    setFirstName(user?.fname);
+    setLastName(user?.lname);
+    setIsEdit(false);
+  }
 
   return (
     <>
@@ -147,7 +134,7 @@ const ProfilePage = () => {
                   type="file"
                   accepts="image/*"
                   id="upload-photo"
-                  onChange={(e) => setFileSelected(e.target.value)}
+                  onChange={(e) => setFileSelected(e.target.value.split("\\")[e.target.value.split("\\").length - 1])}
                 />
               </div>
               {imageSrc && (
@@ -164,32 +151,59 @@ const ProfilePage = () => {
                 </Image>
               )}
               {fileSelected && (
-                <button
-                  type="button"
-                  className="btn submit-pic-button"
-                  onClick={handleImageUpload}
-                >
-                  Upload Picture
+                <button type="button" className="btn submit-pic-button" onClick={handleImageUpload}>
+                  Upload Picture ({fileSelected})
                 </button>
               )}
             </form>
 
             <UserUsername>{user?.username}</UserUsername>
             {isEdit ? (
-              <div>
+              <div className="change-name-grid">
                 <textarea
                   onChange={(e) => setFirstName(e.target.value)}
+                  className="name-change-textarea"
+                  rows={1}
+                  placeholder="First Name"
+                  defaultValue={firstName}
+                ></textarea>
+                <textarea
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="name-change-textarea"
+                  rows={1}
+                  placeholder="Last Name"
+                  defaultValue={lastName}
                 ></textarea>
 
-                <Button onClick={() => setIsEdit(false)}>Edit Name</Button>
+                <Button
+                  onClick={() => cancelEdit()}
+                  style={{
+                    color: "#212529",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Cancel
+                </Button>
+
+                <Button
+                  onClick={handleNameChange}
+                  style={{
+                    color: "#212529",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Submit
+                </Button>
               </div>
             ) : (
-              <div>
+              <div style={{ display: "flex" }}>
                 <UserPara>
-                  {user?.fname} {user?.lname}
+                  {firstName} {lastName}
                 </UserPara>
 
-                <Button onClick={() => setIsEdit(true)}>Edit Name</Button>
+                <Button onClick={() => setIsEdit(true)} style={{ color: "#212529", fontWeight: "bold" }}>
+                  Edit Name
+                </Button>
               </div>
             )}
 

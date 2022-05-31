@@ -75,38 +75,34 @@ export const UserProvider = ({ children }) => {
   );
 
   useEffect(() => {
-      if (!loggedIn) return;
-      GetUserInfo(authToken)
-        .then((response) => {
-          if (response.data.success) {
-            updateUser(response.data.dbUser);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          return;
-        });
-    },
-    [loggedIn, updateUser, authToken]
-  );
+    if (!loggedIn) return;
+    GetUserInfo(authToken)
+      .then((response) => {
+        if (response.data.success) {
+          updateUser(response.data.dbUser);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        return;
+      });
+  }, [loggedIn, updateUser, authToken]);
 
   useEffect(() => {
-      if (!loggedIn) return;
-      const getUser = async () => {
-        try {
-          const userInfoEncoded = localStorage.getItem(KEY);
-          if (userInfoEncoded == null) return;
-          const userInform = JSON.parse(userInfoEncoded);
-          const { userInfo } = userInform;
-          dispatch({ type: "set-user", userInfo });
-        } catch (error) {
-          console.log(error.message);
-        }
-      };
-      getUser();
-    },
-    [loggedIn]
-  );
+    if (!loggedIn) return;
+    const getUser = async () => {
+      try {
+        const userInfoEncoded = localStorage.getItem(KEY);
+        if (userInfoEncoded == null) return;
+        const userInform = JSON.parse(userInfoEncoded);
+        const { userInfo } = userInform;
+        dispatch({ type: "set-user", userInfo });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    getUser();
+  }, [loggedIn]);
 
   const userLogOut = useCallback(() => {
     if (authToken == null || !loggedIn) return;
@@ -120,7 +116,7 @@ export const UserProvider = ({ children }) => {
       user,
       userImage,
       userLogOut,
-      updateUser
+      updateUser,
     };
   }, [user, userImage, userLogOut, updateUser]);
 

@@ -9,7 +9,7 @@
   border-radius: 0.25rem;
 }
 
-.deactivate-acc-button:hover {
+.deactivate-acc-button:hover, .deactivate-acc-button:focus {
   background-color: #edafb6;
 }
 
@@ -35,13 +35,34 @@
 
 .label-upload {
   cursor: pointer;
-  font-weight: bold;
-  background-color: white;
-  padding: 10px 25px 10px 25px;
+  background-color: #ffffff;
+  padding: 10px;
   border-radius: 5px;
 }
 .label-upload:hover {
   background-color: rgba(255, 255, 255, 0.8);
+}
+
+.name-change-textarea {
+  border: unset;
+	border-radius: unset;
+	border-bottom: 1px solid #8d8d8d;
+	background-color: #efd8db;
+  resize: none;
+}
+
+.name-change-textarea:focus {
+  background-color: #efd8db;
+	border-bottom: 1px solid #8d8d8d;
+	box-shadow: unset;
+  outline: unset;
+}
+
+.change-name-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 10px;
 }
 
 @media (max-width: 991px) {
@@ -51,4 +72,48 @@
   }
 }
 
-/* logged out */
+/* deactivation module */
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  font-family: FuturaLight;
+  line-height: 1.5;
+  color: #212529;
+  height: 350px;
+  width: 450px;
+  border: none;
+}
+
+.modal-header {
+  border: none;
+  gap: 10px;
+}
+
+.modal-title {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.modal-footer {
+  justify-content: center;
+}
+
+.confirm-deactivate {
+  width: 404px;
+  justify-self: center;
+  margin: 10px 0 100px;
+  background-color: #edbec4 !important;
+  border: none;
+  height: 54px;
+  color: #212529 !important;
+  border-radius: 0.25rem;
+}
+
+.confirm-deactivate:hover {
+  background-color: #edafb6 !important;
+  color: #ffffff !important;
+}
