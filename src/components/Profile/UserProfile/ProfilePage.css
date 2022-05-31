@@ -35,13 +35,34 @@
 
 .label-upload {
   cursor: pointer;
-  font-weight: bold;
-  background-color: white;
-  padding: 10px 25px 10px 25px;
+  background-color: #ffffff;
+  padding: 10px;
   border-radius: 5px;
 }
 .label-upload:hover {
   background-color: rgba(255, 255, 255, 0.8);
+}
+
+.name-change-textarea {
+  border: unset;
+	border-radius: unset;
+	border-bottom: 1px solid #8d8d8d;
+	background-color: #efd8db;
+  resize: none;
+}
+
+.name-change-textarea:focus {
+  background-color: #efd8db;
+	border-bottom: 1px solid #8d8d8d;
+	box-shadow: unset;
+  outline: unset;
+}
+
+.change-name-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 10px;
 }
 
 @media (max-width: 991px) {
@@ -50,5 +71,3 @@
     margin: 5px;
   }
 }
-
-/* logged out */

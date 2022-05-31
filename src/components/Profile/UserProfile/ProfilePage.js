@@ -109,7 +109,13 @@ const ProfilePage = () => {
         return;
       });
   }, [loggedIn, authToken, setImageSrc]);
-
+  const handleNameChange = () => {
+    ChangeName(firstName, lastName, authToken).then((response) => {
+      if (response.data.success) {
+        setIsEdit(false);
+      }
+    });
+  };
   useEffect(() => {
     if (!loggedIn) return;
     GetUserPicture(authToken)
@@ -178,20 +184,54 @@ const ProfilePage = () => {
 
             <UserUsername>{user?.username}</UserUsername>
             {isEdit ? (
-              <div>
+              <div className="change-name-grid">
                 <textarea
                   onChange={(e) => setFirstName(e.target.value)}
+                  className="name-change-textarea"
+                  rows={1}
+                  placeholder="First Name"
+                  defaultValue={user?.fname}
+                ></textarea>
+                <textarea
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="name-change-textarea"
+                  rows={1}
+                  placeholder="Last Name"
+                  defaultValue={user?.lname}
                 ></textarea>
 
-                <Button onClick={() => setIsEdit(false)}>Edit Name</Button>
+                <Button
+                  onClick={() => setIsEdit(false)}
+                  style={{
+                    color: "#212529",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Cancel
+                </Button>
+
+                <Button
+                  onClick={handleNameChange}
+                  style={{
+                    color: "#212529",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Submit
+                </Button>
               </div>
             ) : (
-              <div>
+              <div style={{ display: "flex" }}>
                 <UserPara>
                   {user?.fname} {user?.lname}
                 </UserPara>
 
-                <Button onClick={() => setIsEdit(true)}>Edit Name</Button>
+                <Button
+                  onClick={() => setIsEdit(true)}
+                  style={{ color: "#212529", fontWeight: "bold" }}
+                >
+                  Edit Name
+                </Button>
               </div>
             )}
 
