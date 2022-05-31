@@ -9,7 +9,7 @@
   border-radius: 0.25rem;
 }
 
-.deactivate-acc-button:hover {
+.deactivate-acc-button:hover, .deactivate-acc-button:focus {
   background-color: #edafb6;
 }
 
@@ -70,4 +70,50 @@
     width: 90%;
     margin: 5px;
   }
+}
+
+/* deactivation module */
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  font-family: FuturaLight;
+  line-height: 1.5;
+  color: #212529;
+  height: 350px;
+  width: 450px;
+  border: none;
+}
+
+.modal-header {
+  border: none;
+  gap: 10px;
+}
+
+.modal-title {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.modal-footer {
+  justify-content: center;
+}
+
+.confirm-deactivate {
+  width: 404px;
+  justify-self: center;
+  margin: 10px 0 100px;
+  background-color: #edbec4 !important;
+  border: none;
+  height: 54px;
+  color: #212529 !important;
+  border-radius: 0.25rem;
+}
+
+.confirm-deactivate:hover {
+  background-color: #edafb6 !important;
+  color: #ffffff !important;
 }
