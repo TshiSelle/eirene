@@ -143,9 +143,9 @@ export default NavBar;
 
 function showNavItems() {
 	var menuItemsId = document.getElementById("menu_items");
-	if (menuItemsId.style.width == "0px") {
-	  menuItemsId.style.width = "270px";
+	if (!menuItemsId.style.width || menuItemsId.style.width == "0px") {
+		menuItemsId.style.width = "270px";
 	} else {
-	  menuItemsId.style.width = "0px";
+		menuItemsId.style.width = "0px";
 	}
   }
