@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuthenticator } from "../../../context/AuthContext";
 import { useUser } from "../../../context/UserContext";
-import { GetUserInfo, GetUserPicture, ReactivateAccount, UploadProfilePicture, ChangeName } from "../../../api/ApiClient";
+import {
+  GetUserInfo,
+  GetUserPicture,
+  ReactivateAccount,
+  UploadProfilePicture,
+  ChangeName,
+} from "../../../api/ApiClient";
 import { Link } from "react-router-dom";
 import { Image, Transformation } from "cloudinary-react";
 import { Alert, Button } from "react-bootstrap";
@@ -50,9 +56,9 @@ const ProfilePage = () => {
   if (loggedIn) {
     GetUserInfo(authToken)
       .then((response) => {
-        setFirstName(response.data.dbUser.fname);
-        setLastName(response.data.dbUser.lname);
-        setDeactivationDate(typeof response.data.dbUser.deactivationDate == "string");
+        setDeactivationDate(
+          typeof response.data.dbUser.deactivationDate == "string"
+        );
       })
       .catch((error) => console.log(error.response.data.message));
   }
@@ -126,12 +132,6 @@ const ProfilePage = () => {
       });
   }, [loggedIn, authToken, imageSrc]);
 
-  function cancelEdit() {
-    setFirstName(user?.fname);
-    setLastName(user?.lname);
-    setIsEdit(false);
-  }
-
   return (
     <>
       {loggedIn ? (
@@ -139,8 +139,9 @@ const ProfilePage = () => {
           <PageBanner>
             <BannerHeader>Profile</BannerHeader>
             <BannerPara>
-              View your account details including profile picture, username, name, gender, email, and whether your account has been verified
-              or not.
+              View your account details including profile picture, username,
+              name, gender, email, and whether your account has been verified or
+              not.
             </BannerPara>
           </PageBanner>
 
@@ -150,7 +151,12 @@ const ProfilePage = () => {
                 <label htmlFor="upload-photo" className="label-upload">
                   Choose File
                 </label>
-                <input type="file" accepts="image/*" id="upload-photo" onChange={(e) => setFileSelected(e.target.value)} />
+                <input
+                  type="file"
+                  accepts="image/*"
+                  id="upload-photo"
+                  onChange={(e) => setFileSelected(e.target.value)}
+                />
               </div>
               {imageSrc && (
                 <Image
@@ -166,7 +172,11 @@ const ProfilePage = () => {
                 </Image>
               )}
               {fileSelected && (
-                <button type="button" className="btn submit-pic-button" onClick={handleImageUpload}>
+                <button
+                  type="button"
+                  className="btn submit-pic-button"
+                  onClick={handleImageUpload}
+                >
                   Upload Picture
                 </button>
               )}
@@ -191,7 +201,7 @@ const ProfilePage = () => {
                 ></textarea>
 
                 <Button
-                  onClick={() => cancelEdit()}
+                  onClick={() => setIsEdit(false)}
                   style={{
                     color: "#212529",
                     fontWeight: "bold",
@@ -213,10 +223,13 @@ const ProfilePage = () => {
             ) : (
               <div style={{ display: "flex" }}>
                 <UserPara>
-                  {firstName} {lastName}
+                  {user?.fname} {user?.lname}
                 </UserPara>
 
-                <Button onClick={() => setIsEdit(true)} style={{ color: "#212529", fontWeight: "bold" }}>
+                <Button
+                  onClick={() => setIsEdit(true)}
+                  style={{ color: "#212529", fontWeight: "bold" }}
+                >
                   Edit Name
                 </Button>
               </div>
@@ -224,15 +237,23 @@ const ProfilePage = () => {
 
             <UserPara>{user?.gender}</UserPara>
             <UserPara>{user?.email}</UserPara>
-            <UserPara>{user?.verified ? "Verified Account" : "Unverified Account"}</UserPara>
+            <UserPara>
+              {user?.verified ? "Verified Account" : "Unverified Account"}
+            </UserPara>
           </UserCard>
 
-          <Button variant={userDeactivationDate ? "success" : "danger"} onClick={handleAccountStatus} className="deactivate-acc-button">
+          <Button
+            variant={userDeactivationDate ? "success" : "danger"}
+            onClick={handleAccountStatus}
+            className="deactivate-acc-button"
+          >
             {userDeactivationDate ? "Activate Account" : "Deactivate Account"}
           </Button>
           {message && (
             <div style={{ paddingTop: 20 }}>
-              <Alert variant={userDeactivationDate ? "danger" : "success"}>{message}</Alert>
+              <Alert variant={userDeactivationDate ? "danger" : "success"}>
+                {message}
+              </Alert>
             </div>
           )}
         </PageContainer>
